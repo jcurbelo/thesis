@@ -1,0 +1,57 @@
+%%%{{{ Comments and the like
+
+\usepackage{acronym}
+\usepackage{bbm}
+%%\usepackage{MnSymbol}
+%%\usepackage{turnstile}
+\usepackage[slide,ruled,algochapter,lined,vlined,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,shapes.misc,shapes.symbols}
+%%\usepackage{colortbl}
+%%\usepackage[makeroom]{cancel}
+\usepackage{ctable}
+
+\newcommand{\R}{\mathbbm R}
+\newcommand{\Rm}{\mathbbm{R}^{m}}
+\newcommand{\Rn}{\mathbbm{R}^{n}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codet}[1]{\texttt{\textbf{#1}}}
+\newcommand{\htbl}[1]{\textsf{#1}}
+\newcommand{\rec}[1]{ \tikz \node[rectangle,draw=red!25,thick,fill=red!20,align=center]{#1}; }
+\newcommand{\fig}[2]{\includegraphics[width=#1\linewidth]{gfx//#2}} %width=\linewidth
+\newcommand{\xcancel}[1]{\tikz[baseline=(X.base),opacity=.7]\node[cross out,draw=red,line width=.3ex](X){#1};}
+
+\title{Bibliotecas de diferenciaci\'on \\ autom\'atica en m\'ultiples lenguajes \\ \vskip 5pt (utilizando ADOL*)}
+\author{Yaneivys Guti\'errez Medina}
+\advisor{M.Sc. Fernando Ra\'ul Rodr\'iguez Flores}
+\degree{Licenciado en Ciencia de la Computaci\'on}
+\faculty{Facultad de Matem\'atica y Computaci\'on}
+\date{Junio de 2014}
+\logo{gfx/uhlogo}
+\makenomenclature
+
+\hyphenation{he-rra-mien-tas Py-thon dot-Value}
+
+%%\flushleft
+%%\newenvironment{vardesc}[1]{%
+%%\settowidth{\parindent}{#1:\ }
+%%\makebox[0pt][r]{#1:\ }}{}
+%%\begin{displaymath}
+%%a^2+b^2=c^2
+%%\end{displaymath}
+%%\begin{vardesc}{Where}$a$,
+%%$b$ -- are adjunct to the right
+%%angle of a right-angled triangle.
+%%$c$ -- is the hypotenuse of
+%%the triangle and feels lonely.
+%%$d$ -- finally does not show up
+%%here at all. Isn't that puzzling?
+%%\end{vardesc}
+
+%%%}}}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "thesis"
+%%% End: 
