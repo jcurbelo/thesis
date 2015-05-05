@@ -166,7 +166,7 @@
     \vfill
     {\LARGE \textbf{\@title}} \\
     \vskip 2cm
-    {\Large Autora: \textbf{\@author}} \\
+    {\Large Autor: \textbf{\@author}} \\
     \vskip 0.5cm
     {\Large Tutor: \textbf{\@advisor}} \\
     \vfill
