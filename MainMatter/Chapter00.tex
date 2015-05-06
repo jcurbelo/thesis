@@ -2,7 +2,7 @@
 
 \begin{introduction}
 
-Debido a la cantidad de información que se posee actualmente para exponer una idea o reformar alguna ya existente, una buena presentación debe contener solo lo esencial para transmitir un mensaje a la audiencia. En sentido general, las presentaciones se configuran de forma tal que apoyen al conductor sin reemplazarlo. Es sabido que se logra una mejor fijación de modo atractivo hacia el contenido de una propuesta cuando se utilizan herramientas audiovisuales que pueden o no incluir animaciones.\\
+Debido a la cantidad de información que se posee actualmente para exponer una idea o reformar alguna ya existente, una buena presentación debe contener solo lo esencial para transmitir un mensaje a la audiencia. En sentido general, las presentaciones se configuran de forma tal que apoyen al conductor sin reemplazarlo. Es sabido que se logra una mejor fijación de modo atractivo hacia el contenido de una propuesta cuando se utilizan herramientas audiovisuales que pueden o no incluir animaciones.
 
 Estos razonamientos explican el uso actual de diversas herramientas que serán comentadas en el acápite ``Antecedentes''.
 
@@ -10,61 +10,61 @@ Cabe destacar la multiplicidad utilitaria de las variantes de presentación, con
 
 
 %---------------------------------------------------------------------------------
-\section*{Antecedentes}
+% \section*{Antecedentes}
 
-Son numerosos los esquemas de presentación con mayor o menor accesibilidad en el mundo actual, entre los cuales citaremos:
+% Son numerosos los esquemas de presentación con mayor o menor accesibilidad en el mundo actual, entre los cuales citaremos:
 
-\begin{itemize}
-	\item Beamer
-	\item PowerPoint (Windows)
-	\item KeyNote (Mac)
-	\item OpenOffice (Linux)
-	\item Impress.js http://bartaz.github.io/impress.js/
-	\item Reveal.js http://lab.hakim.se/reveal-js/
-	\item Tacion.js http://azoff.github.io/tacion.js/ 
-	\item jmpress.js http://jmpressjs.github.io/jmpress.js/ 
-	\item deck.js http://imakewebthings.com/deck.js/
-\end{itemize}
+% % \begin{itemize}
+% % 	\item Beamer
+% % 	\item PowerPoint (Windows)
+% % 	\item KeyNote (Mac)
+% % 	\item OpenOffice (Linux)
+% % 	\item Impress.js
+% % 	\item Reveal.js 
+% % 	\item Tacion.js  
+% % 	\item jmpress.js  
+% % 	\item deck.js
+% % \end{itemize}
 
-Algunos comentarios se hacen necesarios sin que esto implique una obligada crítica. Señalaremos solo algunos aspectos que indican la inconveniencia para el trabajo que nos ocupa: Beamer tiene pocas animaciones y pocas funcionalidades para trabajar con videos. PowerPoint tiene limitadas posibilidades de extensibilidad y para presentaciones científicas (emplear Latex), requiere de plugins comerciales como TextPoint. Además, no hace una separación entre contenido y estilo como Beamer. En cuanto a la interoperabilidad cuando se exporta a PDF pierde ciertas características. Los plugins existentes para realizar presentaciones web tienen una estructura propia (EJemplo, algunos usan canvas) y otros hay que pagarlos.\\
-En contraste con estos señalamientos, es menester ofrecer las ventajas de Beampress. Este plugin lleva a cabo una diferenciación entre contenido y estilo (haciendo uso de HTML+CSS). Organiza el contenido, empleando clases de HTML, logrando una estructura similar a Beamer, por lo que para los usuarios de Beamer resulta muy útil. Además permite el empleo de cualquier otro plugin de Javascript para animaciones, gráficos o cualquier otra funcionalidad, por citar solo un ejemplo: el plugin MathJax para emplear sintaxis Latex  
-
-
-%---------------------------------------------------------------------------------
-\section*{Justificación y Motivación}
-
-A pesar de la disponibilidad de diversas herramientas existen casos en los que es necesario controlar la presentación desde cierta distancia.  Esto ocurre, por ejemplo, en los espectáculos del Proyecto Delta, donde el presentador se ubica en el escenario, mientras que la máquina con las diapositivas se encuentra en la cabina de proyección del cine, a más de 30 metros.  (A esta distancia, los ``controladores'' usuales no funcionan). Debido a las dificultades que dicha distancia implica, y al hecho de que el presentador en este caso no tiene acceso a la computadora desde donde se proyecta la presentación, se implementa una aplicación web que garantiza la vista de control o administración, de forma tal que sea visualizada en un dispositivo móvil conectado a su vez con la máquina central que responde como servidor. \\
-
-Esta reforma puede hacer factibles o expeditos otros muchos proyectos culturales, educativos, informativos y de otra naturaleza, que ayuden a la difusión y al conocimiento que requiere la sociedad actual.
-
-%---------------------------------------------------------------------------------
-\section*{Factibilidad}
-
-\begin{itemize}
-	\item Con JQuery es sencillo manejar contenidos de la página HTML, así como modificar los estilos (CSS)
-	\item Se puede implementar en corto período de tiempo.
-	\item Ya existe un generador automático de presentaciones que genera HTML.
-\end{itemize}
+% Algunos comentarios se hacen necesarios sin que esto implique una obligada crítica. Señalaremos solo algunos aspectos que indican la inconveniencia para el trabajo que nos ocupa: Beamer tiene pocas animaciones y pocas funcionalidades para trabajar con videos. PowerPoint tiene limitadas posibilidades de extensibilidad y para presentaciones científicas (emplear Latex), requiere de plugins comerciales como TextPoint. Además, no hace una separación entre contenido y estilo como Beamer. En cuanto a la interoperabilidad cuando se exporta a PDF pierde ciertas características. Los plugins existentes para realizar presentaciones web tienen una estructura propia (EJemplo, algunos usan canvas) y otros hay que pagarlos.\\
+% En contraste con estos señalamientos, es menester ofrecer las ventajas de Beampress. Este plugin lleva a cabo una diferenciación entre contenido y estilo (haciendo uso de HTML+CSS). Organiza el contenido, empleando clases de HTML, logrando una estructura similar a Beamer, por lo que para los usuarios de Beamer resulta muy útil. Además permite el empleo de cualquier otro plugin de Javascript para animaciones, gráficos o cualquier otra funcionalidad, por citar solo un ejemplo: el plugin MathJax para emplear sintaxis Latex  
 
 
-%---------------------------------------------------------------------------------
+% %---------------------------------------------------------------------------------
+% \section*{Justificación y Motivación}
 
-\section*{Objetivos}
- Para dar respuesta a lo planteado previamente, se persigue como objetivo general:
-\begin{itemize}
-	\item Diseñar una aplicación web que permita mostrar y controlar diapositivas creadas con HTML5, CSS3 y Javascript y que simule todas las funcionalidades de Beamer y otros sistemas de presentaciones existentes.  Además, debe tener varias vistas: la presentación que se muestra al público, y los paneles de control que permitan controlarla.
-\end{itemize}
-Para satisfacer el cumplimiento de este propósito principal, se trazan los siguientes objetivos secundarios:
-\begin{itemize}
-	\item Diseñar un sistema basado en javascript que permita agregar efectos a las presentaciones.
-	\item Diseñar e implementar la aplicación web que permita controlar la aplicación con las diversas vistas.
-	\item Vincular la aplicación con el sistema de mensajería instantánea que se está empleando en el Proyecto Delta
-\end{itemize}
+% A pesar de la disponibilidad de diversas herramientas existen casos en los que es necesario controlar la presentación desde cierta distancia.  Esto ocurre, por ejemplo, en los espectáculos del Proyecto Delta, donde el presentador se ubica en el escenario, mientras que la máquina con las diapositivas se encuentra en la cabina de proyección del cine, a más de 30 metros.  (A esta distancia, los ``controladores'' usuales no funcionan). Debido a las dificultades que dicha distancia implica, y al hecho de que el presentador en este caso no tiene acceso a la computadora desde donde se proyecta la presentación, se implementa una aplicación web que garantiza la vista de control o administración, de forma tal que sea visualizada en un dispositivo móvil conectado a su vez con la máquina central que responde como servidor. \\
+
+% Esta reforma puede hacer factibles o expeditos otros muchos proyectos culturales, educativos, informativos y de otra naturaleza, que ayuden a la difusión y al conocimiento que requiere la sociedad actual.
+
+% %---------------------------------------------------------------------------------
+% \section*{Factibilidad}
+
+% \begin{itemize}
+% 	\item Con JQuery es sencillo manejar contenidos de la página HTML, así como modificar los estilos (CSS)
+% 	\item Se puede implementar en corto período de tiempo.
+% 	\item Ya existe un generador automático de presentaciones que genera HTML.
+% \end{itemize}
 
 
-\section*{Pregunta Científica}
+% %---------------------------------------------------------------------------------
 
-Por qué el pollito tico cruzó la calle?
+% \section*{Objetivos}
+%  Para dar respuesta a lo planteado previamente, se persigue como objetivo general:
+% \begin{itemize}
+% 	\item Diseñar una aplicación web que permita mostrar y controlar diapositivas creadas con HTML5, CSS3 y Javascript y que simule todas las funcionalidades de Beamer y otros sistemas de presentaciones existentes.  Además, debe tener varias vistas: la presentación que se muestra al público, y los paneles de control que permitan controlarla.
+% \end{itemize}
+% Para satisfacer el cumplimiento de este propósito principal, se trazan los siguientes objetivos secundarios:
+% \begin{itemize}
+% 	\item Diseñar un sistema basado en javascript que permita agregar efectos a las presentaciones.
+% 	\item Diseñar e implementar la aplicación web que permita controlar la aplicación con las diversas vistas.
+% 	\item Vincular la aplicación con el sistema de mensajería instantánea que se está empleando en el Proyecto Delta
+% \end{itemize}
+
+
+% \section*{Pregunta Científica}
+
+% Por qué el pollito tico cruzó la calle?
 
 %---------------------------------------------------------------------------------
 

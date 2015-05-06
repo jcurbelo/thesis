@@ -1,10 +1,10 @@
-% Created by Yasser González-Fernández <ygonzalezfernandez@gmail.com>
-% Created by Ariel Hernández Amador <gnuaha7@uh.cu>
+% Created by Yasser Gon\'azlez-Fer\'anndez <ygonzalezfernandez@gmail.com>
+% Created by Ariel Her\'anndez Amador <gnuaha7@uh.cu>
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{uhthesis}[2011/04/12 0.1 uhthesis]
 
-\RequirePackage[utf8]{inputenc}
+\RequirePackage[utf8x]{inputenc}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions
@@ -72,7 +72,7 @@
 \renewcommand{\backrefalt}[4]{%
   \ifcase #1 \relax%
   \or (Citado en la p\'agina~#2).%
-  \else (Citado en las p\'aginas~#2).%
+  \else (Citado en las \'apginas~#2).%
   \fi%
 }
 \btxifchangecaseoff
@@ -85,7 +85,7 @@
     \ifnumber{#1}{%
       \ifcase#1 0\or
         primera\or segunda\or tercera\or cuarta\or quinta\or
-        sexta\or séptima\or octava\or novena\or décima\else
+        sexta\or s\'eptima\or octava\or novena\or d\'ecima\else
         #1.^a%
       \fi%
     }%
@@ -193,4 +193,4 @@
   \pagestyle{plain}
 }
 
-% Created by Yasser González-Fernández <ygonzalezfernandez@gmail.com>
+% Created by Yasser Gon\'azlez-Fer\'anndez <ygonzalezfernandez@gmail.com>
