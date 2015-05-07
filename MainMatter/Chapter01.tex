@@ -6,27 +6,27 @@
 
 	Para crear y controlar presentaciones con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo existen diversas herramientas:	
 
-	\section{Microsoft Office Power Point} % (fold)
+	\section*{Microsoft Office Power Point} % (fold)
 	\label{sec:microsoft_office_power_point}
 
 		Es un software desarrollado por \textit{Microsoft}  que permite realizar presentaciones simples o complejas. Las presentaciones pueden contener texto, imágenes, efectos de sonidos, videos, así como animaciones para dar una sensación más interactiva al público. Las diapositivas están compuestas por una plantilla donde el usuario puede escoger una imagen de fondo, una tipografía específica y las informaciones que desee. Para un usuario estándar (que siempre use el mouse), es cómodo este sistema porque es uno de los de más amplio uso y de fácil comprensión.
 
 	% section microsoft_office_power_point (end)
 
-	\section{Prezi} % (fold)
+	\section*{Prezi} % (fold)
 	\label{sec:prezi}
 
 		Es una aplicación innovadora que permite al usuario manejar su presentación de manera creativa, ya que existe conexión entre las diferentes diapositvas. Se puede usar online o se puede descargar para usarlo sin conexión a internet. El resultado final es una presentación que simula una pequeña película. Aunque es manejable sin necesidad de un orden preestablecido, tiene como desventajas fundamentales que obligatoriamente se necesita una cuenta y que las funcionalidades gratiutas son limitadas, por ejemplo: la edición offline de la presentación es pagada.		
 	% section prezi (end)
 
-	\section{Beamer} % (fold)
+	\section*{Beamer} % (fold)
 	\label{sec:beamer}
 
 		Es una clase de \LaTeX para crear presentaciones especialmente útil para propósitos científicos. Como se sabe, \LaTeX es un lenguaje Turing completo con fuertes capacidades para mostrar notaciones matemáticas y permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que con los sistemas anteriormente analizados.	
 
 	% section beamer (end)
 
-	\section{Otros sistemas} % (fold)
+	\section*{Otros sistemas} % (fold)
 	\label{sec:otros_sistemas}
 		\begin{itemize}
 			\item \textit{Impress.js}: Herramienta que hace uso de las transiciones y transformaciones de CSS3, está inspirada en Prezi
@@ -59,7 +59,13 @@
 
 	Otro problema que se presenciaba en el Proyecto Delta, era la distancia entre la computadora que contenía la presentación y el presentador. Así como la incapacidad del mismo de controlar la presentación desde cierta distancia. De esto último surge \textit{Beampressk}, una herramienta que posibilita el control deseado mediante una conexión wifi, lo que garantiza su control desde una distancia determinada.
 
-	\textit{Beampressk} es un servidor
+	\textit{Beampressk} es un servidor implementado en \textit{Flask}, que es un framework web de Python que se categoriza como micro-framework, o sea, originalmente tiene poca o ninguna dependencia a bibliotecas externas. Esto tiene como ventaja que es bastante ligero, sobre todo para el propósito con que fue concebido, que es el de hacer de intermediario entre las vistas de presentaciones y la vista de control.
+
+	Para controlar la presentación en tiempo real, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la presentación y el servidor. Más específicamente, \textit{Flask-SocketIO} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} de Javascript. De esta manera, se pueden controlar algunos parámetros del flujo de la presentación como el frame (diapositiva) actual, el intervalo actual asi como el control de volumen.
+
+	Como se tiene un servidor web implementado, se cae de la mata decir que también hace función de \textit{API Rest}, por lo que responde a métodos de petición \textit{HTTP} que se definan. En este caso, más específicamente del Proyecto Delta, mostrar mensajes de texto en pantalla y estos están en otro servidor. 
+
+
 
 
 % chapter preliminares (end)
