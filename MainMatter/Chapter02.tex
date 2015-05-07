@@ -1,0 +1,49 @@
+% Introduction
+
+\chapter{Fundamentos conceptuales} % (fold)
+\label{cha:fundamentos_conceptuales}
+
+	Para entender los basamentos y el funcionamiento práctico de Beampress, es necesario enfatizar en sus elementos fundamentales, los cuales viabilizan la utilización objetiva y concreta que nos proponemos demostrar. Para ello, señalamos en primera instancia que dichos elementos fueron creados inicialmente a semejanza de la estructura de Beamer, aunque como demostraremos oportunamente, le hemos añadido nuevas funcionalidades. Beampress, por tanto, utiliza los conceptos de Frame, Slide y Slide Item. 
+
+	Un \textit{Frame} representa una diapositiva en la presentación, y puede o no tener transiciones de entrada y salida. A su vez, cada \textit{Frame} está compuesto por \textit{Slide Items}. Un \textit{Slide Item} es un contenido, ya sea texto, imagen, audio, video o sus combinaciones posibles. Los Slide Items aparecen según los intervalos con los que se definan. Para entender el concepto ``\textit{intervalo}'', que es el orden de la secuencia, lo ilustraremos con un ejemplo, Si tenemos un \textit{Slide Item} con los siguientes intervalos: $$-2;4;6-8;10-$$ significa de forma inequívoca, que dicho \textit{Slide Item}, estará presente hasta el slide dos, no se mostrará en el tres, aparecerá en el cuatro, luego en el cinco se dejará de ver, reaparecerá desde el seis hasta el ocho, en el nueve se esconderá y estará presente desde el diez hasta el final. 
+
+	Para definir los intervalos, la sintaxis que se utiliza es como sigue:
+	\begin{itemize}
+		\item Un intervalo puede ser un número ej: 3 o bien, un rango ej: 3-5. Los límites superiores e inferiores son opcionales, pero en caso de no especificarse, para el inferior se asume 1 y para el superior se asume el último slide del \textit{Frame}.
+		\item Cada \textit{Slide Item} puede tener uno o más intervalos separados por punto y coma ``;''
+	\end{itemize}
+
+	Una vez vez analizados estos conceptos elementales, es oportuno señalar que un \textit{Slide} es un conjunto de \textit{Slide Items} que están presentes dado un intervalo, y que por definición, todos los \textit{Slide Items} están ``mostrados'', o sea, independientemente del slide actual, se muestran si no se les especifican intervalos.
+
+	Llegado a este punto del análisis, es obvio que utilizamos la idea original de \textit{Beamer}, en cuanto a \textit{Overlays} y \textit{Frames}. Sin embargo, nuestra propuesta (\textit{Beampress}), extiende la sintaxis para definir los \textit{Slides} o intervalos, de forma que sea factible usar animaciones así como reproducción de audio y video.
+
+	Para entender este aporte se tienen en cuenta las siguientes consideraciones:
+	\begin{itemize}
+		\item EL proceso que consiste en ir de un intervalo menor a uno mayor, recibe el nombre de ``transición siguiente''
+		\item El proceso inverso, o sea, el transcurrir de un intervalo mayor a uno menor, recibe el nombre de ``transición anterior''
+	\end{itemize}
+
+	Teniendo en cuenta estos conceptos, y mezclando nuestra propuesta con la sintaxis tradicional, definimos según los intervalos de cada \textit{Slide Item} cuáles serían en cada caso, la ``transición siguiente'' y la ``transición anterior''. Como ilustración, expondremos el siguiente ejemplo:
+	$$
+	Ejemplo con la mezcla de las dos sintaxis, el json con los intervalos....la bella ya la bestia.
+	$$
+
+	En este caso, un intervalo puede ser un JSON con las siguientes características:
+	\begin{itemize}
+		\item La primera llave es el número del intervalo
+		\item ``next'' tiene como valores, el nombre de la función de animación a utilizar para la ``transición siguiente'' y sus argumentos
+		\item ``prev'' es lo mismo que ``next'' pero recibe el nombre de la función a utilizar para la ``transición anterior''
+	\end{itemize}
+
+	La principal motivación para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Por ejemplo, si queremos reproducir un audio o un video podemos hacer lo siguiente:
+	$$
+	Ejemplo de audio y video
+	$$
+
+	Dada la posibilidad de empleo de esta sintaxis, también se puede utilizar para definir las ``transiciones siguiente y anterior'' de los \textit{Frames}.	
+
+% chapter fundamentos_conceptuales (end)
+
+
+
+

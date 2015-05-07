@@ -1,12 +1,46 @@
-% Introduction
-
-\chapter{Fundamentos Conceptuales} % (fold)
-\label{cha:fundamentos_conceptuales}
-
-Aqui va lo que escribire hoy.
-
-% chapter fundamentos_conceptuales (end)
+% Preliminares
+\chapter{Preliminares} % (fold)
+\label{cha:preliminares}
+	En esta sección se presentan algunos de los principales sistemas de presentación tomando en cuenta sus ventajas y desventajas; se hablará de la necesidad por la que surge \textit{Beampress} así como las herramientas que fueron utilizadas para su implementación.
 
 
+	Para crear y controlar presentaciones con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo existen diversas herramientas:	
 
+	\section{Microsoft Office Power Point} % (fold)
+	\label{sec:microsoft_office_power_point}
 
+		Es un software desarrollado por \textit{Microsoft}  que permite realizar presentaciones simples o complejas. Las presentaciones pueden contener texto, imágenes, efectos de sonidos, videos, así como animaciones para dar una sensación más interactiva al público. Las diapositivas están compuestas por una plantilla donde el usuario puede escoger una imagen de fondo, una tipografía específica y las informaciones que desee. Para un usuario estándar (que siempre use el mouse), es cómodo este sistema porque es uno de los de más amplio uso y de fácil comprensión.
+
+	% section microsoft_office_power_point (end)
+
+	\section{Prezi} % (fold)
+	\label{sec:prezi}
+		Es una aplicación innovadora que permite al usuario manejar su presentación de manera creativa, ya que existe conexión entre las diferentes diapositvas. Se puede usar online o se puede descargar para usarlo sin conexión a internet. El resultado final es una presentación que simula una pequeña película. Aunque es manejable sin necesidad de un orden preestablecido, tiene como desventajas fundamentales que obligatoriamente se necesita una cuenta y que las funcionalidades gratiutas son limitadas, por ejemplo: la edición offline de la presentación es pagada.		
+	% section prezi (end)
+
+	\section{Beamer} % (fold)
+	\label{sec:beamer}
+
+		Es una clase de \LaTeX para crear presentaciones especialmente útil para propósitos científicos. Como se sabe, \LaTeX es un lenguaje Turing completo con fuertes capacidades para mostrar notaciones matemáticas y permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que con los sistemas anteriormente analizados.	
+
+	% section beamer (end)
+
+	\section{Otros sistemas} % (fold)
+	\label{sec:otros_sistemas}
+		\begin{itemize}
+			\item \textit{Impress.js}: Herramienta que hace uso de las transiciones y transformaciones de CSS3, está inspirada en Prezi
+			\item \textit{jmpress.js}: Es una reimplementación de impress.js usando JQuery
+			\item \textit{Reveal.js}: Framework de presentaciones HTML
+		\end{itemize}
+	% section otros_sistemas (end)
+
+	La propuesta de este trabajo (Beampress) es un sistema de diapositivas que reúna las individualidades siguientes:
+
+	\begin{itemize}
+			\item Separación entre contenido y forma
+			\item Disponibilidad de cuantas animaciones se desee (aunque esto signifique tener que implementarlas)
+			\item Que esté en ámbito web
+			\item Posibilidad de crear diapositivas cómodamente (sin tener que usar el mouse)
+	\end{itemize}	
+
+% chapter preliminares (end)
