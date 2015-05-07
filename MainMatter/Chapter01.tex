@@ -1,7 +1,7 @@
 % Preliminares
 \chapter{Preliminares} % (fold)
 \label{cha:preliminares}
-	En esta sección se presentan algunos de los principales sistemas de presentación tomando en cuenta sus ventajas y desventajas; se hablará de la necesidad por la que surge \textit{Beampress} así como las herramientas que fueron utilizadas para su implementación.
+	En esta sección se presentan algunos de los principales sistemas de presentación tomando en cuenta sus ventajas y desventajas; se hablará de la necesidad por la que surge \textit{Beampress} así como las tecnologías que fueron utilizadas para su implementación.
 
 
 	Para crear y controlar presentaciones con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo existen diversas herramientas:	
@@ -15,6 +15,7 @@
 
 	\section{Prezi} % (fold)
 	\label{sec:prezi}
+
 		Es una aplicación innovadora que permite al usuario manejar su presentación de manera creativa, ya que existe conexión entre las diferentes diapositvas. Se puede usar online o se puede descargar para usarlo sin conexión a internet. El resultado final es una presentación que simula una pequeña película. Aunque es manejable sin necesidad de un orden preestablecido, tiene como desventajas fundamentales que obligatoriamente se necesita una cuenta y que las funcionalidades gratiutas son limitadas, por ejemplo: la edición offline de la presentación es pagada.		
 	% section prezi (end)
 
@@ -34,13 +35,31 @@
 		\end{itemize}
 	% section otros_sistemas (end)
 
-	La propuesta de este trabajo (Beampress) es un sistema de diapositivas que reúna las individualidades siguientes:
+	Después de haber analizado todos estos sistemas para realizar presentaciones, conviene señalar que la propuesta de este trabajo (Beampress) surge como necesidad del Proyecto Delta, ya que las presentaciones se realizaban con \textit{Beamer} y esto impedía la inclusión de audios, videos y animaciones en la propia presentación. Era necesario la actividad de una persona que controlara dichos elementos. 
+
+	Lo que se propone es un sistema de diapositivas que reúna las individualidades siguientes:
 
 	\begin{itemize}
 			\item Separación entre contenido y forma
+			\item Estructuración del contenido de forma similar a \textit{Beamer}
 			\item Disponibilidad de cuantas animaciones se desee (aunque esto signifique tener que implementarlas)
 			\item Que esté en ámbito web
 			\item Posibilidad de crear diapositivas cómodamente (sin tener que usar el mouse)
-	\end{itemize}	
+	\end{itemize}
+
+	Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas mas comunes:
+
+	\begin{itemize}
+		\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otro código de Javascript que tenga ausencia de los mismos
+		\item Un objeto \textbf{defaults}, que tendrá las configuraciones iniciales del plugin
+		\item Un constructor sencillo para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
+		\item Posibilidad de extender las configuraciones (extender \textbf{defaults})
+		\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
+	\end{itemize}
+
+	Otro problema que se presenciaba en el Proyecto Delta, era la distancia entre la computadora que contenía la presentación y el presentador. Así como la incapacidad del mismo de controlar la presentación desde cierta distancia. De esto último surge \textit{Beampressk}, una herramienta que posibilita el control deseado mediante una conexión wifi, lo que garantiza su control desde una distancia determinada.
+
+	\textit{Beampressk} es un servidor
+
 
 % chapter preliminares (end)
