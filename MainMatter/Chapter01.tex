@@ -1,22 +1,25 @@
 % Preliminares
 \chapter{Preliminares} % (fold)
 \label{cha:preliminares}
-	En esta sección se presentan algunos de los principales sistemas de presentación tomando en cuenta sus ventajas y desventajas; se hablará de la necesidad por la que surge \textit{Beampress} así como las tecnologías que fueron utilizadas para su implementación.
 
 
-	Para crear y controlar presentaciones con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo existen diversas herramientas:	
+	Para crear y controlar presentaciones con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo existen diversas herramientas.
+
+	En este acápite se muestran algunos de los principales sistemas de presentación tomando en cuenta las ventajas y desventajas de cada uno de ellos. Ofreceremos los requerimientos que dieron origen a \textit{Beampress} y \textit{Beampressk} así como ofreceremos detalles de las tecnologías que fueron utilizadas para la implementación de estas propuestas.	
 
 	\section*{Microsoft Office Power Point} % (fold)
 	\label{sec:microsoft_office_power_point}
 
-		Es un software desarrollado por \textit{Microsoft}  que permite realizar presentaciones simples o complejas. Las presentaciones pueden contener texto, imágenes, efectos de sonidos, videos, así como animaciones para dar una sensación más interactiva al público. Las diapositivas están compuestas por una plantilla donde el usuario puede escoger una imagen de fondo, una tipografía específica y las informaciones que desee. Para un usuario estándar (que siempre use el mouse), es cómodo este sistema porque es uno de los de más amplio uso y de fácil comprensión.
+		Es un software desarrollado por \textit{Microsoft}  que permite realizar presentaciones simples o complejas. Las presentaciones pueden contener texto, imágenes, efectos de sonidos, videos, así como animaciones para dar una sensación más interactiva al público. Las diapositivas están compuestas por una plantilla donde el usuario puede escoger una imagen de fondo, una tipografía específica y las informaciones que desee. Para un usuario estándar (que siempre use el mouse), es cómodo este sistema porque es uno de los de más amplio uso y de fácil comprensión. 
 
 	% section microsoft_office_power_point (end)
 
 	\section*{Prezi} % (fold)
 	\label{sec:prezi}
 
-		Es una aplicación innovadora que permite al usuario manejar su presentación de manera creativa, ya que existe conexión entre las diferentes diapositvas. Se puede usar online o se puede descargar para usarlo sin conexión a internet. El resultado final es una presentación que simula una pequeña película. Aunque es manejable sin necesidad de un orden preestablecido, tiene como desventajas fundamentales que obligatoriamente se necesita una cuenta y que las funcionalidades gratiutas son limitadas, por ejemplo: la edición offline de la presentación es pagada.		
+		Es una aplicación innovadora que permite al usuario manejar su presentación de manera creativa, ya que existe conexión entre las diferentes diapositivas. Es más dinámica y original que \textit{Microsoft Office Power Point} y permite copiar y pegar archivos de \textit{Power Point} siendo posible usar online o descargarse para luego usarlo offline. Una característica de considerable importancia que incrementa las ventajas de su uso, es que permite hacer zoom en los detalles o incluso modificarlos sin que necesariamente haya que realizar otra diapositiva. El resultado final es una presentación que simula una pequeña película. Aunque es manejable sin necesidad de un orden preestablecido, tiene como desventajas fundamentales que obligatoriamente se necesita una cuenta y que las funcionalidades gratuitas son limitadas, por ejemplo: la edición offline de la presentación es pagada.
+
+		Prezi ofrece cuatro modalidades de privacidad en dependencia de la licencia de la que se disponga (gratiuta, de pago, cuenta \textit{enjoy} o \textit{EDUenjoy})		
 	% section prezi (end)
 
 	\section*{Beamer} % (fold)
@@ -35,35 +38,42 @@
 		\end{itemize}
 	% section otros_sistemas (end)
 
-	Después de haber analizado todos estos sistemas para realizar presentaciones, conviene señalar que la propuesta de este trabajo (Beampress) surge como necesidad del Proyecto Delta, ya que las presentaciones se realizaban con \textit{Beamer} y esto impedía la inclusión de audios, videos y animaciones en la propia presentación. Era necesario la actividad de una persona que controlara dichos elementos. 
+	Después del pormenorizado análisis de los principales sistemas de presentaciones existentes, conviene señalar que la propuesta de este trabajo surge por la necesidad de agilizar el método de presentación del Proyecto Delta, para lo cual resumiremos el funcionamiento básico de dicho espacio cultural vinculado a la ciencia, el humor y la tecnología.
 
-	Lo que se propone es un sistema de diapositivas que reúna las individualidades siguientes:
+	Desde hace varios años, este espacio para la recreación alternativa se llevaba a cabo utilizando \textit{Beamer}. La práctica demostró que no era factible la inclusión de audios, videos y animaciones en la propia presentación sin la ayuda de un colaborador que controlara dichos elementos. Como resultado de esta observación, nos propusimos crear un sistema de presentaciones que reuniera las individualidades necesarias para lograr la agilidad que requiere un evento cultural de tal magnitud.
+
+	\section*{Requerimientos básicos del sistema propuesto} % (fold)
+	\label{sec:requerimientos_basicos_del_sistema_propuesto}
+		\begin{itemize}
+				\item Separación entre contenido y forma
+				\item Estructuración del contenido de forma similar a \textit{Beamer}
+				\item Disponibilidad de cuantas animaciones se desee (aunque esto signifique tener que implementarlas)
+				\item Que esté en ámbito web
+				\item Posibilidad de crear diapositivas cómodamente (sin tener que usar el mouse)
+		\end{itemize}	
+	% section requerimientos_basicos_del_sistema_propuesto (end)
+
+
+
+	Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
 
 	\begin{itemize}
-			\item Separación entre contenido y forma
-			\item Estructuración del contenido de forma similar a \textit{Beamer}
-			\item Disponibilidad de cuantas animaciones se desee (aunque esto signifique tener que implementarlas)
-			\item Que esté en ámbito web
-			\item Posibilidad de crear diapositivas cómodamente (sin tener que usar el mouse)
-	\end{itemize}
-
-	Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas mas comunes:
-
-	\begin{itemize}
-		\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otro código de Javascript que tenga ausencia de los mismos
+		\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
 		\item Un objeto \textbf{defaults}, que tendrá las configuraciones iniciales del plugin
 		\item Un constructor sencillo para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
 		\item Posibilidad de extender las configuraciones (extender \textbf{defaults})
 		\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
 	\end{itemize}
 
-	Otro problema que se presenciaba en el Proyecto Delta, era la distancia entre la computadora que contenía la presentación y el presentador. Así como la incapacidad del mismo de controlar la presentación desde cierta distancia. De esto último surge \textit{Beampressk}, una herramienta que posibilita el control deseado mediante una conexión wifi, lo que garantiza su control desde una distancia determinada.
+	Otra dificultad no despreciable que se constataba en el Proyecto Delta, es la distancia entre la computadora que contiene la presentación y el ejecutor de la misma, o sea, el presentador; a lo que se añade la imposibilidad del mismo de manipular la presentación utilizando los controles comunes (tiki tiki). Si a estos obstáculos se les suma la dificultad del presentador para el registro, control y seguimiento de otros elementos, como son: mensajes de texto, volumen del audio y flujo de la presentación resulta evidente la necesidad de una alternativa capaz de satisfacer las demanadas que esta actividad cultural requiere, dada su característica fundamental de interacción permanente con el público.
 
-	\textit{Beampressk} es un servidor implementado en \textit{Flask}, que es un framework web de Python que se categoriza como micro-framework, o sea, originalmente tiene poca o ninguna dependencia a bibliotecas externas. Esto tiene como ventaja que es bastante ligero, sobre todo para el propósito con que fue concebido, que es el de hacer de intermediario entre las vistas de presentaciones y la vista de control.
+	Por todo esto surge \textit{Beampressk}: una herramienta que posibilita el control deseado mediante una conexión wifi, lo cual garantiza su manejo desde una distancia determinada.
 
-	Para controlar la presentación en tiempo real, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la presentación y el servidor. Más específicamente, \textit{Flask-SocketIO} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} de Javascript. De esta manera, se pueden controlar algunos parámetros del flujo de la presentación como el frame (diapositiva) actual, el intervalo actual asi como el control de volumen.
+	\textit{Beampressk} es un servidor implementado en \textit{Flask}, que es un framework web de Python que se categoriza como micro-framework, o sea, originalmente tiene poca o ninguna dependencia a bibliotecas externas. La ligereza que lo tipifica constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebido: intermediario entre las vistas de presentaciones y la vista de control.
 
-	Como se tiene un servidor web implementado, se cae de la mata decir que también hace función de \textit{API Rest}, por lo que responde a métodos de petición \textit{HTTP} que se definan. En este caso, más específicamente del Proyecto Delta, mostrar mensajes de texto en pantalla y estos están en otro servidor. 
+	Para controlar la presentación en tiempo real, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la presentación y el servidor. Más específicamente, \textit{Flask-SocketIO} porque implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} de Javascript. De esta manera, se pueden controlar algunos parámetros del flujo de la presentación como el frame (diapositiva) actual, el intervalo actual, y el control de volumen.
+
+	Al tener un servidor web implementado, naturalmente hace función de \textit{API Rest}, por lo cual responde a métodos de petición \textit{HTTP} previamente definidos. En el caso que nos ocupa, Proyecto Delta, se hace posible mostrar tanto mensajes de texto provenientes de otro servidor.
 
 
 
