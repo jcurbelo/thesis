@@ -1,4 +1,12 @@
 \chapter{Detalles de implementación} % (fold)
 \label{cha:detalles_de_implementacion}
+	Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
 
+	\begin{itemize}
+		\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
+		\item Un objeto \textbf{defaults}, que tendrá las configuraciones iniciales del plugin
+		\item Un constructor sencillo para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
+		\item Posibilidad de extender las configuraciones (extender \textbf{defaults})
+		\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
+	\end{itemize}
 % chapter detalles_de_implementacion (end)
