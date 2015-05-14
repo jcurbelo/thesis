@@ -18,7 +18,7 @@
 		\subsection{Beamer} % (fold)
 		\label{sub:beamer}
 
-			Es una clase de \LaTeX para crear presentaciones especialmente útil en casos de propósitos científicos. \LaTeX es un lenguaje Turing completo, con fuertes capacidades para mostrar notaciones matemáticas que permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que en \textit{PowerPoint}.	
+			Es una clase de \LaTeX{} para crear presentaciones especialmente útil en casos de propósitos científicos. \LaTeX{} es un lenguaje Turing completo, con fuertes capacidades para mostrar notaciones matemáticas que permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que en \textit{PowerPoint}.	
 
 		% section beamer (end)		
 
@@ -58,47 +58,69 @@
 
 			Otros impedimentos constatados son los siguientes: la pejiguera del presentador para el registro, control y seguimiento de otros elementos propios del especáculo, como los mensajes de texto que envía el público respondiendo preguntas o comentando la evolución del evento; el volumen del audio, cuyo dispositivo de control se encuentra lejos del escenario, en una cabina donde no llega el sonido de lo que se está proyectando en el espectáculo. Esto cobra importancia al utilizarse materiales audiovisuales con distintos niveles de volumen.
 
-			Por último, el conductor necesita reorganizar la presentación de las diapositivas según los requerimientos de cada puesta en escena, algunos de los cuales son imprevisibles dado el dinamismo inherente al Proyecto Delta. Esto se explica por la adecuación que algunos imprevistos obligan a llevar a cabo (ausencia de un invitado, retraso en el inicio de los equipos de audio y de video, problemas en la sala de exhibición, demandas del público, etc.). En haras de mantener el ritmo del espectáculo, se hace necesaria la posibilidad de alterar el orden preconcebido de las diapositivas, de forma tal que pueda obviarse la vista de algunas de ellas o regresar a alguna anterior.			
+			Por último, el conductor necesita reorganizar la presentación de las diapositivas según los requerimientos de cada puesta en escena, algunos de los cuales son imprevisibles dado el dinamismo inherente al Proyecto Delta. Esto se explica por la adecuación que algunos imprevistos obligan a llevar a cabo (ausencia de un invitado, retraso en el inicio de los equipos de audio y de video, problemas en la sala de exhibición, demandas del público, etc.) Con el objetivo de mantener el ritmo del espectáculo, es necesario la posibilidad de alterar el orden preconcebido de las diapositivas, de forma tal que pueda obviarse la vista de algunas de ellas o regresar a alguna anterior.			
 	% section proyecto_delta (end)
 
+		Después de analizar las características del Proyecto Delta, en cuanto a su funcionamiento y dinamismo, se muestran los requisitos fundamentales que debe reunir la propuesta de este trabajo para dar solución a las necesidades ya analizadas de dicho espacio cultural.
 
 	\section{Requerimientos básicos del sistema propuesto} % (fold)
 	\label{sec:requerimientos_basicos_del_sistema_propuesto}
-		En esta sección se habla de las especifidades y características que debe tener el sistema que se propone, de manera tal que resuelva las necesidades vistas en la sección \ref{sec:proyecto_delta}.
+		En esta sección se habla de las especificidades y características que debe cumplir el sistema que se propone, de manera tal que resuelva las necesidades vistas en la sección \ref{sec:proyecto_delta}.
 		\begin{itemize}
-				\item Separación entre contenido y forma. Esto significa que las diapositivas se definan independientes del diseño de la presentación. Esto es un requisito ya que la conformación de las presentaciones debe ser lo más similar a la clase \textit{Beamer} de \LaTeX que es la herramienta utilizada para generar las diapositivas del Proyecto Delta
-				\item Disponibilidad de cuantas animaciones se desee así como la inclusión de audios y videos en las diapositivas. Como vimos en \ref{sec:proyecto_delta}, esto era una de las problemáticas principales, con \textit{Beamer}, es bastante complicado utilizar animaciones, audio y video.
-				\item Que esté en ámbito web. Esto permite conformar las presentaciones con independencia de estilo, gracias a la separacion que ofrece HTML5 y CSS3 y bla bla bla
-				\item Posibilidad de crear diapositivas cómodamente (sin tener que usar el mouse). Permitir escribir la estrucuta de las diapositivas de forma sencilla empleando HTML5 como lenguaje. Esto es cómodo porque podemos tener la utilidad de algún sistema de templates como Jinja que nos organice el codigo..... tambien podemos generar dicho codigo con algun generador automatico de presentaciones....
+				\item Separación entre contenido y forma. 
+
+					Las diapositivas deben crearse de forma independiente al diseño de la presentación, o sea, el estilo, la tipografía, así como otros elementos visuales del contenido, no deben estar incluidos en el mismo. Esto se hace necesario ya que la conformación de las presentaciones debe ser lo más similar a \textit{Beamer}, que ha sido la herramienta utilizada para generar las diapositivas del Proyecto Delta y además, propicia dicha separación gracias a \LaTeX{}.
+
+				\item Disponibilidad de cuantas animaciones se desee y la inclusión de audios y videos en las diapositivas. 
+
+					Como vimos en \ref{sec:proyecto_delta}, esta es una de las problemáticas principales: con \textit{Beamer} es complicado utilizar animaciones, audio y video.
+
+				\item Que esté en ámbito web. 
+
+					Se requiere de un formato para las presentaciones que sea compatible con cualquier sistema, que sea a la vez moderno y de fácil acceso para muchos usuarios.
+
+
+				\item Posibilidad de crear diapositivas cómodamente (sin tener que usar el mouse). 
+
+					Este requisito se refiere a la comodidad que representa no tener que recurrir a ningún aditamento fuera del teclado, de manera que se ahorra tiempo y se evita la dispersión del pensamiento a través de \textit{combinaciones de teclas} y \textit{snippets de códigos}.
 		\end{itemize}	
 	% section requerimientos_basicos_del_sistema_propuesto (end)
+
+
 	Después de haber desglosado los requerimientos que se necesita, se muestran las soluciones que los satisfacen así como las herramientas y tecnologías empleadas. 
 
 	\section{Beampress} % (fold)
 	\label{sec:beampress}
-		Para lograr que nuestro sistema de presentaciones estructure las mismas de forma similar a \textit{Beamer} y cumplimente con lo requisitos mencionados en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, se implementó el plugin de JQuery \textit{beampress.js} aprovechando las bondades de HTML5, CSS3 y Javascript. Los patrones de diseño así como los detalles de su estructura serán explicados más detalladamente en el capítulo \ref{cha:detalles_de_implementacion}.
+		Para lograr que nuestro sistema de presentaciones estructure las mismas de forma similar a \textit{Beamer}, y cumplimente los requisitos mencionados en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, se implementó el plugin de JQuery \textit{beampress.js} aprovechando las bondades de HTML5, CSS3 y Javascript. Los patrones de diseño así como los detalles de su estructura, serán explicados más detalladamente en el capítulo \ref{cha:detalles_de_implementacion}.
 
-		Como estamos en presencia de una herramienta que está en ámbito web, se aprovecha de las posibilidades que esto ofrece, dando solución a las necesidades vistas en la sección \ref{sec:proyecto_delta}, por ejemplo, la inclusión de audios y videos que se realiza gracias a los tags \textbf{audio} y \textbf{video} de HTML5; las animaciones se pueden emplear puramente con Javascript, o basandose en JQuery, que permite el uso de la función ``animate'', con los ``transform'' de CSS3 o con alguna otra herramienta, como  GreenSock Animation Platform (GSAP), basada en Javascript y más rápida que JQuery. 
 
-		El nombre \textit{Beampress} surge por la unión de los nombres \textit{Beamer} e \textit{Impress}, sistemas de presentaciones que fueron detallados en la sección \ref{sec:sistemas_de_presentaciones}.	
+		Como estamos en presencia de una herramienta que se encuentra en ámbito web, se aprovechan las posibilidades que esto ofrece, dando solución a las necesidades vistas en la sección \ref{sec:proyecto_delta}. Por ejemplo, la inclusión de audios y videos se puede realizar gracias a los tags \textbf{audio} y \textbf{video} de HTML5; las animaciones se pueden implementar puramente con Javascript, o se pueden crear con la función ``animate'' de JQuery. También con los ``transform'' de CSS3 o con alguna otra herramienta, como GreenSock Animation Platform (GSAP), que se basa en Javascript y es más rápida que JQuery. 
+
+
+		El nombre \textit{Beampress} surge por la unión de los nombres \textit{Beamer} e \textit{Impress}, sistemas de presentaciones que fueron detallados en la sección \ref{sec:sistemas_de_presentaciones}. Es de destacar que con \textit{Beampress} se solucionan algunos de los problemas señalados como: uso de animaciones y empleo de materiales audiovisuales en las diapositivas.	
 	% section beampress (end)
 
-
-	Muela de outro
-
-
-	Muela de intro
+	En la siguiente sección se ofrece una solución para otra de las problemáticas vistas en la sección \ref{sec:proyecto_delta}: la imposibilidad de usar un \textit{presentador inalámbrico} debido a la gran distancia entre el conductor y la computadora que contiene la presentación.
 	
 	\section{Beampressk} % (fold)
 	\label{sec:beampressk}
-		Por todo esto surge \textit{Beampressk}: una herramienta que posibilita el control de las diapositivas a través de una conexión wifi, lo cual garantiza el manejo de las mismas desde una distancia determinada, que puede ser mayor que la distancia máxima en que son efectivos los \textit{presentadores inalámbricos} (30m).
+		Con el propósito de vencer el obstáculo que representa la distancia entre presentador y diapositivas, surge \textit{Beampressk}: una herramienta que posibilita el control de la presentación a través de una conexión wifi, lo cual garantiza el manejo de las diapositivas con un dispositivo móvil desde una distancia determinada, que puede ser mayor que la máxima en que son efectivos los \textit{presentadores inalámbricos} (30m).
 
-		\textit{Beampressk} es un servidor implementado en \textit{Flask}, que es un framework web de Python que se categoriza como micro-framework, o sea, originalmente tiene poca o ninguna dependencia a bibliotecas externas. La ligereza que lo tipifica constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebido: intermediario entre las vistas de presentaciones y la vista de control.
+		Para realizar dicho manejo, provee una vista de control, concebida para mostrarse en un dispositivo móvil y la vista de las diapositivas (la presentación como tal), que se muestra en un proyector o bien en la pantalla de una computadora. En el capítulo \ref{cha:detalles_de_implementacion} se detalla su estructura, así como la implementación de dicha herramienta.
 
-		Para controlar la presentación en tiempo real, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la presentación y el servidor. Más específicamente, \textit{Flask-SocketIO} porque implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} de Javascript. De esta manera, se pueden controlar algunos parámetros del flujo de la presentación como el frame (diapositiva) actual, el intervalo actual, y el control de volumen.
+		\textit{Beampressk} es un servidor implementado en \textit{Flask}, que es un framework web de \textit{Python} que se categoriza como micro-framework, o sea, tiene poca o ninguna dependencia a bibliotecas externas salvo en casos que se requiera de las mismas. El hecho de que sea una herramienta sencilla constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebida: intermediaria entre la vista de presentación y de control.
 
-		Al tener un servidor web implementado, naturalmente hace función de \textit{API Rest}, por lo cual responde a métodos de petición \textit{HTTP} previamente definidos. En el caso que nos ocupa, Proyecto Delta, se hace posible mostrar tanto mensajes de texto provenientes de otro servidor.	
+		Para controlar la presentación en tiempo real, o sea, que las acciones (modificación de volumen, cambio de diapositivas, etc.) que efectúe el presentador desde el dispositivo móvil, tengan efecto instantáneo en la presentación, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la vista de diapostivas y la vista de control.
+
+		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} de Javascript.
+
+		El nombre \textit{Beampressk} es la mezcla de los nombres de \textit{Beampress} y \textit{Flask}. La idea de esta unión es similar a la que dio origen a \textit{Beampress}, ya que utiliza los títulos de las herramientas que dieron su origen.
+
+		Esta herramienta resuleve las principales problemáticas ocasionadas por la distancia, garantizando que el presentador tenga control de la presentación aún estando lejos de la computadora que contiene la misma.
+
+		En este capítulo se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significaticas a la propuesta de este trabajo. Siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. Se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, así como sus requerimientos, soluciones que ofrecen y tecnologías que se emplearon. En el capítulo \ref{cha:fundamentos_conceptuales} se hablará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, así como los conceptos principales en los que se basan.
 	% section beampressk (end)
+
 
 
 
