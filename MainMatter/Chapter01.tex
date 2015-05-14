@@ -18,7 +18,7 @@
 		\subsection{Beamer} % (fold)
 		\label{sub:beamer}
 
-			Es una clase de \LaTeX{} para crear presentaciones especialmente útil en casos de propósitos científicos. \LaTeX{} es un lenguaje Turing completo, con fuertes capacidades para mostrar notaciones matemáticas que permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que en \textit{PowerPoint}.	
+			Es una clase de \LaTeX{} para crear presentaciones especialmente útil en casos de propósitos científicos. \LaTeX{} es un lenguaje Turing completo ~\cite{turing}, con fuertes capacidades para mostrar notaciones matemáticas que permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que en \textit{PowerPoint}.	
 
 		% section beamer (end)		
 
@@ -35,15 +35,15 @@
 		\label{sub:otros_sistemas}
 			A continuación se muestran otros sistemas de presentaciones basados en HTML, CSS y javascript, que son alternativas de \textit{Prezi}, y sirvieron de base para el presente trabajo, por lo cual se menciona sus nombres y se hace referencia brevemente a la característica fundamental de cada uno.
 			\begin{itemize}
-				\item \textit{Impress.js}: Herramienta que hace uso de las transiciones y transformaciones de CSS3, está inspirada en Prezi
-				\item \textit{jmpress.js}: Es una reimplementación de impress.js usando JQuery
-				\item \textit{Reveal.js}: Framework de presentaciones HTML
+				\item \textit{Impress.js} ~\cite{impress}: Herramienta que hace uso de las transiciones y transformaciones de CSS3, está inspirada en Prezi
+				\item \textit{jmpress.js} ~\cite{jmpress}: Es una reimplementación de impress.js usando JQuery
+				\item \textit{Reveal.js} ~\cite{reveal}: Framework de presentaciones HTML
 			\end{itemize}
 		% section otros_sistemas (end)
 	
 	% section sistemas_de_presentaciones (end)
 
-		Después de analizar los principales sistemas de presentaciones existentes, conviene señalar que la propuesta de este trabajo surge por la necesidad de mejorar el método de presentación del Proyecto Delta, para lo cual resumiremos el funcionamiento básico de dicho espacio cultural vinculado a la ciencia, el humor y la tecnología.
+		Después de analizar los principales sistemas de presentaciones existentes, conviene señalar que la propuesta de este trabajo surge por la necesidad de mejorar el método de presentación del Proyecto Delta ~\cite{delta}, para lo cual resumiremos el funcionamiento básico de dicho espacio cultural vinculado a la ciencia, el humor y la tecnología.
 
 	\section{Proyecto Delta} % (fold)
 	\label{sec:proyecto_delta}
@@ -54,7 +54,7 @@
 			Desde hace varios años, se utilizaba \textit{Beamer} en la confección de las diapositivas de este espacio. La práctica demostró que no era factible la inclusión de audios, videos y animaciones en la propia presentación sin la ayuda de un colaborador que controlara dichos elementos, lo cual representaba un reto a solucionar.	
 
 
-			Otra dificultad del Proyecto Delta es la larga distancia entre la computadora que contiene la presentación y el ejecutor de la misma, o sea, el presentador. Dicha distancia imposibilita el uso de \textit{presentadores inalámbricos}, los cuales están diseñados para funcionar en un radio máximo de 30m, que es menor que la distancia ya mencionada, de aproximadamente 50m. Todo esto impide que el presentador pueda controlar las diapositivas con algún \textit{presentador inalámbrico}.
+			Otra dificultad del Proyecto Delta es la larga distancia entre la computadora que contiene la presentación y el ejecutor de la misma, o sea, el presentador. Dicha distancia imposibilita el uso de \textit{presentadores inalámbricos}, los cuales están diseñados para funcionar en un radio máximo de 30m ~\cite{tikitiki}, que es menor que la distancia ya mencionada, de aproximadamente 50m. Todo esto impide que el presentador pueda controlar las diapositivas con algún \textit{presentador inalámbrico}.
 
 			Otros impedimentos constatados son los siguientes: la pejiguera del presentador para el registro, control y seguimiento de otros elementos propios del especáculo, como los mensajes de texto que envía el público respondiendo preguntas o comentando la evolución del evento; el volumen del audio, cuyo dispositivo de control se encuentra lejos del escenario, en una cabina donde no llega el sonido de lo que se está proyectando en el espectáculo. Esto cobra importancia al utilizarse materiales audiovisuales con distintos niveles de volumen.
 
@@ -94,7 +94,7 @@
 		Para lograr que nuestro sistema de presentaciones estructure las mismas de forma similar a \textit{Beamer}, y cumplimente los requisitos mencionados en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, se implementó el plugin de JQuery \textit{beampress.js} aprovechando las bondades de HTML5, CSS3 y Javascript. Los patrones de diseño así como los detalles de su estructura, serán explicados más detalladamente en el capítulo \ref{cha:detalles_de_implementacion}.
 
 
-		Como estamos en presencia de una herramienta que se encuentra en ámbito web, se aprovechan las posibilidades que esto ofrece, dando solución a las necesidades vistas en la sección \ref{sec:proyecto_delta}. Por ejemplo, la inclusión de audios y videos se puede realizar gracias a los tags \textbf{audio} y \textbf{video} de HTML5; las animaciones se pueden implementar puramente con Javascript, o se pueden crear con la función ``animate'' de JQuery. También con los ``transform'' de CSS3 o con alguna otra herramienta, como GreenSock Animation Platform (GSAP), que se basa en Javascript y es más rápida que JQuery. 
+		Como estamos en presencia de una herramienta que se encuentra en ámbito web, se aprovechan las posibilidades que esto ofrece, dando solución a las necesidades vistas en la sección \ref{sec:proyecto_delta}. Por ejemplo, la inclusión de audios y videos se puede realizar gracias a los tags \textbf{audio} y \textbf{video} de HTML5; las animaciones se pueden implementar puramente con Javascript, o se pueden crear con la función ``animate'' de JQuery. También con los ``transform'' de CSS3 o con alguna otra herramienta, como GreenSock Animation Platform (GSAP) ~\cite{gsap}, que se basa en Javascript y es más rápida que JQuery. 
 
 
 		El nombre \textit{Beampress} surge por la unión de los nombres \textit{Beamer} e \textit{Impress}, sistemas de presentaciones que fueron detallados en la sección \ref{sec:sistemas_de_presentaciones}. Es de destacar que con \textit{Beampress} se solucionan algunos de los problemas señalados como: uso de animaciones y empleo de materiales audiovisuales en las diapositivas.	
@@ -108,11 +108,11 @@
 
 		Para realizar dicho manejo, provee una vista de control, concebida para mostrarse en un dispositivo móvil y la vista de las diapositivas (la presentación como tal), que se muestra en un proyector o bien en la pantalla de una computadora. En el capítulo \ref{cha:detalles_de_implementacion} se detalla su estructura, así como la implementación de dicha herramienta.
 
-		\textit{Beampressk} es un servidor implementado en \textit{Flask}, que es un framework web de \textit{Python} que se categoriza como micro-framework, o sea, tiene poca o ninguna dependencia a bibliotecas externas salvo en casos que se requiera de las mismas. El hecho de que sea una herramienta sencilla constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebida: intermediaria entre la vista de presentación y de control.
+		\textit{Beampressk} es un servidor implementado en \textit{Flask} ~\cite{flask}, que es un framework web de \textit{Python} que se categoriza como micro-framework, o sea, tiene poca o ninguna dependencia a bibliotecas externas salvo en casos que se requiera de las mismas. El hecho de que sea una herramienta sencilla constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebida: intermediaria entre la vista de presentación y de control.
 
 		Para controlar la presentación en tiempo real, o sea, que las acciones (modificación de volumen, cambio de diapositivas, etc.) que efectúe el presentador desde el dispositivo móvil, tengan efecto instantáneo en la presentación, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la vista de diapostivas y la vista de control.
 
-		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} de Javascript.
+		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} ~\cite{flasksocket} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} ~\cite{socketio} de Javascript.
 
 		El nombre \textit{Beampressk} es la mezcla de los nombres de \textit{Beampress} y \textit{Flask}. La idea de esta unión es similar a la que dio origen a \textit{Beampress}, ya que utiliza los títulos de las herramientas que dieron su origen.
 
