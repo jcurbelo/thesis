@@ -1,5 +1,33 @@
 %!TEX root = ../thesis.tex
 \chapter{Extensibilidad} % (fold)
 \label{cha:extensibilidad}
+	Se pueden sobreescribir o añadir nuevas opciones a \textit{beampress.js}; estas son
+	las funciones de animación y los índices de los intervalos. Por ejemplo, si se quisiera
+	añadir una nueva función se debe hacer lo siguiente, Fig. \ref{fig:ex6}
 
+		\begin{figure}[htb]%
+			\begin{lstlisting}%
+
+
+<script>
+   $(document).ready(function(){
+       	/**
+		 * Las funciones deben tener este formato
+		 * @param $el: Selector del elemento HTML  
+		 * @param args: Diccionario de los parámetros
+		 */
+   		function myAnimation($el, args){
+   			// Función de animación 
+   		}     
+       $("#main-container").beampress({
+       		"myAnimation": myAnimation
+       	});
+    });
+</script>
+
+			\end{lstlisting}
+		\caption{
+			Añadiendo una nueva función de animación. 
+			\label{fig:ex6} }
+		\end{figure}	
 % chapter extensibilidad (end)

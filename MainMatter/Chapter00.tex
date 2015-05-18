@@ -1,19 +1,23 @@
+%!TEX root = ../thesis.tex
 % Introduction
 \begin{introduction}
 
 	Las presentaciones y diapositivas han pasado a formar parte de la vida cotidiana. Actualmente se usan no solo en la docencia o eventos científicos, sino en casi todos los escenarios de la vida, llegando incluso a espectáculos artísticos, como se puede apreciar en algunas funciones de Jeff Dunham ~\cite{dunham}, y en el Proyecto Delta ~\cite{delta}.
 
 
-	Una forma que permite medir la importancia y el impacto de las presentaciones en el mundo moderno, es la gran cantidad de referencias bibliográficas que se publican sobre el tema ~\cite{alley, duarte, tufte}. Es de señalar que aunque en la mayoría de estos textos se aclara que las diapositivas no son únicamente la presentación, también se puntualiza que estas consituyen un componente muy importante.
+	Una forma que permite medir la importancia y el impacto de las presentaciones en el mundo moderno, es la gran cantidad de referencias bibliográficas que se publican sobre el tema ~\cite{alley, duarte, tufte}. Es de señalar que aunque en la mayoría de estos textos se aclara que las diapositivas no son únicamente la presentación, también se puntualiza que estas consituyen un componente importante.
 
-	Se propone diseñar una aplicación web que permita mostrar y controlar diapositivas creadas con HTML5, CSS3 y Javascript y que simule todas las funcionalidades de Beamer ~\cite{beamer} y otros sistemas de presentaciones existentes. Dadas las características del proyecto cultural Delta (interacción con el público, proyección de videos, audios y animaciones), y teniendo en cuenta las dificultades que ofrecía el modelo actual, en términos de distancia entre el presentador y el panel de control, entre otras, surgió la necesidad de crear un sistema ágil y facilitador de presentaciones que permitiera el dinamismo que esta actividad científico recreativa exige.
+	Existen varios sistemas que permiten crear y controlar diapositivas, ejemplos de algunos de estos son: \textit{Microsoft Office PowerPoint} ~\cite{powerpoint}, \textit{Beamer}, que es la opción de \LaTeX{} para hacer diapositivas, \textit{Impress de LibreOffice} ~\cite{libreoffice}, Keynote para Mac ~\cite{keynote}, entre otros. También existen varios basados en HTML, CSS y Javascript, como son: \textit{Prezi} ~\cite{prezi}, Impress.js ~\cite{impress}, Reveal.js ~\cite{reveal}, jmpress.js ~\cite{jmpress}.
 
-	Como se verá en el capítulo \ref{cha:preliminares} todos los sistemas de diapositivas sirven de base al presente trabajo y poseen las ventajas de las cuales nos hemos apropiado, así como algunas dificultades que hemos evitado. Se adaptó la concepción de PowerPoint ~\cite{powerpoint} de incluir audios, videos y animaciones; se reprodujo el hecho de que Prezi ~\cite{prezi} esté en ámbito web aunque descartamos de este sistema su limitación al tener que preestablecer un diseño bien definido para la presentación. De la clase Beamer de \LaTeX{} aprovechamos su utilidad especial para propósitos científicos y la manera de estructuar las presentaciones separando contenido de visualización.
+	El propósito de este trabajo es diseñar una aplicación web que permita mostrar y controlar diapositivas creadas con HTML5, CSS3 y Javascript y que simule algunas de las funcionalidades de Beamer ~\cite{beamer} y otros sistemas de presentaciones existentes. Dadas las características del proyecto cultural Delta (interacción con el público, proyección de videos, audios y animaciones), y teniendo en cuenta las dificultades que ofrecía el modelo actual, en términos de distancia entre el presentador y el panel de control, entre otras, surgió la necesidad de crear un sistema ágil y facilitador de presentaciones que permitiera el dinamismo que esta actividad científico recreativa exige.
+
+	Como se verá en el capítulo \ref{cha:preliminares} algunos de los sistemas de diapositivas ya mencionados, sirven de base al presente trabajo y poseen ventajas de las cuales se ha apropiado, así como algunas dificultades que se ha evitado. Se adaptó la concepción de PowerPoint ~\cite{powerpoint} de incluir audios, videos y animaciones; se reprodujo el hecho de que Prezi ~\cite{prezi}, Impress.js ~\cite{impress} e jmpress.js ~\cite{jmpress} estén en ámbito web para aprovechar la separación entre contenido y forma que permite HTML. De Beamer se utilizó su manera de estructurar las presentaciones y al ser este último una clase de \LaTeX{} \cite{latex}, se incluyó su utilidad especial para propósitos científicos; más específicamente la opción de usar expresiones matemáticas. Si estamos en presencia de un sistema en ámbito web, esto se hace posible gracias a las diversas herramientas que permiten incluir \LaTeX, \textit{MathML}, o \textit{AsciiMath} en las páginas web \cite{mathjax, katex, phpmath}. 
+
 
 	\section{Objetivos} % (fold)
 	\label{sec:objetivos}
 
-		El objetivo general de este trabajo es diseñar una aplicación web que permita mostrar y controlar diapositivas creadas con HTML5, CSS3 y Javascript y que simule todas las funcionalidades de Beamer y otros sistemas de presentaciones existentes. Además, debe tener varias vistas: la presentación que se muestra al público, y los paneles de control que permitan controlarla, y para lograrlo se han trazado los siguientes objetivos específicos:
+		El objetivo general de este trabajo es diseñar una aplicación web que permita mostrar y controlar diapositivas creadas con HTML5, CSS3 y Javascript. Para ello se han trazado los siguientes objetivos específicos:
 
 		\begin{enumerate}
 			\item Estudio de los sistemas de presentaciones existentes, para determinar sus ventajas y desventajas para la confección de diapositivas amenas con temáticas científicas, y qué características de los mismas incorporar al nuevo sistema
@@ -23,7 +27,7 @@
 		\end{enumerate}
 	% section objetivos (end)
 
-	\section{Estructura del documento} % (fold)
+	\section*{Estructura del documento} % (fold)
 	\label{sec:estructura_del_documento}
 	
 		Los resultados de este trabajo, y las aplicaciones desarrolladas se presentan en este documento que tiene la siguiente estructura. En el capítulo \ref{cha:preliminares} se presentan las herramientas ya existentes para realizar presentaciones, sus principales características, las tecnologías que vamos a utilizar y por qué. El Capítulo 2 describe las utilidades y las funcionalidades que se desea que tenga nuestra aplicación. El Capítulo 3 es casi un tutorial, se explica cómo puede el usuario lograr cada una de las cosas que se presentaron en el capítulo 2. En el Capítulo 4 se muestran los detalles de implementación, orientadas a que un lector interesado, sepa cómo puede extender la aplicación, ya sea con nuevos efectos, o con nuevas funcionalidades. Finalmente, se presentan las conclusiones, recomendaciones y bibliografía consultada.
