@@ -1,17 +1,58 @@
+%!TEX root = ../thesis.tex
 % Introduction
 
 \chapter{Fundamentos conceptuales} % (fold)
 \label{cha:fundamentos_conceptuales}
+	En este capítulo se ofrecen los conceptos básicos en los que se apoya la propuesta de este trabajo. Se observará que muchas de las nociones que se establecen y la forma de ``conformar'' una presentación se basan en la clase \textit{Beamer} de \LaTeX{}.
 
-	Para entender los basamentos y el funcionamiento práctico de Beampress, es necesario enfatizar en sus elementos fundamentales, los cuales viabilizan la utilización objetiva y concreta que nos proponemos demostrar. Para ello, señalamos en primera instancia que dichos elementos fueron creados inicialmente a semejanza de la estructura de Beamer, aunque como demostraremos oportunamente, le hemos añadido nuevas funcionalidades. Beampress, por tanto, utiliza los conceptos de Frame, Slide y Slide Item. 
+	\section{Definiciones} % (fold)
+	\label{sec:definiciones}
+		Para dar un mejor entendimiento...
 
-	Un \textit{Frame} representa una diapositiva en la presentación, y puede o no tener transiciones de entrada y salida. A su vez, cada \textit{Frame} está compuesto por \textit{Slide Items}. Un \textit{Slide Item} es un contenido, ya sea texto, imagen, audio, video o sus combinaciones posibles. Los Slide Items aparecen según los intervalos con los que se definan. Para entender el concepto ``\textit{intervalo}'', que es el orden de la secuencia, lo ilustraremos con un ejemplo, Si tenemos un \textit{Slide Item} con los siguientes intervalos: $$-2;4;6-8;10-$$ significa de forma inequívoca, que dicho \textit{Slide Item}, estará presente hasta el slide dos, no se mostrará en el tres, aparecerá en el cuatro, luego en el cinco se dejará de ver, reaparecerá desde el seis hasta el ocho, en el nueve se esconderá y estará presente desde el diez hasta el final. 
+		\begin{itemize}
+			\item Un \textit{contenido} en la presentación es cualquier cosa que se muestre en las diapositivas, puede ser texto, imagen, audio, video o sus combinaciones posibles.
+			\item \textit{Mostrar} un contenido pueden ser varias cosas en dependencia del tipo de contenido. En caso de ser un audio o un video, es reproducirlo, y en caso de ser otra cosa que no sea audiovisual, visualizarse
+		\end{itemize}
+	% section definiciones (end)
+
+	\section{Frames} % (fold)
+	\label{sec:frames}
+
+		Un \textit{Frame} representa una diapositiva en la presentación, dicha diapositiva puede tener o no animaciones para las transiciones de entrada y de salida. A su vez, cada \textit{Frame} está compuesto por \textit{Slide Items}. Nótese que esta definición es distinta a la definición de \textit{Frame} que utiliza \textit{Beamer}. En \textit{Beamer}, un \textit{Frame} no es una diapositiva, es un conjunto de diapositivas.	
+	
+	% section frames (end)
+
+	\section{Slide Items} % (fold)
+	\label{sec:slide_items}
+
+		Un \textit{Slide Item} es un \textit{contenido} de la presentación y además abarca la información de cómo será \textit{mostrado} y en qué momento.
+	
+	% section slide_items (end)
+
+	\section{On Slides} % (fold)
+	\label{sec:on_slides}
+
+		Para entender el concepto ``\textit{intervalo}'', que es el orden de la secuencia, lo ilustraremos con un ejemplo, Si tenemos un \textit{Slide Item} con los siguientes intervalos: $$-2;4;6-8;10-$$ significa de forma inequívoca, que dicho \textit{Slide Item}, estará presente hasta el slide dos, no se mostrará en el tres, aparecerá en el cuatro, luego en el cinco se dejará de ver, reaparecerá desde el seis hasta el ocho, en el nueve se esconderá y estará presente desde el diez hasta el final. 
 
 	Para definir los intervalos, la sintaxis que se utiliza es como sigue:
 	\begin{itemize}
 		\item Un intervalo puede ser un número ej: 3 o bien, un rango ej: 3-5. Los límites superiores e inferiores son opcionales, pero en caso de no especificarse, para el inferior se asume 1 y para el superior se asume el último slide del \textit{Frame}.
 		\item Cada \textit{Slide Item} puede tener uno o más intervalos separados por punto y coma ``;''
-	\end{itemize}
+	\end{itemize}	
+	
+	% section slides (end)
+
+	\section{Sintaxis de Beamer} % (fold)
+	\label{sec:sintaxis_de_beamer}
+	
+	% section sintaxis_de_beamer (end)
+
+	\section{Sintaxis extendida} % (fold)
+	\label{sec:sintaxis_extendida}
+	
+	% section sintaxis_extendida (end)
+
+
 
 	Una vez vez analizados estos conceptos elementales, es oportuno señalar que un \textit{Slide} es un conjunto de \textit{Slide Items} que están presentes dado un intervalo, y que por definición, todos los \textit{Slide Items} están ``mostrados'', o sea, independientemente del slide actual, se muestran si no se les especifican intervalos.
 
