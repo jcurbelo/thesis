@@ -1,10 +1,11 @@
+%!TEX root = ../thesis.tex
 % Preliminares
 \chapter{Preliminares} % (fold)
 \label{cha:preliminares}
 
 	En este acápite se muestran algunos de los principales sistemas de presentación tomando en cuenta las ventajas y desventajas de cada uno de ellos. Ofreceremos los requerimientos que dieron origen a \textit{Beampress} y \textit{Beampressk}, así como los detalles de las tecnologías que fueron utilizadas para la implementación de estas propuestas.
 
-	Para crear y controlar presentaciones, ya sea con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo, existen diversas herramientas. A continuación, como ya anunciamos, esbozaremos las características principales de los sistemas de presentaciones más conocidos, enfatizando en las ventajas y desventajas que se tuvo en cuenta para la elaboración de este trabajo.	
+	Para crear y controlar presentaciones, ya sea con propósitos científicos, educacionales, de negocio, culturales o de otro ámbito informativo, existen diversas herramientas. A continuación, como ya anunciamos, esbozaremos las características principales de los sistemas de presentaciones más conocidos, enfatizando en las ventajas y desventajas que se tuvieron en cuenta para la elaboración de este trabajo.	
 
 	\section{Sistemas de presentaciones} % (fold)
 	\label{sec:sistemas_de_presentaciones}
@@ -18,7 +19,7 @@
 		\subsection{Beamer} % (fold)
 		\label{sub:beamer}
 
-			Es una clase de \LaTeX{} para crear presentaciones especialmente útil en casos de propósitos científicos. \LaTeX{} es un lenguaje Turing completo ~\cite{turing}, con fuertes capacidades para mostrar notaciones matemáticas que permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que en \textit{PowerPoint}.	
+			Es una clase de \LaTeX{} para crear presentaciones especialmente útil en casos de propósitos científicos. \LaTeX{} es un lenguaje Turing completo ~\cite{turing}, con fuertes capacidades para mostrar notaciones matemáticas que permite la división entre contenido y visualización. Como inconveniente debe señalarse que resulta mucho más complicado insertar animaciones, videos y sonidos que en \textit{PowerPoint}.
 
 		% section beamer (end)		
 
@@ -87,7 +88,7 @@
 	% section requerimientos_basicos_del_sistema_propuesto (end)
 
 
-	Después de haber desglosado los requerimientos que se necesita, se muestran las soluciones que los satisfacen así como las herramientas y tecnologías empleadas. 
+	Después de haber desglosado los requerimientos que se necesitan, se muestran las soluciones que los satisfacen, así como las herramientas y tecnologías empleadas en dicho propósito. 
 
 	\section{Beampress} % (fold)
 	\label{sec:beampress}
@@ -106,19 +107,19 @@
 	\label{sec:beampressk}
 		Con el propósito de vencer el obstáculo que representa la distancia entre presentador y diapositivas, surge \textit{Beampressk}: una herramienta que posibilita el control de la presentación a través de una conexión wifi, lo cual garantiza el manejo de las diapositivas con un dispositivo móvil desde una distancia determinada, que puede ser mayor que la máxima en que son efectivos los \textit{presentadores inalámbricos} (30m).
 
-		Para realizar dicho manejo, provee una vista de control, concebida para mostrarse en un dispositivo móvil y la vista de las diapositivas (la presentación como tal), que se muestra en un proyector o bien en la pantalla de una computadora. En el capítulo \ref{cha:detalles_de_implementacion} se detalla su estructura, así como la implementación de dicha herramienta.
+		Para realizar dicho manejo, \textit{Beampressk} provee una vista de control, concebida para mostrarse en un dispositivo móvil y la vista de las diapositivas (la presentación como tal), que se muestra en un proyector o bien en la pantalla de una computadora. En el capítulo \ref{cha:detalles_de_implementacion} se detalla su estructura, así como la implementación de esta herramienta.
 
 		\textit{Beampressk} es un servidor implementado en \textit{Flask} ~\cite{flask}, que es un framework web de \textit{Python} que se categoriza como micro-framework, o sea, tiene poca o ninguna dependencia a bibliotecas externas salvo en casos que se requiera de las mismas. El hecho de que sea una herramienta sencilla constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebida: intermediaria entre la vista de presentación y de control.
 
-		Para controlar la presentación en tiempo real, o sea, que las acciones (modificación de volumen, cambio de diapositivas, etc.) que efectúe el presentador desde el dispositivo móvil, tengan efecto instantáneo en la presentación, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la vista de diapostivas y la vista de control.
+		Para controlar la presentación en tiempo real, o sea, que las acciones (modificación de volumen, cambio de diapositivas, etc.) que efectúe el presentador desde el dispositivo móvil tengan efecto instantáneo en la presentación, se utilizó \textit{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la vista de diapostivas y la vista de control.
 
 		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} ~\cite{flasksocket} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} ~\cite{socketio} de Javascript.
 
-		El nombre \textit{Beampressk} es la mezcla de los nombres de \textit{Beampress} y \textit{Flask}. La idea de esta unión es similar a la que dio origen a \textit{Beampress}, ya que utiliza los títulos de las herramientas que dieron su origen.
+		El nombre \textit{Beampressk} es la mezcla de los nombres de \textit{Beampress} y \textit{Flask}. La idea de esta unión es similar a la motivó a \textit{Beampress}, ya que utiliza los títulos de las herramientas que dieron su origen.
 
 		Esta herramienta resuleve las principales problemáticas ocasionadas por la distancia, garantizando que el presentador tenga control de la presentación aún estando lejos de la computadora que contiene la misma.
 
-		En este capítulo se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significaticas a la propuesta de este trabajo. Siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. Se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, así como sus requerimientos, soluciones que ofrecen y tecnologías que se emplearon. En el capítulo \ref{cha:fundamentos_conceptuales} se hablará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, así como los conceptos principales en los que se basan.
+		En este capítulo se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significaticas a la propuesta de este trabajo, siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. Se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, sus requerimientos, las soluciones que ofrecen y las tecnoklogías que se emplearon. En el capítulo \ref{cha:fundamentos_conceptuales} se hablará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, y los conceptos principales en los que se basan.
 	% section beampressk (end)
 
 
