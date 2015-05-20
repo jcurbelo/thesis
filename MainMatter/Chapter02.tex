@@ -3,7 +3,7 @@
 
 \chapter{Fundamentos conceptuales} % (fold)
 \label{cha:fundamentos_conceptuales}
-	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item} y \ref{def:overlay} respectivamante. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{Api Rest}, para eliminar las dificultades del presentador con respecto a la distancia vistas en la sección \ref{sec:proyecto_delta}, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{sec:live_feed} respectivamante. 
+	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item} y \ref{def:overlay} respectivamante. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{Api Rest} para eliminar las dificultades referidas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{def:live_feed} respectivamante. 
 
 	\section{Definiciones de Beampress} % (fold)
 	\label{sec:definiciones_de_beampress}
@@ -11,7 +11,7 @@
 		
  		\begin{definition}
  		\label{def:presentation}
-			Una \textbf{presentación} es un conjunto de frames, que serán mostrados según su orden. En la fig \ref{fig:frames} se expone una presentación compuesta por tres frames.
+			Una \textbf{presentación} es un conjunto de frames, que se muestran según su orden. En la fig \ref{fig:frames} se expone una presentación compuesta por tres frames.
  		\end{definition}
 
  		\begin{figure}[tb]
@@ -25,12 +25,12 @@
 
  		\begin{definition}
  		\label{def:frame}
-			Un \textbf{frame} es un conjunto de \textbf{slides items} y representa una diapostiva en la presentación. Nótese que esta definición es distinta en \textit{Beamer}, donde un \textit{Frame} no es una diapositiva, sino un conjunto de ellas, mostradas de forma tal que simulen una animación.
+			Un \textbf{frame} es un conjunto de \textbf{slides items} y representa una diapostiva en la presentación. Nótese que esta definición es distinta en \textit{Beamer}, donde un \textit{Frame} no es una diapositiva, sino un conjunto de ellas, que se muestran de forma tal que simulen una animación.
  		\end{definition}		
 
 		\begin{definition}
 		\label{def:content}
-			Un \textbf{contenido} es todo aquello que se muestre en las diapositivas, ya sea texto, imagen, audio, video o sus combinaciones posibles. En la fig \ref{fig:frame_video_image} se muestra un frame con varios contenidos: un video en la esquina superior izquierda, una imagen a su derecha y debajo tres bloques con texto.
+			Un \textbf{contenido} es todo aquello que se muestre en las diapositivas, ya sea texto, imagen, audio, video o sus combinaciones posibles. En la fig \ref{fig:frame_video_image} se expone un frame con varios contenidos: un video en la esquina superior izquierda, una imagen a su derecha y debajo tres bloques con texto.
 		\end{definition}
  		\begin{figure}[tb]
  			\centering
@@ -44,7 +44,7 @@
 			\textbf{Mostrar} un contenido es la exhibición de imagen o de texto, la reproducción de audio o de video o cualquier combinación de estas posibilidades.
 		\end{definition} 		
 
-		Una \textit{presentación} tiene una ordenación en las diapositivas y en los \textit{contenidos}. Por ejemplo, en la fig. \ref{fig:contents} se muestra un \textit{frame} con tres \textit{contenidos} que se ven en momentos distintos. A continuación se argumentarán algunas definiciones que se tuvieron en cuenta para especificar dicha ordenación.
+		Una \textit{presentación} tiene un orden en las diapositivas y en los \textit{contenidos}. Por ejemplo, en la fig. \ref{fig:contents} se muestra un \textit{frame} con tres \textit{contenidos} que se ven en momentos distintos. A continuación se argumentarán algunas definiciones que se tuvieron en cuenta para especificar dicha ordenación.
 
  		\begin{figure}[tb]
  			\centering
@@ -57,7 +57,7 @@
 
  		\begin{definition}
  		\label{def:overlay}
- 			Un \textbf{overlay} es un intervalo que determina un orden para mostrar un contenido. Un intervalo puede ser un número ej: 3 o bien, un rango ej: 3-5. Los límites superiores e inferiores son opcionales, pero en caso de no especificarse, para el inferior se asume 1 y para el superior se asume el último \textit{overlay} del \textit{Frame}.
+ 			Un \textbf{overlay} es un intervalo que determina un orden para mostrar un contenido. Un intervalo puede ser un número ej: 3, o bien un rango ej: 3-5. Los límites superiores e inferiores son opcionales, pero en caso de no especificarse, para el inferior se asume 1 y para el superior, el último \textit{intervalo} del \textit{Frame}.
  		\end{definition}
 
  		\begin{definition}
@@ -67,7 +67,7 @@
 
  		\begin{definition}
  		\label{def:slide_item}
- 			Un \textbf{slide item}, es la base de los \textbf{frames}. Es un \textbf{contenido} que tiene definido un conjunto de \textbf{overlays}. Por convenio, los \textit{slide items} están \textbf{mostrados}, o sea, independientemente del \textbf{overlay} actual, se muestran si no se les especifican intervalos. Un ejemplo de \textit{slide item} puede ser la imagen del \textit{frame} en la fig \ref{fig:frame_video_image}, sin \textit{overlays}.
+ 			Un \textbf{slide item}, es la base de los \textbf{frames}. Es un \textbf{contenido} que tiene definido un conjunto de \textbf{overlays}. Por convenio, los \textit{slide items} están \textbf{mostrados}, o sea, independientemente del \textbf{overlay} actual, se muestran a no ser que su conjunto de \textbf{overlays} especifique lo contrario. Un ejemplo de \textit{slide item} puede ser la imagen del \textit{frame} en la fig \ref{fig:frame_video_image}, sin \textit{overlays}.
  		\end{definition}
 
 		\begin{figure}[htb]%
@@ -77,7 +77,7 @@
 			\label{fig:overlay_set}
 			\small
 
-		Para un mejor entendimiento de los conceptos ``\textit{overlay}'' y ``\textit{slide item}'' se empleará un ejemplo. Un \textit{slide item} con los intervalos de esta figura, indica que su \textit{contenido} estará \textit{mostrado} hasta el slide dos, no se \textit{mostrará} en el tres, aparecerá en el cuatro, luego en el cinco se dejará de ver, reaparecerá desde el seis hasta el ocho, en el nueve se dejará de ver y estará \textit{mostrado} desde el diez hasta el final. 			
+		Para un mejor entendimiento de los conceptos ``\textit{overlay}'' y ``\textit{slide item}'' se empleará un ejemplo. Un \textit{slide item} con los intervalos de esta figura, indica que su \textit{contenido} estará \textit{mostrado} hasta el slide dos, no se \textit{mostrará} en el tres, aparecerá en el cuatro, luego en el cinco se dejará de ver, reaparecerá desde el seis hasta el ocho, en el nueve se dejará de ver, y estará \textit{mostrado} desde el diez hasta el final. 			
 		\end{figure}
 
  		\begin{definition}
@@ -100,7 +100,7 @@
  			Una \textbf{transición anterior} es el paso de un intervalo (\textbf{overlay}) mayor a uno menor.
  		\end{definition}
 
-		Para hacer uso de las \textit{transiciones} con los \textit{overlays} se explican algunas definiciones que se tomaron en cuenta.
+		Para hacer uso de las \textit{transiciones} con los \textit{overlays} se explican algunas definiciones.
 
 		\begin{definition}
 		\label{def:transition_func}
@@ -117,41 +117,64 @@
 			Una \textbf{función de transición anterior} en un \textbf{slide item} es el cambio de estado del \textbf{contenido} del \textbf{slide item} al ocurrir una \textbf{transición anterior}.
 		\end{definition}
 
-		Por defecto, se definen tres \textbf{funciones de transición} básicas que son las siguientes:
+		Por defecto, se definen tres \textbf{funciones de transición} básicas:
 		\begin{itemize}
 			\item \textbf{Función identidad}: No cambia el estado del \textit{contenido} del \textit{slide item}
-			\item \textbf{Función mostrar}: \textit{Visualiza} el \textit{contenido} del \textit{slide item}. Esta función no cumple totalmente con la definición \ref{def:show} de \textbf{mostrar} que se argumentó, no reproduce ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la sección \ref{sec:sintaxis_extendida} 
-			\item \textbf{Función ocultar}: \textit{Oculta} el \textit{contenido} del \textit{slide item}
+			\item \textbf{Función mostrar}: \textit{Visualiza} el \textit{contenido} del \textit{slide item}. Esta función no cumple totalmente con la definición \ref{def:show} de \textbf{mostrar} un \textbf{contenido} ya que no es capaz de reproducir ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la sección \ref{sec:sintaxis_extendida} 
+			\item \textbf{Función ocultar}: Provoca que el \textit{contenido} del \textit{slide item} deje de ser \textit{visualizado}
 		\end{itemize}
 
-		Como se vió en la definición \ref{def:slide_item}, un \textbf{slide item} está \textbf{mostrado} por defecto en todos los \textbf{slides} a no ser que su \textbf{conjunto de overlays} especifique otra cosa. Luego de definir las funciones elementales, esto se traduce a que todas las \textbf{funciones de transición} de un \textbf{slide item} por defecto son la \textbf{función identidad} excepto la primera, que es la \textbf{función mostrar}. 
+		Como se vió en la definición \ref{def:slide_item}, un \textbf{slide item} está \textbf{mostrado} por defecto en todos los \textbf{slides} a no ser que su \textbf{conjunto de overlays} especifique otra cosa. Luego de definir las funciones elementales, esto se traduce en que todas las \textbf{funciones de transición} de un \textbf{slide item} por defecto son la \textbf{función identidad} excepto la primera, que es la \textbf{función mostrar}. 
 
-		\comment{A continuación se define de una forma más detallada lo antes expuesto:}{Creo que lo que viene no queda muy claro, pero para definiciones matemáticas debería preguntar primero no? Bueno, a lo mejor nada de nada queda claro}
+		A continuación se define de una forma más detallada lo antes expuesto:
 
- 		Sean \( I \) y \( M \) la \textbf{función identidad} y la \textbf{función mostrar} respectivamente
+ 		Sean \( I \), \( M \) y \( O \) la \textbf{función identidad}, la \textbf{función mostrar} y la \textbf{función ocultar} respectivamente
 
 
         Sea \( S_j \) un \textbf{slide item}
 
         Entonces la \textbf{función de transición} \( f_i \) de \( S_j \) para los intervalos \( 1 \dots n \) se define de la siguiente manera:
-        \comment{
+
+
 		\begin{equation}
+		\label{eq:default}
 			f_i = 
 			\begin{cases}
-				M & \mbox{si } i = 1 \\
-				I & \mbox{si } i > 1.
+				M, & \mbox{si }i = 1 \\
+				I, & \mbox{si }1 < i \leq n.
 			\end{cases}
-		\end{equation}}{No me salió bien la fórmula, el cambio de línea para los \textit{cases} is not pinching}
+		\end{equation}
 
-		A contiunación se muestra otra definición de \textbf{overlay} usando las \textbf{funciones elementales}.
+		Seguidamente, se muestra otra definición de \textbf{overlay} usando las \textbf{funciones elementales}.
 
 		\begin{definition}
 		\label{def:new_overlay}
 
  			Un \textbf{overlay} es un intervalo que tiene definido una \textbf{función de transición siguiente} y una \textbf{función de transición anterior}.
 
-		\end{definition}		
+		\end{definition}
 
+		Usando esta definición, se puede ver el \textbf{conjunto de overlays} de la fig. \ref{fig:overlay_set} de la manera siguiente:
+
+
+		Sea \(-2; 4; 6-8; 10-\) dicho conjunto de \textbf{overlays} del \textbf{slide item} \( S_j \) que se encuentra en un \textbf{frame} con \( n \) intervalos. Entonces la \textbf{función de transición} \( f_i \) de \( S_j \) en el intervalo \( i \) es:
+
+		\begin{equation}
+		\label{eq:example}
+			f_i = 
+			\begin{cases}
+				M, & \mbox{si }i = 1 \\
+				I, & \mbox{si }i = 2  \\
+				O, & \mbox{si }i = 3  \\
+				M, & \mbox{si }i = 4  \\
+				O, & \mbox{si }i = 5  \\
+				M, & \mbox{si }i = 6  \\
+				I, & \mbox{si } 6 < i \leq 8  \\
+				O, & \mbox{si }i = 9  \\
+				M, & \mbox{si }i = 10  \\
+				I, & \mbox{si } 10 < i \leq n  \\
+			\end{cases}
+		\end{equation}
 
 	% section definiciones (end)
 
@@ -181,11 +204,11 @@
 	En este caso, un intervalo puede ser un JSON con las siguientes características:
 	\begin{itemize}
 		\item ``número'' es el número del intervalo
-		\item ``next'' tiene como valores, el nombre de la \textbf{función de transición siguiente} a utilizar y sus argumentos
-		\item ``prev'' es lo mismo que ``next'' pero recibe el nombre de la \textbf{función de transición anterior}
+		\item ``next'' tiene como valores el nombre de la \textbf{función de transición siguiente} a utilizar, y sus argumentos
+		\item ``prev'' tiene como valores el nombre de la \textbf{función de transición anterior} con sus argumentos
 	\end{itemize}
 
-	Una de las principales motivaciones para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video vistas en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Por ejemplo, si se quiere reproducir un audio o un video podemos se puede utilizar lo que se muestra en la fig. \ref{fig:ex_audio_video_syntax}.
+	Una de las principales motivaciones para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video vistas en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Si se necesita reproducir un audio o un video se puede utilizar el ejemplo que se muestra en la fig. \ref{fig:ex_audio_video_syntax}.
 	\begin{figure}[htb]%
 		\begin{lstlisting}%
 
@@ -199,7 +222,7 @@
 		\small Se hará un \textit{fade in} para reproducir el video en el \textit{overlay} 1 comenzando en el segundo 30. Lo mismo sucederá con el audio, pero en el \textit{overlay} 2 y comenzando en el segundo 10.
 		\end{figure}
 
-		La utilización de esta sintaxis permite el empleo de \textit{cualquier} \textbf{función de transición} que se defina, en la sección \ref{cha:extensibilidad} se hablará de esta característica con más detalles. Un ejemplo de un \textbf{overlay} con una \textbf{función de transición} distinta de las funciones elementales, se puede apreciar en la fig. \ref{fig:ball_code} y su ejemplo visual en la fig. \ref{fig:ball_visual}.
+		La utilización de esta sintaxis permite el empleo de \textit{cualquier} \textbf{función de transición} que se defina. En la sección \ref{cha:extensibilidad} se hablará de esta característica con más detalles. Un ejemplo de un \textbf{overlay} con una \textbf{función de transición} distinta de las funciones elementales, se aprecia en la fig. \ref{fig:ball_code} y su ejemplo visual en la fig. \ref{fig:ball_visual}.
 
 
 
@@ -215,10 +238,10 @@
         "func": "rollBallToRight",
         "args": {}
     }
-}}''
+}}'
 			\end{lstlisting}
 		\caption{Ejemplo del empleo de una \textbf{función de transición} en un \textbf{overlay}} 
-			\label{fig:ball_code} }
+			\label{fig:ball_code} 
 		\end{figure}	
 
 
@@ -234,7 +257,7 @@
  		\end{figure}	
 
 
-	Dada la posibilidad de empleo de esta sintaxis, también se puede utilizar para definir las \textbf{funciones de transición} de los \textit{Frames}. En la fig. \ref{fig:frame_trans} se muestra un ejemplo de esto.
+	Con el empleo de esta sintaxis, es posible definir las \textbf{funciones de transición} de los \textit{Frames}. En la fig. \ref{fig:frame_trans} se muestra un ejemplo de esto.
 
 		\begin{figure}[htb]%
 			\begin{lstlisting}%
@@ -249,8 +272,33 @@
 
 	% section sintaxis_extendida (end)
 
+		Con la aplicación de las definiciones anteriores, se resuelve la mayoría de las dificultades analizadas en la sección \ref{sec:proyecto_delta} referentes al Proyecto Delta, o sea, la inclusión de videos, audios y animaciones en la proyección de diapositivas. Sin embargo, permanece el obstáculo de la distancia entre el presentador y la computadora que contiene la presentacion. En la próxima sección, se explica la propuesta que soluciona dicha dificultad.
+
 	\section{Definiciones de Beampressk} % (fold)
 	\label{sec:definiciones_de_beampressk}
+
+		En esta sección se exponen las definiciones que dan solución a la dificultad del Proyecto Delta en cuanto a la distancia entre el presentador y la computadora que contiene la presentación. Estas son: \textbf{live feed}, control y modificación \textbf{dinámica} de la presentación y la posibilidad de \textbf{mostrar} mensajes de texto en la misma.
+
+	\begin{definition}
+		\textbf{Controlar} de forma dinámica una presentación es la posibilidad de realizar \textbf{transiciones} especificadas por el presentador en el momento que él determine. Esto se puede llevar a cabo en la computadora que contiene la \textbf{presentación} o en otro dispositivo
+	\end{definition}
+
+	\begin{definition}
+		\textbf{Modificar} la presentación es la capacidad de variar, agregar o eliminar un \textbf{contenido} mientras transcurre la presentación
+	\end{definition}
+
+	A continuación se definen elementos que son derivados de estas dos primeras definiciones.
+
+	\begin{definition}
+	\label{def:message}
+		Mostrar un \textbf{mensaje} en la presentación es añadir un \textbf{contenido} de forma dinámica con el texto de dicho mensaje en el \textbf{frame} que se está mostrando. Esta acción es independiente de la presentación, y el presentador decide el momento en que serán exhibidos y eliminados dichos textos
+	\end{definition}
+
+	\begin{definition}
+		Un \textbf{live feed} es \textbf{mostrar} en la presentación un \textbf{contenido} que consiste en la imagen que filma una cámara y el audio que registra un micrófono
+	\end{definition}
+
+ 	Teniendo en cuenta que \textit{Beampressk} es un servidor web \ref{sec:beampressk}, cuya implementación se detallará en el capítulo \ref{cha:detalles_de_implementacion}, cumple función de \textbf{Api Rest}. Esto resulta fundamental para los conceptos anteriormente expuestos. A continuación se explican las funcionalidades de \textit{Beampressk} como \textbf{Api Rest}.
 	
 	% section definiciones_de_beampressk (end)
 

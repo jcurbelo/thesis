@@ -4,7 +4,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{uhthesis}[2011/04/12 0.1 uhthesis]
 
-\RequirePackage[utf8x]{inputenc}
+\RequirePackage[utf8]{inputenc}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions
