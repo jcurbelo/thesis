@@ -1,129 +1,137 @@
 %!TEX root = ../thesis.tex
 \chapter{Detalles de implementación} % (fold)
 \label{cha:detalles_de_implementacion}
-	Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
+	En este
 
-	\begin{itemize}
-		\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
-		\item Un objeto \textbf{defaults}, que tendrá las configuraciones iniciales del plugin
-		\item Un constructor sencillo para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
-		\item Posibilidad de extender las configuraciones (extender \textbf{defaults})
-		\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
-	\end{itemize}
+	\section{Beampress} % (fold)
+	\label{sec:beampress_imp}
+	
 
-	Para organizar la presentación como mencionamos anteriormente, se hace uso de los atributos de HTML. 
-	Por ejemplo: un \textit{frame} sería un contenedor con la clase \textit{frame} y sus \textit{slide items} serían
-	todos los elementos HTML hijos de dicho \textit{frame} como se muestra en la Fig. \ref{fig:ex1}.	 
-
-	Las especificaciones de los intervalos con las animaciones se definen con el atributo \textit{data-onslide}; estas se realizan mediante la combinación de dos sintaxis distintas. La más sencilla, es la misma que se utiliza para definir los \textit{overlays} en Beamer \cite{overlay}, como se ve en la Fig. \ref{fig:ex1}. 
- 
-
-		\begin{figure}[htb]%
-			\begin{lstlisting}%
-
-<section class="frame">
-	<h1>Hola, soy el frame 1!!!</h1>
-    <span data-onslide="1-">Desde el intervalo 1 hasta el final.</span>
-    <span data-onslide="2;4">Solamente en los intervalos 2 y 4.</span>
-    <span data-onslide="1;2-4;7-">Desde el 1 hasta el 4 y desde el 7 hasta el final.</span>
-    <span data-onslide="-3;5-8">Desde el 1 hasta el 3 y luego desde el 5 hasta el 8.</span>
-</section>
-<section class="frame">
-	<h1>Hola, soy el frame 2!!!</h1>
-</section>
-			\end{lstlisting}
-		\caption{Ejemplo de un frame con varios overlays y otro mostrando un saludo sin overlays. \label{fig:ex1}}
-		\end{figure}
-
-	Con esta sintaxis solo se modifica el valor \textit{opacity} de cada \textit{slide item} en el intervalo que le corresponda, o sea, no tendrán ninguna animación definida. Para esto se cuenta con la otra sintaxis que es un poco más compleja, pero es más explícita sobre lo que se quiere hacer y cuando. Cada intervalo se define mediante un JSON con el siguiente formato Fig. \ref{fig:ex2}:
-
-		\begin{figure}[htb]%
-			\begin{lstlisting}%
-			<span></span>
-{"slide-number":{"next":{"func":"next-function-name", "args":{...}}, "prev": {"func":"prev-function-name", "args":{...}}}}		
-			\end{lstlisting}
-		\caption{
-			Formato JSON para un intervalo. 
-			\label{fig:ex2} }
-		\end{figure}
+		Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
 
 		\begin{itemize}
-			\item \textbf{slide-number}: Número del intervalo
-			\item \textbf{next-function-name}: Nombre de la función de la transición ``siguiente'' del \textit{slide item}
-			\item \textbf{prev-function-name}: Nombre de la función de la transición ``anterior'' del \textit{slide item}			 	
-			\item \textbf{args}: Argumentos (en formato de JSON) que recibe la función  
+			\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
+			\item Un objeto \textbf{defaults}, que tendrá las configuraciones iniciales del plugin
+			\item Un constructor sencillo para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
+			\item Posibilidad de extender las configuraciones (extender \textbf{defaults})
+			\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
 		\end{itemize}
 
+		Para organizar la presentación como mencionamos anteriormente, se hace uso de los atributos de HTML. 
+		Por ejemplo: un \textit{frame} sería un contenedor con la clase \textit{frame} y sus \textit{slide items} serían
+		todos los elementos HTML hijos de dicho \textit{frame} como se muestra en la Fig. \ref{fig:ex1}.	 
 
-	De esta manera se puede determinar que tipo de función de animación se va a utilizar; beampress.js cuenta con algunas funciones básicas pero el usuario puede utilizar cualquiera que implemente como se verá en la sección \ref{sec:ext}. Nótese el uso de dos funciones: \textit{previous} y \textit{next}, esta es una forma de definir la función inversa de animación de cada \textit{slide item}, que es necesario para las transiciones \textit{previous}. Por ejemplo, si la transición \textit{next} de un \textit{slide item} es ``moverse a la derecha'', tiene sentido que su transición \textit{previous} o función inversa fuera ``moverse a la izquierda''. Nótese que queda a consideración del usuario determinar para cada función su inversa. En la Fig. \ref{fig:ex3} se muestra un ejemplo con la combinación de ambas sintaxis.
+		Las especificaciones de los intervalos con las animaciones se definen con el atributo \textit{data-onslide}; estas se realizan mediante la combinación de dos sintaxis distintas. La más sencilla, es la misma que se utiliza para definir los \textit{overlays} en Beamer \cite{overlay}, como se ve en la Fig. \ref{fig:ex1}. 
+	 
 
-		\begin{figure}[htb]%
-			\begin{lstlisting}%
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
 
-<section class="frame">
-	<h1>Usemos ambas sintaxis!!!</h1>
-    <span data-onslide='1-2;{"4":{"next":{"func":"slowShowItem", "args":{}}, "prev": {"func":"slowHideItem", "args":{}}}}'>Desde el intervalo 1 hasta el 2 y luego aparezco en el 4 suavemente.</span>
-    <span data-onslide="2;4">Solamente en los intervalos 2 y 4.</span>
-    <span data-onslide='{"2":{"next":{"func":"slowShowItem", "args":{}}, "prev": {"func":"slowHideItem", "args":{}}}}'>Aparezco suavemente solamente en el intervalo 2.</span>
-    <span data-onslide="-3;5-8">Desde el 1 hasta el 3 y luego desde el 5 hasta el 8.</span>
-</section>				
-			\end{lstlisting}
-		\caption{
-			Ejemplo de uso de ambas sintaxis para definir animaciones con intervalos. 
-			\label{fig:ex3} }
-		\end{figure}
+	<section class="frame">
+		<h1>Hola, soy el frame 1!!!</h1>
+	    <span data-onslide="1-">Desde el intervalo 1 hasta el final.</span>
+	    <span data-onslide="2;4">Solamente en los intervalos 2 y 4.</span>
+	    <span data-onslide="1;2-4;7-">Desde el 1 hasta el 4 y desde el 7 hasta el final.</span>
+	    <span data-onslide="-3;5-8">Desde el 1 hasta el 3 y luego desde el 5 hasta el 8.</span>
+	</section>
+	<section class="frame">
+		<h1>Hola, soy el frame 2!!!</h1>
+	</section>
+				\end{lstlisting}
+			\caption{Ejemplo de un frame con varios overlays y otro mostrando un saludo sin overlays. \label{fig:ex1}}
+			\end{figure}
 
-	Otra ventaja de emplear esta sintaxis es la facilitación de la incorporación de videos y sonidos a la presentación, \textit{beampress.js} viene con funciones básicas para reproducir audio y videos; que estos a su vez se definen en el contenido como se muestra en la Fig. \ref{fig:ex4}
+		Con esta sintaxis solo se modifica el valor \textit{opacity} de cada \textit{slide item} en el intervalo que le corresponda, o sea, no tendrán ninguna animación definida. Para esto se cuenta con la otra sintaxis que es un poco más compleja, pero es más explícita sobre lo que se quiere hacer y cuando. Cada intervalo se define mediante un JSON con el siguiente formato Fig. \ref{fig:ex2}:
 
-		\begin{figure}[htb]%
-			\begin{lstlisting}%
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
+				<span></span>
+	{"slide-number":{"next":{"func":"next-function-name", "args":{...}}, "prev": {"func":"prev-function-name", "args":{...}}}}		
+				\end{lstlisting}
+			\caption{
+				Formato JSON para un intervalo. 
+				\label{fig:ex2} }
+			\end{figure}
 
-<section class="frame">
-	<h1>Empleo de audio y sonido</h1>
-	<video src="example.mp4" data-onslide='{"1":{"next":{"func":"fadeInVideo", "args":{"currentTime": "30"}}, "prev": {"func":"fadeOutVideo", "args":{}}}}'></video>
-	<audio src="example.mp3" data-onslide='{"2":{"next":{"func":"fadeInAudio", "args":{"currentTime": "10"}}, "prev": {"func":"fadeOutAudio", "args":{}}}}'></audio>    
-</section>				
-			\end{lstlisting}
-		\caption{
-			Ejemplo de uso de audio y sonido. 
-			\label{fig:ex4} }
-		\end{figure}		
+			\begin{itemize}
+				\item \textbf{slide-number}: Número del intervalo
+				\item \textbf{next-function-name}: Nombre de la función de la transición ``siguiente'' del \textit{slide item}
+				\item \textbf{prev-function-name}: Nombre de la función de la transición ``anterior'' del \textit{slide item}			 	
+				\item \textbf{args}: Argumentos (en formato de JSON) que recibe la función  
+			\end{itemize}
 
-	Como \textit{beampress.js} está basado en JQuery, para usarlo es necesario incluir alguna biblioteca de JQuery; todo el contenido de la presentación debe estar incluida dentro de un contenedor general, un ejemplo completo de su uso se puede ver en la Fig. \ref{fig:ex5}
 
-		\begin{figure}[htb]%
-			\begin{lstlisting}%
+		De esta manera se puede determinar que tipo de función de animación se va a utilizar; beampress.js cuenta con algunas funciones básicas pero el usuario puede utilizar cualquiera que implemente como se verá en la sección \ref{sec:ext}. Nótese el uso de dos funciones: \textit{previous} y \textit{next}, esta es una forma de definir la función inversa de animación de cada \textit{slide item}, que es necesario para las transiciones \textit{previous}. Por ejemplo, si la transición \textit{next} de un \textit{slide item} es ``moverse a la derecha'', tiene sentido que su transición \textit{previous} o función inversa fuera ``moverse a la izquierda''. Nótese que queda a consideración del usuario determinar para cada función su inversa. En la Fig. \ref{fig:ex3} se muestra un ejemplo con la combinación de ambas sintaxis.
 
-<!DOCTYPE html>
-<html>
-	<head>
-    	<title>Ejemplo</title>
-	</head>
-	<body>
-		<div id="main-container">
-			<section class="frame">
-				<!-- Contenido del frame -->
-			</section>
-			<section class="frame">
-				<!-- Contenido del frame -->
-			</section>						
-		</div>
-	   <script src="js/jquery-1.10.2.min.js"></script>
-	   <script src="js/beampress.js"></script>
-	   <script>
-	       $(document).ready(function(){     
-	           $("#main-container").beampress();
-	        });
-	   </script>		
-	</body>
-</html>			
-			\end{lstlisting}
-		\caption{
-			Ejemplo de presentación usando \textit{beampress.js}. 
-			\label{fig:ex5} }
-		\end{figure}	
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
 
-	El estilo de la presentación queda a manos del usuario, por lo que se requiere previos conocimientos 
-	de HTML, CSS y Javascript, lo cual constituye indudablemente una cierta desventaja. 
+	<section class="frame">
+		<h1>Usemos ambas sintaxis!!!</h1>
+	    <span data-onslide='1-2;{"4":{"next":{"func":"slowShowItem", "args":{}}, "prev": {"func":"slowHideItem", "args":{}}}}'>Desde el intervalo 1 hasta el 2 y luego aparezco en el 4 suavemente.</span>
+	    <span data-onslide="2;4">Solamente en los intervalos 2 y 4.</span>
+	    <span data-onslide='{"2":{"next":{"func":"slowShowItem", "args":{}}, "prev": {"func":"slowHideItem", "args":{}}}}'>Aparezco suavemente solamente en el intervalo 2.</span>
+	    <span data-onslide="-3;5-8">Desde el 1 hasta el 3 y luego desde el 5 hasta el 8.</span>
+	</section>				
+				\end{lstlisting}
+			\caption{
+				Ejemplo de uso de ambas sintaxis para definir animaciones con intervalos. 
+				\label{fig:ex3} }
+			\end{figure}
+
+		Otra ventaja de emplear esta sintaxis es la facilitación de la incorporación de videos y sonidos a la presentación, \textit{beampress.js} viene con funciones básicas para reproducir audio y videos; que estos a su vez se definen en el contenido como se muestra en la Fig. \ref{fig:ex4}
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
+
+	<section class="frame">
+		<h1>Empleo de audio y sonido</h1>
+		<video src="example.mp4" data-onslide='{"1":{"next":{"func":"fadeInVideo", "args":{"currentTime": "30"}}, "prev": {"func":"fadeOutVideo", "args":{}}}}'></video>
+		<audio src="example.mp3" data-onslide='{"2":{"next":{"func":"fadeInAudio", "args":{"currentTime": "10"}}, "prev": {"func":"fadeOutAudio", "args":{}}}}'></audio>    
+	</section>				
+				\end{lstlisting}
+			\caption{
+				Ejemplo de uso de audio y sonido. 
+				\label{fig:ex4} }
+			\end{figure}		
+
+		Como \textit{beampress.js} está basado en JQuery, para usarlo es necesario incluir alguna biblioteca de JQuery; todo el contenido de la presentación debe estar incluida dentro de un contenedor general, un ejemplo completo de su uso se puede ver en la Fig. \ref{fig:ex5}
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
+
+	<!DOCTYPE html>
+	<html>
+		<head>
+	    	<title>Ejemplo</title>
+		</head>
+		<body>
+			<div id="main-container">
+				<section class="frame">
+					<!-- Contenido del frame -->
+				</section>
+				<section class="frame">
+					<!-- Contenido del frame -->
+				</section>						
+			</div>
+		   <script src="js/jquery-1.10.2.min.js"></script>
+		   <script src="js/beampress.js"></script>
+		   <script>
+		       $(document).ready(function(){     
+		           $("#main-container").beampress();
+		        });
+		   </script>		
+		</body>
+	</html>			
+				\end{lstlisting}
+			\caption{
+				Ejemplo de presentación usando \textit{beampress.js}. 
+				\label{fig:ex5} }
+			\end{figure}	
+
+		El estilo de la presentación queda a manos del usuario, por lo que se requiere previos conocimientos 
+		de HTML, CSS y Javascript, lo cual constituye indudablemente una cierta desventaja. 
+
+	% section beampress (end)
 		
 % chapter detalles_de_implementacion (end)

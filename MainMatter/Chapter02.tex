@@ -3,7 +3,7 @@
 
 \chapter{Fundamentos conceptuales} % (fold)
 \label{cha:fundamentos_conceptuales}
-	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item} y \ref{def:overlay} respectivamante. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{Api Rest} para eliminar las dificultades referidas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{def:live_feed} respectivamante. 
+	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item} y \ref{def:overlay} respectivamante. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{Api Rest} para eliminar las dificultades señaladas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{def:live_feed} respectivamante. 
 
 	\section{Definiciones de Beampress} % (fold)
 	\label{sec:definiciones_de_beampress}
@@ -44,7 +44,7 @@
 			\textbf{Mostrar} un contenido es la exhibición de imagen o de texto, la reproducción de audio o de video o cualquier combinación de estas posibilidades.
 		\end{definition} 		
 
-		Una \textit{presentación} tiene un orden en las diapositivas y en los \textit{contenidos}. Por ejemplo, en la fig. \ref{fig:contents} se muestra un \textit{frame} con tres \textit{contenidos} que se ven en momentos distintos. A continuación se argumentarán algunas definiciones que se tuvieron en cuenta para especificar dicha ordenación.
+		Las diapostivias y los \textit{contenidos} de una \textit{presentación} se exhiben con un orden. Por ejemplo, en la fig. \ref{fig:contents} se muestra un \textit{frame} con tres \textit{contenidos} que se ven en momentos distintos. A continuación se argumentarán algunas definiciones que se tuvieron en cuenta para especificar dicha ordenación.
 
  		\begin{figure}[tb]
  			\centering
@@ -119,6 +119,7 @@
 
 		Por defecto, se definen tres \textbf{funciones de transición} básicas:
 		\begin{itemize}
+		\label{it:basic_functions}
 			\item \textbf{Función identidad}: No cambia el estado del \textit{contenido} del \textit{slide item}
 			\item \textbf{Función mostrar}: \textit{Visualiza} el \textit{contenido} del \textit{slide item}. Esta función no cumple totalmente con la definición \ref{def:show} de \textbf{mostrar} un \textbf{contenido} ya que no es capaz de reproducir ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la sección \ref{sec:sintaxis_extendida} 
 			\item \textbf{Función ocultar}: Provoca que el \textit{contenido} del \textit{slide item} deje de ser \textit{visualizado}
@@ -222,7 +223,14 @@
 		\small Se hará un \textit{fade in} para reproducir el video en el \textit{overlay} 1 comenzando en el segundo 30. Lo mismo sucederá con el audio, pero en el \textit{overlay} 2 y comenzando en el segundo 10.
 		\end{figure}
 
-		La utilización de esta sintaxis permite el empleo de \textit{cualquier} \textbf{función de transición} que se defina. En la sección \ref{cha:extensibilidad} se hablará de esta característica con más detalles. Un ejemplo de un \textbf{overlay} con una \textbf{función de transición} distinta de las funciones elementales, se aprecia en la fig. \ref{fig:ball_code} y su ejemplo visual en la fig. \ref{fig:ball_visual}.
+		Como se vió en los \textbf{overlays} de la fig. \ref{fig:ex_audio_video_syntax}, las \textbf{funciones de transición} utilizadas (\textit{fadeInVideo}, \textit{fadeInAudio}) con la utilización de esta sintaxis no son las elementales definidas en \ref{it:basic_functions}. A continuación se muestra cómo esta sintaxis ampliada permite el uso de \textit{cualquier} \textbf{función de transición} que se defina.
+	% section sintaxis_extendida (end)
+	\section{Extensibilidad} % (fold)
+	\label{sec:extensibilidad}
+		
+		La sintaxis ampliada para definir \textbf{overlays} argumentada en la sección anterior permite agregar nuevas \textbf{funciones de transición} además de las elementales \ref{it:basic_functions}. En esta sección se explican las características que debe tener la sintaxis para definir dichas funciones.
+
+		Un ejemplo de un \textbf{overlay} con una \textbf{función de transición} distinta de las funciones elementales, se aprecia en la fig. \ref{fig:ball_code} y su ejemplo visual en la fig. \ref{fig:ball_visual}.
 
 
 
@@ -269,8 +277,8 @@
 			\textbf{Funciones de transición para un frame}. 
 			\label{fig:frame_trans} }
 		\end{figure}	
-
-	% section sintaxis_extendida (end)
+	% section extensibilidad (end)
+	
 
 		Con la aplicación de las definiciones anteriores, se resuelve la mayoría de las dificultades analizadas en la sección \ref{sec:proyecto_delta} referentes al Proyecto Delta, o sea, la inclusión de videos, audios y animaciones en la proyección de diapositivas. Sin embargo, permanece el obstáculo de la distancia entre el presentador y la computadora que contiene la presentacion. En la próxima sección, se explica la propuesta que soluciona dicha dificultad.
 
@@ -289,9 +297,10 @@
 
 	A continuación se definen elementos que son derivados de estas dos primeras definiciones.
 
+	Como se vió en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, uno de los requisitos para la propuesta de estre trabajo es que la presentación esté en ámbito web para lograr una interacción con otros \textit{servicios web}, en el caso particular del Proyecto Delta \ref{sec:proyecto_delta} mostrar los mensajes de texto en la presentación que envía el público. Para esto se define lo siguiente: 
 	\begin{definition}
 	\label{def:message}
-		Mostrar un \textbf{mensaje} en la presentación es añadir un \textbf{contenido} de forma dinámica con el texto de dicho mensaje en el \textbf{frame} que se está mostrando. Esta acción es independiente de la presentación, y el presentador decide el momento en que serán exhibidos y eliminados dichos textos
+		Mostrar un \textbf{mensaje} en la presentación es añadir un \textbf{contenido} de forma dinámica con el texto de dicho mensaje en el \textbf{frame} que se está mostrando. La acción de enviar este texto es independiente de la presentación, y el presentador decide el momento en que será exhibido y ocultado
 	\end{definition}
 
 	\begin{definition}
@@ -347,12 +356,11 @@
 			\end{tabular}
 		\end{table}
 		
+
+		\agregaesto{FALTA TERMINAR ESTA SECCIÓN Y PONER LAS CONCLUSIONES DEL CAPÍTULO Y LA TRANSICIÓN AL SIGUIENTE, O SEA, LA \textbf{TRANSICIÓN SIGUIENTE}}
 	% section api_rest (end)	
 
-	\section{Extensibilidad} % (fold)
-	\label{sec:extensibilidad}
 	
-	% section extensibilidad (end)		
 
 % chapter fundamentos_conceptuales (end)
 
