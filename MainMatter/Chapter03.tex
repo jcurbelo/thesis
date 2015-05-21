@@ -1,13 +1,15 @@
 %!TEX root = ../thesis.tex
 \chapter{Detalles de implementación} % (fold)
 \label{cha:detalles_de_implementacion}
-	En este
+	En este capítulo se explicará cómo fueron implementados \textit{Beampress} y \textit{Beampressk} tomando en cuenta los requerimientos vistos en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} y siguiendo las concepciones definidas en el capítulo anterior.
+
+	Cómo se especificó que la presentación tenía que estar en ámbito web, se aprovecharon las bondades de HTML5, CSS3 y Javascript para conformar las diapositivas separando contenido de forma. A continuación se detallan las características del plugin de JQuery \textit{beampress.js} vistas en la sección \ref{sec:beampress} y las implementaciones para las definiciones vistas en \ref{sec:definiciones_de_beampress}. 
 
 	\section{Beampress} % (fold)
 	\label{sec:beampress_imp}
 	
 
-		Para cumplimentar los requisitos anteriores, se implementó el plugin de JQuery \textit{beampress.js} aprovechando, como ya dijimos, las bondades de HTML5, CSS3 y Javascript. Para ello, se utlizó un patrón ``ligero'' como diseño de dicho plugin (http://www.smashingmagazine.com/2011/10/11/essential-jquery-plugin-patterns/) que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
+		 Para la implementación de \textit{beampress.js} se utlizó un patrón ``ligero'' como diseño de dicho plugin \cite{smashingmagazine} que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
 
 		\begin{itemize}
 			\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
@@ -17,8 +19,115 @@
 			\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
 		\end{itemize}
 
-		Para organizar la presentación como mencionamos anteriormente, se hace uso de los atributos de HTML. 
-		Por ejemplo: un \textit{frame} sería un contenedor con la clase \textit{frame} y sus \textit{slide items} serían
+		Para crear una presentación usando las definiciones del capítulo anterior se hace uso de los atributos de HTML5. Esto permite estructurar el contenido de las diapositivas usando una sintaxis verbosa, en la fig. \ref{fig:main_container} se especifica donde van definidos los \textbf{frames} con código HTML.
+
+		\begin{figure}[htb]%
+			\begin{lstlisting}%
+
+	<div class="main-container">
+    	<!-- Los Frames (contenido de la presentación) va aquí -->
+	</div>
+			\end{lstlisting}
+		\caption{Contenedor principal}
+		\label{fig:main_container}
+		\end{figure}		
+
+
+		\subsection{Frames} % (fold)
+		 \label{sub:frames}
+		 
+		  
+			Un \textit{frame} es un contenedor con la clase \textit{frame}, el orden con que se mostrarán cada uno es el mismo con el que se definan. En la fig. \ref{fig:frames_html} se muestran varios frames.
+
+
+				\begin{figure}[htb]%
+					\begin{lstlisting}%
+
+		<div class="main-container">
+    		<section class="frame">Primer Frame</section>
+    		<section class="frame">Segundo Frame</section>
+    		<!-- ... -->
+    		<section class="frame">Enésimo Frame</section>
+		</div> 
+					\end{lstlisting}
+					\caption{Forma de definir frames}
+					\label{fig:frames_html}
+				\end{figure}		
+		% subsection frames (end)
+
+		\subsection{Contenidos} % (fold)
+		\label{sub:contenidos}
+			Los contenidos de la presentación son cualquier elemento de HTML que se especifique, por ejemplo un \textit{párrafo} (\textit{<p>}), una \textit{imagen} (\textit{<img>}), un \textit{video} (\textit{<video>}), un \textit{audio} (\textit{<audio>}) o un \textit{canvas} (\textit{<canvas>}). En la fig. se definen los contenidos del frame mostrado en la fig. \ref{fig:frame_video_image}.
+
+				\begin{figure}[htb]%
+					\begin{lstlisting}%
+
+            <section class="frame">
+                <h1>Mostrando varios contenidos</h1>
+                <div class="frame-content">
+                    <div class="hfil">
+                        <div class="minipage">
+                            <video controls src="forrest_gump.mp4"></video>
+                        </div>
+                        <div class="minipage">
+                            <img height="280px" src="python.jpg" alt="">
+                        </div>                        
+                    </div>
+                    <div class="block">
+                        <header>Estándar</header>
+                        <div class="block-content">
+                            Bloque estándar
+                        </div>
+                    </div>
+                    <div class="block example">
+                        <header>Ejemplo</header>
+                        <div class="block-content">
+                            Bloque de ejemplo
+                        </div>
+                    </div>
+                    <div class="block alert">
+                        <header>Alert</header>
+                        <div class="block-content">
+                            Bloque alert
+                        </div>
+                    </div>                    
+                </div>
+                <footer class="clearfix">
+                    <div class="authors">
+                        <p>Jorge R. Curbelo Fernández</p>
+                    </div>
+                    <div class="topic"><p>Mostrando varios contenidos</p></div>
+                </footer>                
+            </section>
+					\end{lstlisting}
+					\caption{Un frame en HTML con contenidos}
+					\label{fig:frames_html}
+				\end{figure}	  
+		
+		% subsection contenidos (end)
+
+		\subsection{Overlays y Slide Items} % (fold)
+		\label{sub:slide_items}
+			Como se definió en \ref{def:slide_item}, un \textbf{slide item} es un \textbf{contenido} con un \textbf{conjunto de overlays}, para emplear la sintaxis de overlays vista en la fig. \ref{fig:overlay_set} se hace uso de los atributos \textit{data} de HTML5, en este caso se definió el atributo \textit{data-onslide}. En la fig. \ref{fig:slide_items_html} se ejemplifican varios slide items.
+
+				\begin{figure}[htb]%
+					\begin{lstlisting}%
+
+		<div class="block-content">
+		    <ul>
+		        <li data-onslide="3-">Desde el intervalo 3 hasta el final</li>
+		        <li data-onslide="4;6">En el intervalo 4 y 6</li>
+		        <li data-onslide="5;8">En el intervalo 5 y 8</li>
+		        <li data-onslide="3-5;7-8">Del 3 al 5 y del 7 al 8</li>
+		    </ul>          
+		</div>	
+					\end{lstlisting}
+					\caption{Forma de definir slide items con overlays}
+					\label{fig:slide_items_html}
+				\end{figure}		
+		
+		% subsection slide_items (end)
+		y sus \textit{slide items} serían
 		todos los elementos HTML hijos de dicho \textit{frame} como se muestra en la Fig. \ref{fig:ex1}.	 
 
 		Las especificaciones de los intervalos con las animaciones se definen con el atributo \textit{data-onslide}; estas se realizan mediante la combinación de dos sintaxis distintas. La más sencilla, es la misma que se utiliza para definir los \textit{overlays} en Beamer \cite{overlay}, como se ve en la Fig. \ref{fig:ex1}. 
