@@ -254,6 +254,11 @@
 		El plugin \textit{beampress.js} realiza las transiciones de los frames de forma similar a la manera en que las realiza con los slide items, pero sin depender de un slide.
 		% subsection frames (end)
 
+		\subsection{Transiciones} % (fold)
+		\label{sub:transiciones}
+			Para realizar las transiciones o cambio de slides, se implementaron las funciones \texttt{next()} y \texttt{prev()} que efectúan las transiciones siguiente y anterior respectivamente. Estas funciones están registradas a distintos eventos, de forma tal que se ejecutan en dependecia de la interacción del usuario con el navegador o de la interacción de algún otro dispotivo utilizando Websocket. Esto último se explicará con más detalle en la sección \ref{sec:beampressk_imp}.
+		% subsection transiciones (end)
+
 		\subsection{Presentación} % (fold)
 		\label{sub:presentacion}
 			Todos los frames de la presentación tienen que estar contenidos dentro de un contenedor general. En la fig. \ref{fig:main_container} se define un contenedor con clase \texttt{main-container}.
@@ -304,16 +309,20 @@
 				\label{fig:ex5} }
 			\end{figure}	
 
-			El estilo de la presentación queda sujeto al usuario, por lo que se requieren previos conocimientos de HTML, CSS y Javascript. 
+			El estilo de la presentación queda sujeto al usuario, por lo que se requieren previos conocimientos de HTML, CSS y Javascript. Como extensión a la propuesta de este trabajo se implementó el estilo Warsaw de \textit{Beamer} con el CSS \texttt{warsaw.css} que se mencionará también en la siguiente sección.
 		% subsection presentación (end)
 	% section beampress (end)
 
 	\section{Beampressk} % (fold)
 	\label{sec:beampressk_imp}
-		Se implementó una aplicación de \textit{Flask} para manejar todos los pedidos que el servidor web recibe usando el protocolo Web Server Gateway Interface (WSGI). La instancia de la aplicación es un objeto de clase \textit{Flask}. 
+		Se implementó una aplicación de \textit{Flask} para manejar todos los pedidos que el servidor web recibe usando el protocolo Web Server Gateway Interface (WSGI). La instancia de la aplicación es un objeto de clase \textit{Flask}.
+
+		La aplicación asocia URLs con funciones de Python que tenga definidas. Dicha asociación se llama \textit{ruta} y en esta sección se asume \texttt{beampress.com} como URL base.
 		
 		\subsection{Estructura de la aplicación} % (fold)
 		\label{sub:estructura_de_la_aplicacion}
+			Todas las vistas que se definieron en la sección TAL se conforman usando el sistema de templates \textit{Jinja2}, en la fig. \ref{sub:estructura_de_la_aplicacion} se muestra la ubicación de cada template.
+			Para interpretar las presentaciones, o sea, interpretar los frames, slides, slide items, overlays y las funciones de transición se usa el plugin \textit{beampress.js} cuyas características se argumentaron en la sección anterior. El uso de \textit{SocketIO} ~\cite{socketio} se realiza con la biblioteca \textit{socket.io..min.js}, y para eliminar los 300ms de espera en los navegadores móviles desde el momento en que se toca un botón para disparar el evento \texttt{click}, se usa \texttt{fastclick.js} ~\cite{fastclick}. La razón de este retraso es que el navegador está esperando para determinar si se hace un doble click ~\cite{fior}.
 			\begin{figure}[htb]%
 				\dirtree{%
 				.1 beampressk.
@@ -327,6 +336,12 @@
 				.3 js.
 				.4 beampress{.}js \ldots{} \begin{minipage}[t]{8cm}
 									\textit{Plugin de Beampress}{.}
+								\end{minipage}.
+				.4 socket{.}io{.}min{.}js \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Biblioteca para SocketIO}{.}
+								\end{minipage}.
+				.4 fastclick{.}js \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Biblioteca Fastclick}{.}
 								\end{minipage}.
 				.2 templates.
 				.3 nombre\_de\_pres \ldots{} \begin{minipage}[t]{8cm}
@@ -347,7 +362,134 @@
 			\caption{Estructura de Beampressk}
 			\label{fig:beampressk_structure}
 			\end{figure}		
-		% subsection estructura_de_la_aplicación (end)	
+		% subsection estructura_de_la_aplicación (end)
+
+		\subsection{Presentaciones} % (fold)
+		\label{sub:presentaciones}
+
+			Por convenio un template de presentación debe llamarse \texttt{index.html} y estar dentro de una carpeta con el nombre de la presentación contenida en el directorio \texttt{templates} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion}. Para mostrar cada presentación se usa la siguiente URL: \\
+			\texttt{beampressk.com/presentation/nombre\textendash de\textendash presentacion} y esta es intepretada por la aplicación de \textit{Flask} (\texttt{app.py}) con la función \texttt{show} de la fig.\ref{fig:presentation_routes}.
+
+			Si el servidor tiene varios clientes y al mismo tiempo acceden a la misa URL de una presentación, esta se visualizará simultáneamente en varios dispositivos. 
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=Python]%
+
+# Presentaciones
+@app.route('/presentation/<name>')
+def show(name):
+    return render_template('%s/index.html' % name)
+				\end{lstlisting}
+			\caption{Rutas dinámicas para las presentaciones}
+			\label{fig:presentation_routes}
+			\end{figure}
+
+		% subsection presentaciones (end)
+
+		\subsection{Vista de control} % (fold)
+		\label{sub:vista_de_control}
+			El template de la vista de control se encuentra en \texttt{templates/index.html} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion} y la URL de la misma es la URL raíz: \texttt{beampress.com}. La función \texttt{index} de la fig. \ref{fig:control_view_code} es llamada luego de mapearse la URL raíz.
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=Python]%
+
+# Vista de control
+@app.route('/')
+def index():
+    return render_template('index.html')
+				\end{lstlisting}
+			\caption{Ruta para la vista de control}
+			\label{fig:control_view_code}
+			\end{figure}			
+		
+		% subsection vista_de_control (end)
+
+		\subsection{Websocket} % (fold)
+		\label{sub:websocket}
+
+		En la sección TAL se definió que la comunicación entre la vista de control y la vista de presentación tenía que ser instantánea. Como se vió en la sección \ref{sec:beampressk} se utilizó websocket para establecer un canal de comunicación bidireccional entre estas vistas. Para ello se incluyó la extensión de Flask \textit{Flask-SocketIO} ~\cite{flasksocket} en la aplicación de Beampressk que establece una conexión con los clientes que tengan la biblioteca \textit{Socket.IO}.
+
+			\subsubsection{Mensajes de comunicación} % (fold)
+			\label{ssub:mensajes_de_comunicacion}
+				Para establecer la comunicación entre la vista de control y la vista de presentaciones se usan los mensajes de \textit{SocketIO}. Estos mensajes son registrados con \textit{Flask-SocketIO} de forma similar a la manera en que registra las \textit{rutas} con funciones en Python. 
+
+				De esta manera \textit{Bemampressk} hace de intermediario entre la vista de control y la vista de presentación. En la fig. \ref{fig:control_view_msgs} y \ref{fig:presentation_view_msgs} se muestra el uso de los mensajes definidos de la tabla \ref{tab:messages} en la parte cliente y en la fig. TAL en la parte servidor.
+
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=JavaScript]%
+
+// Evento ante 'respuesta actualiza'
+socket.on('response', function(msg) {
+    // Actualizar información acerca 
+    // de la presentación
+}); 
+
+// Mensaje 'siguiente'
+socket.emit('next');
+
+// Mensaje 'anterior'
+socket.emit('prev');
+
+// Mensaje 'volumen'
+socket.emit('volume', {data: <valor-volumen>});
+
+// Mensaje 'live feed'
+socket.emit('live_feed');
+
+// Mensaje 'message'
+socket.emit('hide_msg');
+  
+				\end{lstlisting}
+			\caption{Mensajes en la vista de control}
+			\label{fig:control_view_msgs}
+			\end{figure}
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=JavaScript]%
+
+// Mensaje 'respuesta actualiza'
+socket.emit('update_info', {data: <información>});
+
+//Mensaje 'volumen'
+socket.on('volume_response', function(msg) {
+	// Actualizar volumen
+});
+
+//Mensaje 'live feed'
+socket.on('live_feed_response', function() {
+    // Mostrar u ocultar el live feed
+});
+
+//Mensaje 'message'
+socket.on('msg', function(msg){
+	// Mostrar mensaje
+});
+
+//Mensaje 'message'
+socket.on('hide_msg_response', function (){
+	// Ocultar mensaje
+}); 
+  
+				\end{lstlisting}
+			\caption{Mensajes en la vista de presentación}
+			\label{fig:presentation_view_msgs}
+			\end{figure}			
+
+			
+			% subsubsection mensajes (end)		
+
+		\subsection{Live Feed} % (fold)
+		\label{sub:live_feed}
+		
+		% subsection live_feed (end)
+		
+		% subsection websockets (end)
+
+		\subsection{API REST} % (fold)
+		\label{sub:api_rest}
+		
+		% subsection api_rest (end)	
 	% section beampressk (end)
 
 	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccinal utilizando Websocket.
