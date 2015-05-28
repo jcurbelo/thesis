@@ -125,7 +125,7 @@
 
 		Para realizar dicho manejo, \textit{Beampressk} provee una vista de control, concebida para mostrarse en un dispositivo móvil y la vista de las diapositivas (la presentación como tal), que se muestra en un proyector o bien en la pantalla de una computadora. En el capítulo \ref{cha:detalles_de_implementacion} se detalla su estructura, así como la implementación de esta herramienta.
 
-		\textit{Beampressk} es un servidor web implementado en \textit{Flask} ~\cite{flask}, que es un framework web de \textit{Python} que se categoriza como micro framework, o sea, tiene poca o ninguna dependencia de bibliotecas externas salvo en casos que se requiera de las mismas. Dicho framework está basado en \textit{Werkzeug} que es un conjunto de herramientas para aplicaciones que estén fundamentadas con Web Server Gateway Interface (WSGI) ~\cite{wsgi}, que es una especificación para una interfaz simple y universal entre servidores web y aplicaciones web o frameworks de \textit{Python}. \textit{Flask} también usa \textit{Jinja2} como motor de \textit{templates}, lo que permite estructurar los \textit{templates} de las vistas de control y presentación.
+		\textit{Beampressk} es un servidor web implementado en \textit{Flask} ~\cite{flask}, un framework web de \textit{Python} que se categoriza como micro framework, o sea, tiene poca o ninguna dependencia de bibliotecas externas salvo en casos que se requiera de las mismas. Dicho framework está basado en \textit{Werkzeug} que es un conjunto de herramientas para aplicaciones que estén fundamentadas con Web Server Gateway Interface (WSGI) ~\cite{wsgi}, lo cual es una especificación para una interfaz simple y universal entre servidores web y aplicaciones web o frameworks de \textit{Python}. \textit{Flask} también usa \textit{Jinja2} como motor de \textit{templates}, lo que permite estructurar los \textit{templates} de las vistas de control y presentación.
 
 
 		El hecho de que sea una herramienta sencilla constituye una gran ventaja, sobre todo teniendo en cuenta el propósito para el cual fue concebida: intermediaria entre la vista de presentación y de control.
@@ -134,7 +134,7 @@
 
 		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} ~\cite{flasksocket} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} ~\cite{socketio} de Javascript.
 
-	 	Teniendo en cuenta que \textit{Beampressk} es un servidor web se decidió concebirlo como API REST para que interactuara con otros servicios web, principalmente con los mensajes de texto que envía el público. A continuación se explican las funcionalidades de \textit{Beampressk} como \textbf{API REST}.
+	 	Teniendo en cuenta que \textit{Beampressk} es un servidor web se decidió concebirlo como API REST para que interactuara con otros servicios web, principalmente con los mensajes de texto que envía el público. A continuación se explican las funcionalidades de \textit{Beampressk} como API REST ~\cite{book:899251}.
 		
 		% section definiciones_de_beampressk (end)
 
@@ -144,9 +144,10 @@
 
 			La \textbf{Transferencia de Estado Representacional} (Representational State Transfer) o \textbf{REST} es una arquitectura simple y \textit{sin estados} que generalmente funciona a través del protocolo HTTP. En los últimos años REST ha emergido como el diseño de la arquitectura estándar para servicios web (Servicios RESTful) y APIs web.
 
-			Conjuntamente con el concepto de un servicio RESTful está la noción de \textit{recursos}. Los recursos son representados por URIs, un cliente envía un pedido (request) a estas URIs usando los métodos definidos por el protocolo HTTP, y posiblemente el estado de dicho recurso cambie como resultado de dicho pedido. En el caso de \textit{Beampressk} un recurso es la vista de presentación, la vista de control, los mensajes que envía el público del Proyecto Delta y el live feed entre otros que se definan.
+			Conjuntamente con el concepto de un servicio RESTful está la noción de \textit{recursos}. Los recursos son representados por URIs, un cliente envía un pedido (request) a estas URIs usando los métodos definidos por el protocolo HTTP, y posiblemente el estado de un recurso cambie como resultado de dicho pedido. 
+			% En el caso de \textit{Beampressk} un recurso es la vista de presentación, la vista de control, los mensajes que envía el público del Proyecto Delta y el live feed entre otros que se definan.
 
-			Los pedidos HTTP son diseñados para afectar un recurso en diversas formas, en la tabla \ref{tab:request} se muestran pedidos HTTP con las acciones que provocan en \textit{Beampressk}.
+			Los pedidos HTTP son diseñados para afectar un recurso de formas diversas. En la tabla \ref{tab:request} se muestran pedidos HTTP con las acciones que provocan en \textit{Beampressk}.
 
 			\begin{table}[b]
 				\caption{Ejemplos de tipos de pedidos HTTP con sus acciones}
@@ -179,12 +180,12 @@
 				\end{tabular}
 			\end{table}		
 
-		El nombre \textit{Beampressk} es la mezcla de los nombres de \textit{Beampress} y \textit{Flask}. La idea de esta unión es similar a la motivó a \textit{Beampress}, ya que utiliza los títulos de las herramientas que dieron su origen.
+		El nombre \textit{Beampressk} es la mezcla de los nombres de \textit{Beampress} y \textit{Flask}. La idea de esta unión es similar a la motivó a \textit{Beampress}, ya que utiliza los títulos de las herramientas que dieron lugar a su origen.
 
-		Esta herramienta resuleve las principales problemáticas ocasionadas por la distancia, garantizando que el presentador tenga control de la presentación aún estando lejos de la computadora que contiene la misma.
+		Esta herramienta resuelve las principales problemáticas ocasionadas por la distancia, garantizando que el presentador tenga control de la presentación aún estando lejos de la computadora que contiene la misma.
 
 
-		En este capítulo se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, sus requerimientos, las soluciones que ofrecen y las tecnologías que se emplearon. También se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significaticas a la propuesta de este trabajo, siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. En el capítulo \ref{cha:fundamentos_conceptuales} se hablará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, y los conceptos principales en los que se basan.
+		En este capítulo se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, sus requerimientos, las soluciones que ofrecen y las tecnologías que se emplearon. También se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significativas a la propuesta de este trabajo, siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. En el capítulo \ref{cha:fundamentos_conceptuales} se explicará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, y los conceptos principales en los que se basan.
 	% section beampressk (end)
 
 

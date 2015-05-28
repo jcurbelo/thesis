@@ -3,7 +3,7 @@
 
 \chapter{Fundamentos conceptuales} % (fold)
 \label{cha:fundamentos_conceptuales}
-	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item}, \textit{Slide} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item}, \ref{def:slide} y \ref{def:overlay} respectivamante. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{API REST} para eliminar las dificultades señaladas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{def:live_feed} respectivamante. 
+	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item}, \textit{Slide} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item}, \ref{def:slide} y \ref{def:overlay} respectivamente. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{API REST} para eliminar las dificultades señaladas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{def:live_feed} respectivamante. 
 
 	\section{Definiciones de Beampress} % (fold)
 	\label{sec:definiciones_de_beampress}
@@ -87,16 +87,16 @@
  			Un \textbf{slide} es un conjunto de slide items que se muestran simultáneamente en un frame.
  		\end{definition}
 		
-		Un frame puede tener varios slides y un slide se identifica con un número natural que simula el momento en que se mostrará su conjunto de slide items. Los slides al estar representados por enteros positivos son ordenables, decir que un slide es mayor que otro significa que ocurre después de otro. En \textit{Beamer} la definición de slide es distinta ya que un slide representa una de las diapositivas de un frame.
+		Un frame puede tener varios slides y un slide se identifica con un número natural que simula el momento en que se mostrará su conjunto de slide items. Al estar los slides representados por enteros positivos son ordenables. Decir que un slide es mayor que otro significa que ocurre después de otro. En \textit{Beamer} la definición de slide es distinta, ya que un slide representa una de las diapositivas de un frame.
 
 		Por ejemplo, en la fig. \ref{fig:contents_b} el slide 2 es el conjunto formado por los dos primeros contenidos del frame, que son los mostrados. 				
 
  		\begin{definition}
  		\label{def:overlay}
- 			Un \textbf{overlay} es un número natural ej: 3, o bien una secuencia de números naturales de la forma \( inicio-final \) ej: 3-5 que define el o los slides a los que pertenece un slide item.
+ 			Un \textbf{overlay} es un número natural ej: 3, o bien una secuencia de números naturales de la forma \texttt{inicio-final} ej: 3-5 que define el o los slides a los que pertenece un slide item.
  		\end{definition}
 
- 		En caso de ser una secuencia de la forma \( inicio-final \) se toman las siguientes consideraciones: si no se especifica el slide \( inicio \) se asume 1 y si no se especifica el slide \( final \) se asume el último slide del frame. Ejemplos de estos casos se pueden ver en el ejemplo \ref{ex:overlay_set}. 		
+ 		En caso de ser una secuencia de la forma \texttt{inicio-final} se toman las siguientes consideraciones: si no se especifica el slide \texttt{inicio} se asume 1 y si no se especifica el slide \texttt{final} se asume el último slide del frame. Muestras de estos casos se pueden ver en el ejemplo \ref{ex:overlay_set}. 		
 
  		\begin{definition}
  		\label{def:ovaerlay_set}
@@ -136,7 +136,7 @@
  			\label{fig:frame_video_image}
  		\end{figure}
 
- 		Un contenido puede estar oculto o mostrado, si se toman como ejemplo los tres contenidos del frame de la fig. \ref{fig:contents} se puede ver que en la fig. \ref{fig:contents_a} está mostrado el primer contenido y los otros dos están ocultos, en la fig. \ref{fig:contents_b} solo está oculto el tercero y en la fig. \ref{fig:contents_c} están motrados los tres contenidos.		
+ 		Un contenido puede estar oculto o mostrado, si se toman como ejemplo los tres contenidos del frame de la fig. \ref{fig:contents} se puede ver que en la fig. \ref{fig:contents_a} está mostrado el primer contenido y los otros dos están ocultos, mientras que en la fig. \ref{fig:contents_b} solo está oculto el tercero y en la fig. \ref{fig:contents_c} están motrados los tres contenidos.		
 
 		\begin{definition}
 		\label{def:show}
@@ -183,11 +183,11 @@
 		\begin{itemize}
 		\label{it:basic_functions}
 			\item \textbf{Función identidad}: No cambia el estado del contenido del slide item
-			\item \textbf{Función mostrar}: Visualiza el contenido del slide item. Esta función no cumple totalmente con la definición \ref{def:show} de mostrar un contenido ya que no es capaz de reproducir ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la sección \ref{sec:sintaxis_extendida} 
+			\item \textbf{Función mostrar}: Visualiza el contenido del slide item. Esta función no cumple totalmente con la definición \ref{def:show} de mostrar un contenido, ya que no es capaz de reproducir ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la subsección \ref{subsec:sintaxis_extendida} 
 			\item \textbf{Función ocultar}: Provoca que el contenido del slide item deje de ser visualizado
 		\end{itemize}
 
-		Como se vió en la definición \ref{def:slide_item}, un slide item está mostrado por defecto en todos los slides si no tiene un conjunto de overlays, pero de tenerlo se asume que está oculto en todos los slides a no ser que sus overlays determinen otra cosa. En términos de las funciones elementales, esto se traduce en que todas las funciones de transición de un slide item (con overlays) por defecto son la función identidad excepto la primera, que es la función ocultar. 
+		Como se vio en la definición \ref{def:slide_item}, un slide item está mostrado por defecto en todos los slides si no tiene un conjunto de overlays, pero de tenerlo se asume que está oculto en todos los slides, a no ser que sus overlays determinen otro comportamiento. En términos de las funciones elementales, esto se traduce en que todas las funciones de transición de un slide item (con overlays) por defecto son la función identidad excepto la primera, que es la función ocultar. 
 
 		A continuación se define de una forma más detallada lo antes expuesto:
 
@@ -211,14 +211,14 @@
 		\begin{definition}
 		\label{def:new_overlay}
 
- 			Un \textbf{overlay} es un número natural, o bien una secuencia de números naturales de la forma \( inicio-final \) que define una función de transición siguiente y una función de transición anterior.
+ 			Un \textbf{overlay} es un número natural, o bien una secuencia de números naturales de la forma \texttt{inicio-final} que define una función de transición siguiente y una función de transición anterior.
 
 		\end{definition}
 
 		Usando esta definición, se puede ver el conjunto de overlays del ejemplo \ref{ex:overlay_set} de la manera siguiente:
 
 
-		Sea \(-2; 4; 6-8; 10-\) dicho conjunto de overlays del slide item \( S_j \) que se encuentra en un frame con \( n \) slides. Entonces la función de transición \( f_i \) de \( S_j \) en el slide \( i \) es:
+		Sea \texttt{-2; 4; 6-8; 10-} dicho conjunto de overlays del slide item \( S_j \) que se encuentra en un frame con \( n \) slides. Entonces la función de transición \( f_i \) de \( S_j \) en el slide \( i \) es:
 
 		\begin{equation}
 		\label{eq:example}
@@ -273,14 +273,14 @@
 		\end{figure}
 
 
-	En este caso, un slide puede ser un JSON con las siguientes características:
+	Un overlay con esta sintaxis extendida es un JSON con las siguientes características:
 	\begin{itemize}
 		\item \texttt{número}: el número del slide
 		\item \texttt{siguiente}: tiene como valores el nombre de la función de transición siguiente a utilizar, y sus argumentos
 		\item \texttt{anterior}: tiene como valores el nombre de la función de transición anterior con sus argumentos
 	\end{itemize}
 
-	Una de las principales motivaciones para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video vistas en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Si se necesita reproducir un audio o un video se puede utilizar el ejemplo que se muestra en la fig. \ref{fig:ex_audio_video_syntax}. En el ejemplo se hará un \textit{fade in} para reproducir el video en el \textit{slide} 1 comenzando en el segundo 30. Lo mismo sucederá con el audio, pero en el \textit{slide} 2 y comenzando en el segundo 10.
+	Una de las principales motivaciones para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video detallado en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Si se necesita reproducir un audio o un video se puede utilizar el ejemplo que se muestra en la fig. \ref{fig:ex_audio_video_syntax}. En el ejemplo se hará un \textit{fade in} para reproducir el video en el \textit{slide} 1 comenzando en el segundo 30. Lo mismo sucederá con el audio, pero en el \textit{slide} 2 y comenzando en el segundo 10.
 
 
 	\begin{figure}[htb]%
@@ -322,7 +322,7 @@
 		\end{figure}
 
 		
-		Como se vió en los overlays de la fig. \ref{fig:ex_audio_video_syntax}, las funciones de transición utilizadas (\texttt{fadeInVideo}, \texttt{fadeInAudio}) no son las elementales definidas en el listado \ref{it:basic_functions}. Esta sintaxis ampliada para definir overlays permite agregar nuevas funciones de transición además de las elementales, garantizando la extensibilidad de \textit{Beampress} que se verá con más detalles en el capítulo \ref{cha:extensibilidad}.
+		Como se vio en los overlays de la fig. \ref{fig:ex_audio_video_syntax}, las funciones de transición utilizadas (\texttt{fadeInVideo}, \texttt{fadeInAudio}) no son las elementales definidas en el listado \ref{it:basic_functions}. Esta sintaxis ampliada para definir overlays permite agregar nuevas funciones de transición además de las elementales, garantizando la extensibilidad de \textit{Beampress} que se verá con más detalles en el capítulo \ref{cha:extensibilidad}.
 
 
 		Un ejemplo de un overlay con una función de transición distinta de las funciones elementales, se aprecia en la fig. \ref{fig:ball_code} y su ejemplo visual en la fig. \ref{fig:ball_visual}.
@@ -398,22 +398,22 @@
 
 	
 
-		Con la implementación de las ideas vistas anteriores, se resuelve la mayoría de las dificultades analizadas en la sección \ref{sec:proyecto_delta} referentes al Proyecto Delta, o sea, la inclusión de videos, audios y animaciones en la proyección de diapositivas. Sin embargo, permanece el obstáculo de la distancia entre el presentador y la computadora que contiene la presentacion. En la próxima sección, se presenta el servidor web \textit{Beampressk}, que soluciona dicha dificultad.
+		Con la implementación de las ideas anteriormente explicadas, se resuelve la mayoría de las dificultades analizadas en la sección \ref{sec:proyecto_delta}, referentes al Proyecto Delta, o sea, la inclusión de videos, audios y animaciones en la proyección de diapositivas. Sin embargo, permanece el obstáculo de la distancia entre el presentador y la computadora que contiene la presentación. En la próxima sección, se presenta el servidor web \textit{Beampressk}, que soluciona dicha dificultad.
 	% section sintaxis_extendida (end)
 
 	\section{Definiciones de Beampressk} % (fold)
 	\label{sec:definiciones_de_beampressk}
 
-		 En esta sección se exponen las definiciones que dan solución a la dificultad del Proyecto Delta en cuanto a la distancia entre el presentador y la computadora que contiene la presentación. Estas son: vista de presentación, control y modificación dinámica de la presentación, la posibilidad de mostrar mensajes de texto en la misma, live feed y vista de control que se argumentan en las definiciones \ref{def:presentation_view}, \ref{def:dynamic_control}, \ref{def:presentation_modification}, \ref{def:message}, \ref{def:live_feed} y \ref{def:control_view} respectivamente. %También se argumentarán los recursos vistos en la sección \ref{sec:beampressk} que determina \textit{Beampressk} al ser concebido como \textit{API REST}.
+		 En esta sección se exponen las definiciones que dan solución a la dificultad del Proyecto Delta en cuanto a la distancia entre el presentador y la computadora que contiene la presentación. Estas son: vista de presentación, control y modificación dinámica de la presentación, posibilidad de mostrar mensajes de texto, live feed y vista de control, todo lo cual se argumenta en las definiciones \ref{def:presentation_view}, \ref{def:dynamic_control}, \ref{def:presentation_modification}, \ref{def:message}, \ref{def:live_feed} y \ref{def:control_view} respectivamente. %También se argumentarán los recursos vistos en la sección \ref{sec:beampressk} que determina \textit{Beampressk} al ser concebido como \textit{API REST}.
 
 		\begin{definition}
 		\label{def:presentation_view}
 			La \textbf{vista de presentación} muestra la presentación. 
 		\end{definition}
 
-		La vista de presentación puede ser visualizada o accedida desde diferentes dispositivos, permitiendo esto que una misma presentación se muestre simultáneamente en distintos lugares.
+		La vista de presentación puede ser visualizada o accedida desde diferentes dispositivos. Esto permite que una misma presentación se muestre simultáneamente en distintos lugares.
 
-		Como se vió en las definiciones \ref{def:next_transition} y \ref{def:prev_transition} una presentación cuenta con transiciones siguiente y anterior, estas a su vez realizan un cambio de slide o un cambio de frame. \textit{Beampressk} tiene que dar la posibilidad de efectuar dichas transiciones desde el dispositivo que contiene la presentación o desde cualquier otro.
+		Como se vio en las definiciones \ref{def:next_transition} y \ref{def:prev_transition} una presentación cuenta con transiciones siguiente y anterior, estas a su vez realizan un cambio de slide o un cambio de frame. \textit{Beampressk} brinda la posibilidad de efectuar dichas transiciones desde el dispositivo que contiene la presentación o desde cualquier otro.
 
 
 		\begin{definition}
@@ -424,16 +424,16 @@
 
 		% A continuación se definen elementos que son derivados de estas dos primeras definiciones.
 
-		Como se vió en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, uno de los requisitos para la propuesta de estre trabajo es que la presentación esté en ámbito web para lograr una interacción con otros \textit{servicios web}, en el caso particular de las presentaciones del Proyecto Delta se trata de mostrar en el medio de la presentación los mensajes de texto que envía el público. Para esto se define lo siguiente: 
+		Como se vio en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, uno de los requisitos para la propuesta de este trabajo es que la presentación esté en ámbito web para lograr una interacción con otros \textit{servicios web} y en el caso particular de las presentaciones del Proyecto Delta se trata de mostrar en el medio de la presentación los mensajes de texto que envía el público. Para esto se define lo siguiente: 
 
 		\begin{definition}
 		\label{def:presentation_modification}
 			\textbf{Modificar la presentación} es la capacidad de variar, agregar o eliminar un contenido mientras transcurre la presentación.
 		\end{definition}
 
-		Cuando se habla de \textit{variar} puede ser modificar el volumen de un contenido multimedia, la posición de una imagen, tamaño de un texto, entre otras posibilidades que se definan.
+		Cuando se habla de \textit{variar} puede ser modificar el volumen de un contenido multimedia, la posición de una imagen o el tamaño de un texto, entre otros parámetros.
 
-		A continuación se definen elementos que son derivados de esta definición.
+		% A continuación se definen elementos derivados de la definición.
 
 		\begin{definition}
 		\label{def:message}
@@ -470,12 +470,12 @@
 
 		\begin{definition}
 		\label{def:control_view}
-			La \textbf{vista de control} manipula de forma dinámica una presentación y modifica la misma teniendo la capacidad de reorganizarla, de agregar contenidos como mensajes de texto y un live feed, de modificar las propiedades de un contenido como el volumen de un video y de eliminar un contenido como un mensaje de texto previamente agregado en la presentación. 
+			La \textbf{vista de control} manipula de forma dinámica una presentación y la modifica, siendo capaz de reorganizarla, de agregar contenidos como mensajes de texto y un live feed, de modificar algunas propiedades como el volumen de un video, y de eliminar un contenido como un mensaje de texto previamente agregado en la presentación. 
 		\end{definition}		
 		
-		La vista de control es independiente de la vista de presentación, se puede mostrar en el dispositivo que contiene la presentación o en cualquier otro, dando la opción de ser visualizada al mismo tiempo en varios lugares. Esto significa que pueden existir varios \textit{controladores} manipulando una misma presentación.
+		La vista de control es independiente de la vista de presentación. Se puede mostrar en el dispositivo que contiene la presentación o en cualquier otro, dando la opción de ser visualizada al mismo tiempo en varios lugares. Esto significa que pueden existir varios \textit{controladores} manipulando una misma presentación.
 
-		Un requisito de vital importancia es que exista un canal de comunicación bidireccional entre la vista de presentación y la vista de control para que las acciones y las respuestas entre las dos vistas tengan efecto instantáneo. Para esto se definen los siguientes mensajes de \textit{acción} y \textit{respuesta} en la tabla \ref{tab:messages}.
+		Un requisito de vital importancia es que exista un canal de comunicación bidireccional entre la vista de presentación y la vista de control, para que las acciones y las respuestas entre las dos vistas tengan efecto instantáneo. Para esto se definen los siguientes mensajes de \textit{acción} y \textit{respuesta} en la tabla \ref{tab:messages}.
 
 			\begin{table}[b]
 				\caption{Mensajes de comunicación entre la vista de control y la vista de presentación}
@@ -488,15 +488,14 @@
 				\hline
 					\textbf{Vista Control} & \textbf{Acción} & \textbf{Vista \newline Presentación} & \textbf{Acción} \\
 				\hline
-					\texttt{siguiente} & Realiza una transición siguiente & \texttt{respuesta actualiza} & Actualiza la información en la vista de control. Esta es el frame y el slide actual de la presentación, el nivel del volumen, si está o no mostrado el live feed o algún mensaje de texto  \\ \cline{1-2}
+					\texttt{siguiente} & Realiza una transición siguiente & \texttt{respuesta actualiza} & Actualiza la información en la vista de control. La información está integrada por el frame y el slide actual, así como por el nivel del volumen, y si está o no mostrado el live feed o algún mensaje de texto  \\ \cline{1-2}
 				% \hline
-
 				% \hline
 					\texttt{anterior} & Realiza una transición anterior &   &  \\ \cline{1-2}
 				% \hline
 
 				% \hline
-					\texttt{volume} & Ajusta el volumen con el valor especificado en el contenido del mensaje &  &  \\ \cline{1-2}
+					\texttt{volumen} & Ajusta el volumen con el valor especificado en el contenido del mensaje &  &  \\ \cline{1-2}
 				% \hline	
 
 				% \hline
@@ -516,7 +515,9 @@
 			\end{table}	
 
 
-		En este capítulo se analizaron las definiciones que dieron origen a \textit{Beampress} y a \textit{Beampressk}, sus requerimientos, las soluciones que ofrecen y las tecnologías que se emplearon. También se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significaticas a la propuesta de este trabajo, siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. En el capítulo \ref{cha:fundamentos_conceptuales} se hablará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, y los conceptos principales en los que se basan.
+		En este capítulo se analizaron, de \textit{Beampress}, los conceptos de presentación, slide, slide item, overlay y contenido, así como las transiciones anterior y siguiente y la necesidad de una sintaxis extendida para definir cualquier función de transición. También se detallaron otras definiciones que pertenecen a \textit{Beampressk}, como vistas de presentación y de control, la capacidad de modificar y controlar la presentación, y la instantaneidad que se logra en la comunicación entre las dos vistas.
+
+		Seguidamente se detallan las implementaciones de \textit{Beampress}: un plugin de JQuery, y de \textit{Beampressk}: un servidor web implementado en Flask.
 
 
 	
