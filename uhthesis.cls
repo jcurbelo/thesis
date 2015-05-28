@@ -139,6 +139,7 @@
 
 \newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{definition}{Definici\'on}[chapter]
+\newtheorem{example}{Ejemplo}[chapter]
 
 \AtBeginDocument{%
   \hypersetup{pdftitle=\@title,pdfauthor=\@author}%

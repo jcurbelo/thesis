@@ -1,7 +1,10 @@
 %%%{{{ Comments and the like
 \usepackage{amsmath}
+\usepackage{multirow}
+% \usepackage{bera}
 \usepackage{acronym}
 \usepackage{bbm}
+\usepackage{subcaption}
 %%\usepackage{MnSymbol}
 %%\usepackage{turnstile}
 \usepackage[slide,ruled,algochapter,lined,vlined,linesnumbered]{algorithm2e}
@@ -64,13 +67,13 @@
 	% scripts
 	</script, <script,
   % More tags...
-  <canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video>, <image, </image>, </section, <section, <span, </span, <h1, </h1
+  <canvas, /canvas>, <svg, <rect, <animateTransform, </rect>, </svg>, <video, <source, <iframe, </iframe>, </video, </video>, <image, </image>, </section, <section, <span, </span, <h1, </h1, </ul, <ul, </ul>, </li, <li, </li>, </header, <header, </header>, </footer, <footer, </footer>, </img, <img, </img>, </audio, <audio, </audio>
   },
   ndkeywords={
   % General
   =,
   % HTML attributes
-  charset=, src=, id=, width=, height=, style=, type=, rel=, href=, class=, data-onslide=, data-onstyle=,
+  charset=, src=, id=, width=, height=, style=, type=, rel=, href=, class=, data-onslide=, data-onstyle=, controls, alt=,
   % SVG attributes
   fill=, attributeName=, begin=, dur=, from=, to=, poster=, controls=, x=, y=, repeatCount=, xlink:href=,
   % CSS properties
@@ -84,15 +87,15 @@
 
 \lstset{%
   % General design
-  % backgroundcolor=\color{editorGray},
+  backgroundcolor=\color{editorGray},
   basicstyle={\small\ttfamily},   
   frame=l,
   % line-numbers
-  % xleftmargin={0.75cm},
-  % numbers=left,
-  % stepnumber=1,
-  % firstnumber=1,
-  % numberfirstline=true,	
+  xleftmargin={0.75cm},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numberfirstline=true,	
   % Code design
   identifierstyle=\color{black},
   keywordstyle=\color{blue}\bfseries,

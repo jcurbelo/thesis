@@ -3,244 +3,308 @@
 \label{cha:detalles_de_implementacion}
 	En este capítulo se explicará cómo fueron implementados \textit{Beampress} y \textit{Beampressk} tomando en cuenta los requerimientos vistos en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} y siguiendo las concepciones definidas en el capítulo anterior.
 
-	Cómo se especificó que la presentación tenía que estar en ámbito web, se aprovecharon las bondades de HTML5, CSS3 y Javascript para conformar las diapositivas separando contenido de forma. A continuación se detallan las características del plugin de JQuery \textit{beampress.js} vistas en la sección \ref{sec:beampress} y las implementaciones para las definiciones vistas en \ref{sec:definiciones_de_beampress}. 
+	Cómo se especificó que la presentación tenía que estar en ámbito web, se aprovecharon las bondades de HTML5 y CSS3 para conformar las diapositivas separando contenido de forma. A continuación se explica cómo estructurar una presentación y se detallan las características del plugin de JQuery \textit{beampress.js} que cumplen con las definiciones \ref{def:slide}. 
 
 	\section{Beampress} % (fold)
 	\label{sec:beampress_imp}
 	
 
-		 Para la implementación de \textit{beampress.js} se utlizó un patrón ``ligero'' como diseño de dicho plugin \cite{smashingmagazine} que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
+		Como se vió en la sección \ref{sec:beampress} para la implementación de \textit{beampress.js} se utlizó un  \textit{patrón ligero} como diseño de dicho plugin. 
 
-		\begin{itemize}
-			\item Uso de un punto y coma \textbf{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
-			\item Un objeto \textbf{defaults}, que tendrá las configuraciones iniciales del plugin
-			\item Un constructor sencillo para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
-			\item Posibilidad de extender las configuraciones (extender \textbf{defaults})
-			\item Un ligero \textit{wrapper} al constructor para evitar problemas como múltiples instancias
-		\end{itemize}
+		Para crear una presentación usando las definiciones del capítulo anterior se hace uso de los atributos de HTML5. Esto permite estructurar el contenido de las diapositivas usando una sintaxis semántica, en la fig. \ref{fig:main_container} se especifica donde van definidos los \textbf{frames} con código HTML.
 
-		Para crear una presentación usando las definiciones del capítulo anterior se hace uso de los atributos de HTML5. Esto permite estructurar el contenido de las diapositivas usando una sintaxis verbosa, en la fig. \ref{fig:main_container} se especifica donde van definidos los \textbf{frames} con código HTML.
 
-		\begin{figure}[htb]%
-			\begin{lstlisting}%
+		\subsection{Contenidos} % (fold)
+		\label{sub:contenidos}
+			Los contenidos de la presentación son cualquier elemento de HTML que se especifique, por ejemplo un \textit{párrafo} (\texttt{<p>}), una \textit{imagen} (\texttt{<img>}), un \textit{video} (\texttt{<video>}), un \textit{audio} (\texttt{<audio>}) o un \textit{canvas} (\texttt{<canvas>}). En la fig. \ref{fig:frames_html_content} se muestran ejemplos de contenidos en HTML.
 
-	<div class="main-container">
-    	<!-- Los Frames (contenido de la presentación) va aquí -->
-	</div>
-			\end{lstlisting}
-		\caption{Contenedor principal}
-		\label{fig:main_container}
-		\end{figure}		
+				\begin{figure}[htb]%
 
+					\begin{lstlisting}						
+<!-- Texto -->
+<p>Un texto</p>
+
+<!-- Imagen -->
+<img src="imagen.jpg" alt="imagen">
+
+<!-- Video -->
+<video src="video.mp4"></video>
+
+<!-- Audio -->
+<audio src="sound.mp3"></audio>		 							 					
+ 					 			
+
+					\end{lstlisting}
+					\caption{Contenidos de un frame en HTML}
+					\label{fig:frames_html_content}
+				\end{figure}	  
+		
+		% subsection contenidos (end)
+
+
+		\subsection{Overlays y Slide Items} % (fold)
+		\label{sub:slide_items}
+			Como se se vió en la definición \ref{def:slide_item}, un slide item es un contenido con un conjunto de overlays, para emplear la sintaxis de overlays vista en el ejemplo \ref{fig:overlay_set} se hace uso de los atributos \texttt{data} de HTML5, en este caso se definió el atributo \texttt{data-onslide}. Un slide item es un contenido de HTML con el atributo \texttt{data-onslide}, que tiene como valor el conjunto de overlays usando la sintaxis básica del ejemplo \ref{fig:overlay_set} o la sintaxis extendida vista en la sección \ref{sec:sintaxis_extendida}. Por ejemplo en la fig. se definen varios slide items usando la sintaxis básica.
+
+
+				\begin{figure}[htb]%
+					\begin{lstlisting}%
+
+<img data-onslide="1-" src="test.jpg" alt="test">
+<ul>
+    <li data-onslide="3-">Desde el slide 3 hasta el final</li>
+    <li data-onslide="4;6">En el slide 4 y 6</li>
+    <li data-onslide="5;8">En el slide 5 y 8</li>
+    <li data-onslide="3-5;7-8">Del 3 al 5 y del 7 al 8</li>
+</ul> 
+
+	
+					\end{lstlisting}
+					\caption{Forma de definir slide items con overlays en HTML5}
+					\label{fig:slide_items_html}
+				\end{figure}
+			Un slide item está mostrado en todos los slides si no tiene overlays, o sea, si un elemento HTML no tiene el atributo \texttt{data-onslide} se verá en todas las transiciones del frame al que pertenece; de tenerlo, se ocultará en todos los slides a no ser que sus overlays determinen otra cosa.
+
+
+			Para determinar los slides de un frame, \textit{beampress.js} primero analiza todos elementos HTML hijos de dicho frame y en dependencia de cada conjuntos de overlays, obtiene el menor y el mayor slide que son el primero y el último respectivamente. Para analizar cada overlay con la sintaxis básica, se utiliza la siguiente expresión regular: \texttt{/([1\textendash 9]\textbackslash d*)?(\textendash )?([1\textendash 9]\textbackslash d*)?/} para agrupar los límites inferior y superior, nótese que estos pueden no estar al igual que puede ser sólo un número sin \texttt{\textendash}. 
+
+			Un overlay es un objeto JSON con el mismo formato de la fig. \ref{fig:json_format} y teniendo en cuenta la definición \ref{def:new_overlay} determina una función de transición siguiente y una función de transición anterior para uno o varios slides. Beampress transforma la sintaxs básica en la sintaxis extendida de la sección \ref{sec:sintaxis_extendida}. 
+
+			Por ejemplo, si se tiene el siguiente conjunto de overlays: $$-2; 4$$ \textit{beampress.js} lo convierte en los overlays de la fig. \ref{fig:overlay_set_beampress}. Las funciones elementales vistas en el listado TAL se implementaron en \textit{beampress.js} de forma tal que modifican el atributo \texttt{opacity} del elemento en cuestión.
+
+				\begin{figure}[htb]%
+					\begin{lstlisting}%
+
+// Slide 1
+{"1":{"siguiente":{"func": "mostrar", "args": {}},
+      "anterior": {"func": "ocultar", "args": {}}}} 
+// Slide 2
+{"2":{"siguiente":{"func": "identidad", "args": {}},
+      "anterior": {"func": "identidad", "args": {}}}}  
+// Slide 3
+{"3":{"siguiente":{"func": "ocultar", "args": {}},
+      "anterior": {"func": "mostrar", "args": {}}}}  
+// Slide 4
+{"4":{"siguiente":{"func": "mostrar", "args": {}},
+      "anterior": {"func": "ocultar", "args": {}}}}                                       				
+	
+					\end{lstlisting}
+					\caption{Representación en beampress.js del conjunto de slides: \(-2; 4\)}
+					\label{fig:overlay_set_beampress}
+				\end{figure}			
+					
+		
+			
+			Hay que aclarar que si se definen los overlays usando la sintaxis extendida, \textit{beampress.js} parsea explícitamente el overlay para convertirlo en objeto JSON. Por ejemplo en la fig \ref{fig:extended_syntax_html} se muestran slide items que tienen definidos sus overlays con la sintaxis extendida.
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
+
+<!-- Slide 4 -->
+<span data-onslide='{
+    "4": {
+        "next": {
+            "func": "slowShowItem",
+            "args": {}
+        },
+        "prev": {
+            "func": "slowHideItem",
+            "args": {}
+        }
+    }}'>
+	Leve transición en el slide 4
+</span>
+
+<!-- Slide 2 -->
+<span data-onslide='{
+    "2": {
+        "next": {
+            "func": "slowShowItem",
+            "args": {}
+        },
+        "prev": {
+            "func": "slowHideItem",
+            "args": {}
+        }
+    }}'>
+	Leve transición en el slide 2
+</span>
+
+			
+				\end{lstlisting}
+				\caption{Uso de la sintaxis extendida en slide items.} 
+				\label{fig:extended_syntax_html}
+			\end{figure}
+
+			En la fig. \ref{fig:basic_and_extended_syntax_html} se exhibe un slide item que tiene especificado sus overlays usando la sintaxis extendida y la sintaxis básica.
+
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
+
+
+<span data-onslide='-2;{
+    "4": {
+        "next": {
+            "func": "slowShowItem",
+            "args": {}
+        },
+        "prev": {
+            "func": "slowHideItem",
+            "args": {}
+        }
+    }}'>
+	Hasta el slide 2 y luego en el slide 4
+</span>
+
+			
+				\end{lstlisting}
+				\caption{Uso de ambas sintaxis extendida en un slide item.} 
+				\label{fig:basic_and_extended_syntax_html}
+			\end{figure}			
+
+
+			Las funciones de transición \texttt{slowShowItem} y \texttt{slowHideItem} utilizadas en la fig. \ref{fig:extended_syntax_html} no son las elementales pero están definidas en \textit{beampress.js}, con el fin de cumplir los requerimientos de la sección \ref{sec:requirements} se implementaron otras funciones además de las elementales. Como invariante estas funciones reciben como argumento el selector DOM del elemento que modifican, a continuación se describe el efecto que produce cada una en el elemento que modifican:
+
+			\begin{itemize}
+				\item \texttt{addStyle(\$el, args)}: Agrega los estilos de CSS que recibe como argumentos
+				\item \texttt{removeStyle(\$el, args)}: Quita todos los estilos CSS definidos
+				\item \texttt{slowShowItem(\$el, args)}: Realiza un \texttt{animate} de JQuery incrementando la opacidad hasta el 100 PORCIENTO del elemento con el tiempo especificado en los argumentos
+				\item \texttt{slowHideItem(\$el, args)}: Realiza un \texttt{animate} de JQuery disminuyendo la opacidad del elemento con el tiempo especificado en los argumentos
+				\item \texttt{playAudio(\$el, args)}: Reproduce el audio en el tiempo y con el volumen especificados en los argumentos
+				\item \texttt{stopAudio(\$el, args)}: Detiene el audio
+				\item \texttt{playVideo(\$el, args)}: Reproduce el video en el tiempo y con el volumen especificados en los argumentos
+				\item \texttt{stopVideo(\$el, args)}: Detiene el video
+				\item \texttt{slowShowFrame(\$el, args)}: Similar a \texttt{slowShowItem} pero además establece el valor de \texttt{display} en \texttt{Blovk}
+				\item \texttt{slowHideFrame(\$el, args)}: Similar a \texttt{slowHideItem} pero además establece el valor \texttt{display} en \texttt{None}				
+			\end{itemize}
+			En el capítulo \ref{ch:extensibilidad} se explicará como se pueden agregar otras funciones que se definan así como el formato que deben tener.
+
+			En \textit{beampress.js} un \texttt{slide item} es un objeto de Javascript ~\cite{book:1047044} de tipo \texttt{SlideItem} con las siguientes propiedades:
+
+			\begin{itemize}
+			\label{it:slide_item}
+			 	\item \texttt{\$el}: selector JQuery del elemento HTML que representa
+			 	\item \texttt{overlays}: lista de todos los objetos JSON que definien sus overlays
+			 	\item función \texttt{next}: recibe el número del slide actual como argumento del frame mostrado, ejectua la función \textit{siguiente} cuyo nombre está determinado por el overlay que tiene como llave el slide del argumento 
+			 	\item función \texttt{prev}: recibe el número del slide actual como argumento del frame mostrado y ejectua la función \textit{anterior}			 	
+			 \end{itemize} 
+				
+		% subsection slide_items (end)	
 
 		\subsection{Frames} % (fold)
 		 \label{sub:frames}
 		 
 		  
-			Un \textit{frame} es un contenedor con la clase \textit{frame}, el orden con que se mostrarán cada uno es el mismo con el que se definan. En la fig. \ref{fig:frames_html} se muestran varios frames.
+			Un \textit{frame} es un contenedor con la clase \texttt{frame}, el orden en que se muestra cada uno es el mismo con el que se define. En la fig. \ref{fig:frames_html} se muestran varios frames.
 
 
 				\begin{figure}[htb]%
 					\begin{lstlisting}%
 
-		<div class="main-container">
-    		<section class="frame">Primer Frame</section>
-    		<section class="frame">Segundo Frame</section>
-    		<!-- ... -->
-    		<section class="frame">Enésimo Frame</section>
-		</div> 
+<section class="frame">Primer Frame</section>
+<section class="frame">Segundo Frame</section>
+<!-- ... -->
+<section class="frame">Enésimo Frame</section>
 					\end{lstlisting}
-					\caption{Forma de definir frames}
+					\caption{Forma de definir frames en HTML}
 					\label{fig:frames_html}
-				\end{figure}		
+				\end{figure}
+
+			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de Javascript de tipo \texttt{Frame} que hereda de \texttt{SlideItem} adquiriendo las propiedades vistas en el listado \ref{it:slide_item}. Para organizar la presentación \textit{beampress.js} analiza cada frame usando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items hijos del frame se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. 
+
+			Un objeto \texttt{Frame} tiene una lista de objetos \texttt{SlideItems} y sus funciones de transición o transiciones de entrada y salida por defecto se hacen alterando su atributo \texttt{display}, que en caso de estar mostrado es \texttt{Block} y en caso de estar oculto es \texttt{None}. Un frame hace su transición de salida cuando se visualizan todos sus slides y el siguiente (en caso de existir) realiza su transición de entrada. En la fig. \ref{fig:frame_html_slides} se muestra un frame con varios slide items.
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}%
+
+<section class="frame">
+	<h1>Frame</h1>
+	<span data-onslide="1-">Texto</span>
+	<span data-onslide="2-">Texto3</span>
+	<span data-onslide="3-">Texto4</span>
+</section>
+				\end{lstlisting}
+				\caption{Un frame en HTML con varios slide items}
+				\label{fig:frame_html_slides}
+			\end{figure}
+
+			Como se explicó anteriormente, el slide item \texttt{<h1>Frame</h1>} siempre estará visible en todos los slides del frame de la fig. \ref{fig:frame_html_slides} porque no tiene el atributo \texttt{data-onslide}, de hecho, no se crea ningún objeto \texttt{SlideItem} porque no está en los resultados del selector \texttt{\$("[data-onslide]")}.
+
+
+			En la sección \ref{sec:extensibilidad} se argumentó que un frame podía tener funciones de transición, en este caso, transición de entrada y salida. Usando la sintaxis extendida y los atributos \texttt{data-onshow} y \texttt{data-onhide} se puede efectuar dicha funcionalidad. En la fig. \ref{fig:frames_transitions} se muestran dos frames con transiciones de entrada y de salida.
+
+
+		\begin{figure}[htb]%
+			\begin{lstlisting}%
+
+<section data-onhide='{"func": "slowHideFrame", "args": {}}' class="frame"></section>
+<section data-onshow='{"func": "slowShowFrame", "args": {}}' class="frame"></section>
+			\end{lstlisting}
+		\caption{Transiciones entre frames}
+		\label{fig:frames_transitions}
+		\end{figure}	
+
+		El plugin \textit{beampress.js} realiza las transiciones de los frames de forma similar a la manera en que las realiza con los slide items, pero sin depender de un slide.
 		% subsection frames (end)
 
-		\subsection{Contenidos} % (fold)
-		\label{sub:contenidos}
-			Los contenidos de la presentación son cualquier elemento de HTML que se especifique, por ejemplo un \textit{párrafo} (\textit{<p>}), una \textit{imagen} (\textit{<img>}), un \textit{video} (\textit{<video>}), un \textit{audio} (\textit{<audio>}) o un \textit{canvas} (\textit{<canvas>}). En la fig. se definen los contenidos del frame mostrado en la fig. \ref{fig:frame_video_image}.
-
-				\begin{figure}[htb]%
-					\begin{lstlisting}%
-
-            <section class="frame">
-                <h1>Mostrando varios contenidos</h1>
-                <div class="frame-content">
-                    <div class="hfil">
-                        <div class="minipage">
-                            <video controls src="forrest_gump.mp4"></video>
-                        </div>
-                        <div class="minipage">
-                            <img height="280px" src="python.jpg" alt="">
-                        </div>                        
-                    </div>
-                    <div class="block">
-                        <header>Estándar</header>
-                        <div class="block-content">
-                            Bloque estándar
-                        </div>
-                    </div>
-                    <div class="block example">
-                        <header>Ejemplo</header>
-                        <div class="block-content">
-                            Bloque de ejemplo
-                        </div>
-                    </div>
-                    <div class="block alert">
-                        <header>Alert</header>
-                        <div class="block-content">
-                            Bloque alert
-                        </div>
-                    </div>                    
-                </div>
-                <footer class="clearfix">
-                    <div class="authors">
-                        <p>Jorge R. Curbelo Fernández</p>
-                    </div>
-                    <div class="topic"><p>Mostrando varios contenidos</p></div>
-                </footer>                
-            </section>
-					\end{lstlisting}
-					\caption{Un frame en HTML con contenidos}
-					\label{fig:frames_html}
-				\end{figure}	  
+		\subsection{Presentación} % (fold)
+		\label{sub:presentacion}
+			Todos los frames de la presentación tienen que estar contenidos dentro de un contenedor general, en la fig. \ref{fig:main_container} se define un contenedor con clase \texttt{main-container}.
 		
-		% subsection contenidos (end)
-
-		\subsection{Overlays y Slide Items} % (fold)
-		\label{sub:slide_items}
-			Como se definió en \ref{def:slide_item}, un \textbf{slide item} es un \textbf{contenido} con un \textbf{conjunto de overlays}, para emplear la sintaxis de overlays vista en la fig. \ref{fig:overlay_set} se hace uso de los atributos \textit{data} de HTML5, en este caso se definió el atributo \textit{data-onslide}. En la fig. \ref{fig:slide_items_html} se ejemplifican varios slide items.
-
-				\begin{figure}[htb]%
-					\begin{lstlisting}%
-
-		<div class="block-content">
-		    <ul>
-		        <li data-onslide="3-">Desde el intervalo 3 hasta el final</li>
-		        <li data-onslide="4;6">En el intervalo 4 y 6</li>
-		        <li data-onslide="5;8">En el intervalo 5 y 8</li>
-		        <li data-onslide="3-5;7-8">Del 3 al 5 y del 7 al 8</li>
-		    </ul>          
-		</div>	
-					\end{lstlisting}
-					\caption{Forma de definir slide items con overlays}
-					\label{fig:slide_items_html}
-				\end{figure}		
-		
-		% subsection slide_items (end)
-		y sus \textit{slide items} serían
-		todos los elementos HTML hijos de dicho \textit{frame} como se muestra en la Fig. \ref{fig:ex1}.	 
-
-		Las especificaciones de los intervalos con las animaciones se definen con el atributo \textit{data-onslide}; estas se realizan mediante la combinación de dos sintaxis distintas. La más sencilla, es la misma que se utiliza para definir los \textit{overlays} en Beamer \cite{overlay}, como se ve en la Fig. \ref{fig:ex1}. 
-	 
-
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
 
-	<section class="frame">
-		<h1>Hola, soy el frame 1!!!</h1>
-	    <span data-onslide="1-">Desde el intervalo 1 hasta el final.</span>
-	    <span data-onslide="2;4">Solamente en los intervalos 2 y 4.</span>
-	    <span data-onslide="1;2-4;7-">Desde el 1 hasta el 4 y desde el 7 hasta el final.</span>
-	    <span data-onslide="-3;5-8">Desde el 1 hasta el 3 y luego desde el 5 hasta el 8.</span>
-	</section>
-	<section class="frame">
-		<h1>Hola, soy el frame 2!!!</h1>
-	</section>
+<div class="main-container">
+	<!-- Los Frames van aquí -->
+</div>
 				\end{lstlisting}
-			\caption{Ejemplo de un frame con varios overlays y otro mostrando un saludo sin overlays. \label{fig:ex1}}
-			\end{figure}
-
-		Con esta sintaxis solo se modifica el valor \textit{opacity} de cada \textit{slide item} en el intervalo que le corresponda, o sea, no tendrán ninguna animación definida. Para esto se cuenta con la otra sintaxis que es un poco más compleja, pero es más explícita sobre lo que se quiere hacer y cuando. Cada intervalo se define mediante un JSON con el siguiente formato Fig. \ref{fig:ex2}:
-
-			\begin{figure}[htb]%
-				\begin{lstlisting}%
-				<span></span>
-	{"slide-number":{"next":{"func":"next-function-name", "args":{...}}, "prev": {"func":"prev-function-name", "args":{...}}}}		
-				\end{lstlisting}
-			\caption{
-				Formato JSON para un intervalo. 
-				\label{fig:ex2} }
-			\end{figure}
-
-			\begin{itemize}
-				\item \textbf{slide-number}: Número del intervalo
-				\item \textbf{next-function-name}: Nombre de la función de la transición ``siguiente'' del \textit{slide item}
-				\item \textbf{prev-function-name}: Nombre de la función de la transición ``anterior'' del \textit{slide item}			 	
-				\item \textbf{args}: Argumentos (en formato de JSON) que recibe la función  
-			\end{itemize}
+			\caption{Contenedor principal}
+			\label{fig:main_container}
+			\end{figure}				
 
 
-		De esta manera se puede determinar que tipo de función de animación se va a utilizar; beampress.js cuenta con algunas funciones básicas pero el usuario puede utilizar cualquiera que implemente como se verá en la sección \ref{sec:ext}. Nótese el uso de dos funciones: \textit{previous} y \textit{next}, esta es una forma de definir la función inversa de animación de cada \textit{slide item}, que es necesario para las transiciones \textit{previous}. Por ejemplo, si la transición \textit{next} de un \textit{slide item} es ``moverse a la derecha'', tiene sentido que su transición \textit{previous} o función inversa fuera ``moverse a la izquierda''. Nótese que queda a consideración del usuario determinar para cada función su inversa. En la Fig. \ref{fig:ex3} se muestra un ejemplo con la combinación de ambas sintaxis.
+			Como \textit{beampress.js} está basado en JQuery, para usarlo es necesario incluir alguna biblioteca de JQuery; un ejemplo completo de su uso se puede ver en la Fig. \ref{fig:ex5}
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
 
-	<section class="frame">
-		<h1>Usemos ambas sintaxis!!!</h1>
-	    <span data-onslide='1-2;{"4":{"next":{"func":"slowShowItem", "args":{}}, "prev": {"func":"slowHideItem", "args":{}}}}'>Desde el intervalo 1 hasta el 2 y luego aparezco en el 4 suavemente.</span>
-	    <span data-onslide="2;4">Solamente en los intervalos 2 y 4.</span>
-	    <span data-onslide='{"2":{"next":{"func":"slowShowItem", "args":{}}, "prev": {"func":"slowHideItem", "args":{}}}}'>Aparezco suavemente solamente en el intervalo 2.</span>
-	    <span data-onslide="-3;5-8">Desde el 1 hasta el 3 y luego desde el 5 hasta el 8.</span>
-	</section>				
-				\end{lstlisting}
-			\caption{
-				Ejemplo de uso de ambas sintaxis para definir animaciones con intervalos. 
-				\label{fig:ex3} }
-			\end{figure}
-
-		Otra ventaja de emplear esta sintaxis es la facilitación de la incorporación de videos y sonidos a la presentación, \textit{beampress.js} viene con funciones básicas para reproducir audio y videos; que estos a su vez se definen en el contenido como se muestra en la Fig. \ref{fig:ex4}
-
-			\begin{figure}[htb]%
-				\begin{lstlisting}%
-
-	<section class="frame">
-		<h1>Empleo de audio y sonido</h1>
-		<video src="example.mp4" data-onslide='{"1":{"next":{"func":"fadeInVideo", "args":{"currentTime": "30"}}, "prev": {"func":"fadeOutVideo", "args":{}}}}'></video>
-		<audio src="example.mp3" data-onslide='{"2":{"next":{"func":"fadeInAudio", "args":{"currentTime": "10"}}, "prev": {"func":"fadeOutAudio", "args":{}}}}'></audio>    
-	</section>				
-				\end{lstlisting}
-			\caption{
-				Ejemplo de uso de audio y sonido. 
-				\label{fig:ex4} }
-			\end{figure}		
-
-		Como \textit{beampress.js} está basado en JQuery, para usarlo es necesario incluir alguna biblioteca de JQuery; todo el contenido de la presentación debe estar incluida dentro de un contenedor general, un ejemplo completo de su uso se puede ver en la Fig. \ref{fig:ex5}
-
-			\begin{figure}[htb]%
-				\begin{lstlisting}%
-
-	<!DOCTYPE html>
-	<html>
-		<head>
-	    	<title>Ejemplo</title>
-		</head>
-		<body>
-			<div id="main-container">
-				<section class="frame">
-					<!-- Contenido del frame -->
-				</section>
-				<section class="frame">
-					<!-- Contenido del frame -->
-				</section>						
-			</div>
-		   <script src="js/jquery-1.10.2.min.js"></script>
-		   <script src="js/beampress.js"></script>
-		   <script>
-		       $(document).ready(function(){     
-		           $("#main-container").beampress();
-		        });
-		   </script>		
-		</body>
-	</html>			
+<!DOCTYPE html>
+<html>
+	<head>
+    	<title>Ejemplo</title>
+	</head>
+	<body>
+		<div id="main-container">
+			<section class="frame">
+				<!-- Contenido del frame -->
+			</section>
+			<section class="frame">
+				<!-- Contenido del frame -->
+			</section>						
+		</div>
+	   <script src="js/jquery-1.10.2.min.js"></script>
+	   <script src="js/beampress.js"></script>
+	   <script>
+	       $(document).ready(function(){     
+	           $("#main-container").beampress();
+	        });
+	   </script>		
+	</body>
+</html>			
 				\end{lstlisting}
 			\caption{
 				Ejemplo de presentación usando \textit{beampress.js}. 
 				\label{fig:ex5} }
 			\end{figure}	
 
-		El estilo de la presentación queda a manos del usuario, por lo que se requiere previos conocimientos 
-		de HTML, CSS y Javascript, lo cual constituye indudablemente una cierta desventaja. 
-
+			El estilo de la presentación queda a manos del usuario, por lo que se requiere previos conocimientos de HTML, CSS y Javascript, lo cual constituye indudablemente una cierta desventaja. 
+		% subsection presentación (end)
 	% section beampress (end)
+
+	\section{Beampressk} % (fold)
+	\label{sec:beampressk_imp}
+	
+	% section beampressk (end)
 		
 % chapter detalles_de_implementacion (end)
