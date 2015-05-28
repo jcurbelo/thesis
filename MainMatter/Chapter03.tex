@@ -180,7 +180,7 @@
 				\item \texttt{playVideo(\$el, args)}: Reproduce el video en el tiempo y con el volumen especificados en los argumentos
 				\item \texttt{stopVideo(\$el, args)}: Detiene el video
 				\item \texttt{slowShowFrame(\$el, args)}: Similar a \texttt{slowShowItem} pero además establece el valor de \texttt{display} en \texttt{Blovk}
-				\item \texttt{slowHideFrame(\$el, args)}: Similar a \texttt{slowHideItem} pero además establece el valor \texttt{display} en \texttt{None}				
+				\item \texttt{slowHideFrame(\$el, args)}: Similar a \texttt{slowHideItem} pero además establece el valor \texttt{display} en \texttt{none}				
 			\end{itemize}
 			En el capítulo \ref{ch:extensibilidad} se explicará la manera en que se pueden agregar otras funciones que se definan, así como el formato que deben tener.
 
@@ -217,9 +217,9 @@
 
 			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de Javascript de tipo \texttt{Frame} que hereda de \texttt{SlideItem} para adquirir las propiedades vistas en el listado \ref{it:slide_item}. 
 
-			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame usando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items hijos del frame se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. 
+			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame empleando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items de un frame, o sea, todos los elementos HTML hijos de un contenedor frame, se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. Las instancias de \texttt{Frame} son almacenadas en una lista y en todo momento se sabe qué frame está mostrado y en qué slide se encuentra con los índices \texttt{currentFrame} y \texttt{currentSlide} respectivamente.
 
-			Un objeto \texttt{Frame} tiene una lista de objetos \texttt{SlideItems}. Sus funciones de transición o transiciones de entrada y salida por defecto se hacen alterando su atributo \texttt{display}, que en caso de estar mostrado es \texttt{Block} y en caso contrario es \texttt{None}. Un frame hace su transición de salida cuando se visualizan todos sus slides y el siguiente (en caso de existir) realiza su transición de entrada. En la fig. \ref{fig:frame_html_slides} se muestra un frame con varios slide items.
+			Un objeto \texttt{Frame} tiene una lista de objetos \texttt{SlideItems}. Sus funciones de transición o transiciones de entrada y salida por defecto se hacen alterando su atributo \texttt{display}, que en caso de estar mostrado es \texttt{block} y en caso contrario es \texttt{none}. Un frame hace su transición de salida cuando se visualizan todos sus slides y el siguiente (en caso de existir) realiza su transición de entrada. En la fig. \ref{fig:frame_html_slides} se muestra un frame con varios slide items.
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
@@ -310,7 +310,44 @@
 
 	\section{Beampressk} % (fold)
 	\label{sec:beampressk_imp}
-	
+		Se implementó una aplicación de \textit{Flask} para manejar todos los pedidos que el servidor web recibe usando el protocolo Web Server Gateway Interface (WSGI). La instancia de la aplicación es un objeto de clase \textit{Flask}. 
+		
+		\subsection{Estructura de la aplicación} % (fold)
+		\label{sub:estructura_de_la_aplicacion}
+			\begin{figure}[htb]%
+				\dirtree{%
+				.1 beampressk.
+				.2 static \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Todos los recursos se localizan aquí}{.}
+								\end{minipage}.
+				.3 css.
+				.4 warsaw{.}css \ldots{} \begin{minipage}[t]{8cm}
+									\textit{CSS para el estilo de Warsaw}{.}
+								\end{minipage}.	
+				.3 js.
+				.4 beampress{.}js \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Plugin de Beampress}{.}
+								\end{minipage}.
+				.2 templates.
+				.3 nombre\_de\_pres \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Ejemplo de una presentación}{.}
+								\end{minipage}.
+				.4 index{.}html.
+				.3 warsaw\_base{.}html \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Template base para todas las presentaciones con estilo Warsaw}{.}
+								\end{minipage}.
+				.3 index{.}html \ldots{} \begin{minipage}[t]{8cm}
+									\textit{Template de la vista de control}{.}
+								\end{minipage}.	
+				.2 app{.}py \ldots{} \begin{minipage}[t]{8cm}
+									\textit{La aplicación de Flask}{.}
+								\end{minipage}.				
+				}
+
+			\caption{Estructura de Beampressk}
+			\label{fig:beampressk_structure}
+			\end{figure}		
+		% subsection estructura_de_la_aplicación (end)	
 	% section beampressk (end)
 
 	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccinal utilizando Websocket.

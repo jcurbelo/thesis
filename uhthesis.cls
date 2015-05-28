@@ -72,7 +72,7 @@
 \renewcommand{\backrefalt}[4]{%
   \ifcase #1 \relax%
   \or (Citado en la p\'agina~#2).%
-  \else (Citado en las \'apginas~#2).%
+  \else (Citado en las p\'aginas~#2).%
   \fi%
 }
 \btxifchangecaseoff
