@@ -146,7 +146,6 @@
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
 
-
 <span data-onslide='-2;{
     "4": {
         "next": {
@@ -413,7 +412,7 @@ def index():
 			\label{ssub:mensajes_de_comunicacion}
 				Para establecer la comunicación entre la vista de control y la vista de presentaciones se usan los mensajes de \textit{SocketIO}. Estos mensajes son registrados con \textit{Flask-SocketIO} de forma similar a la manera en que registra las \textit{rutas} con funciones en Python. 
 
-				De esta manera \textit{Bemampressk} hace de intermediario entre la vista de control y la vista de presentación. En la fig. \ref{fig:control_view_msgs} y \ref{fig:presentation_view_msgs} se muestra el uso de los mensajes definidos de la tabla \ref{tab:messages} en la parte cliente y en la fig. TAL en la parte servidor.
+				De esta manera la aplicación de \textit{Flask} funciona como intermediaria entre la vista de control y la vista de presentación. Los mensajes definidos en la tabla \ref{tab:messages} se muestran en la fig. \ref{fig:control_view_msgs} y \ref{fig:presentation_view_msgs} para la parte cliente y en la fig. \ref{fig:server_msgs} para la parte servidor.
 
 
 			\begin{figure}[htb]%
@@ -441,15 +440,30 @@ socket.emit('live_feed');
 socket.emit('hide_msg');
   
 				\end{lstlisting}
-			\caption{Mensajes en la vista de control}
+			\caption{Mensajes de comunicación en la vista de control}
 			\label{fig:control_view_msgs}
 			\end{figure}
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}[language=JavaScript]%
 
-// Mensaje 'respuesta actualiza'
-socket.emit('update_info', {data: <información>});
+// Mensaje 'siguiente'
+socket.on('next_response', function() {
+	// Transición siguiente
+	next();
+	// Mensaje 'respuesta actualiza'
+	socket.emit('update_info', {data: <información>});
+});
+
+
+// Mensaje 'anterior'
+socket.on('prev_response', function() {
+	// Transición anterior
+	prev();
+	// Mensaje 'respuesta actualiza'
+	socket.emit('update_info', {data: <información>});
+});
+
 
 //Mensaje 'volumen'
 socket.on('volume_response', function(msg) {
@@ -472,15 +486,57 @@ socket.on('hide_msg_response', function (){
 }); 
   
 				\end{lstlisting}
-			\caption{Mensajes en la vista de presentación}
+			\caption{Mensajes de comunicación en la vista de presentación}
 			\label{fig:presentation_view_msgs}
-			\end{figure}			
+			\end{figure}
 
-			
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=Python]%
+
+# Mensaje respuesta actualiza
+@socketio.on('update_info', namespace='/beampressk')
+def beampressk_update_info(message):
+    data = message.get('data', {})
+    emit('response', {'data': data}, broadcast=True)
+
+# Mensaje siguiente
+@socketio.on('next', namespace='/beampressk')
+def beampressk_next():
+    emit('next_response', broadcast=True)
+
+# Mensaje anterior
+@socketio.on('prev', namespace='/beampressk')
+def beampressk_prev():
+    emit('prev_response', broadcast=True)
+
+# Mensaje volumen
+@socketio.on('volume', namespace='/beampressk')
+def beampressk_volume(message):
+    emit('volume_response', {'data': message.get('data', {})}, broadcast=True)
+
+# Mensaje live feed
+@socketio.on('live_feed', namespace='/beampressk')
+def beampressk_live_feed():
+    emit('live_feed_response', broadcast=True)
+
+# Mensaje message
+@socketio.on('hide_msg', namespace='/beampressk')
+def beampressk_hide_msg():
+    emit('hide_msg_response', broadcast=True)
+  
+				\end{lstlisting}
+			\caption{Mensajes de comunicación en el servidor}
+			\label{fig:server_msgs}
+			\end{figure}							
+
 			% subsubsection mensajes (end)		
 
 		\subsection{Live Feed} % (fold)
 		\label{sub:live_feed}
+
+			La captura multimedia HTML (audio y video) se realiza con la API \texttt{getUserMedia()} que funciona en combinación con los tags de HTML5 \texttt{<audio>} y \texttt{<video>}. El primer parámetro de \texttt{getUserMedia()} es para especificar el tipo de medio al que se quiere acceder. Por ejemplo, si se quiere solicitar la cámara web, el primer parámetro debe ser \texttt{video}. Para usar tanto el micrófono como la cámara, se utiliza \texttt{video, audio}.
+
+			Como se observó en las fig. \ref{fig:presentation_view_msgs}, \ref{fig:control_view_msgs} y \ref{fig:server_msgs} se puede activar o desactivar un live feed mediante los mensajes de Websocket. A contiunación se explicará el uso de esta funcionalidad a través de otro servicio web, así como la incorporación de otros contenidos en la presentación utilizando las rutas de la aplicación en \textit{Flask}.
 		
 		% subsection live_feed (end)
 		
@@ -488,7 +544,33 @@ socket.on('hide_msg_response', function (){
 
 		\subsection{API REST} % (fold)
 		\label{sub:api_rest}
-		
+			En la sección TAL se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia solo funciona adecuadamente cuando el servidor web que ejecuta la aplicación de \textit{Flask} no es \textit{multi hilos}. Esto es factible ya que \textit{Beampressk} no un servidor web en producción, con una gran cantidad de accesos.
+
+			Para efectuar un método POST y emitir un mensaje de Websocket se usa la función de la fig. \ref{fig:post_method}. De esta manera se puede activar el live feed o mostrar mensajes de texto que se envíen en el pedido.
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=Python]%
+
+# pedidos RESTfuls
+
+# POST
+@app.route('/action', methods=['POST'])
+def beampressk_emit_task():
+    action = request.json['action']
+    if action == 'live_feed':
+        socketio.emit('live_feed_response', namespace='/beampressk')
+    elif action == 'msg':
+        data = request.json['data']
+        socketio.emit('msg', {'data': data}, namespace='/beampressk')
+    return jsonify({'action': action}), 200  
+  
+				\end{lstlisting}
+			\caption{Método POST}
+			\label{fig:post_method}
+			\end{figure}			
+
+			
+			
 		% subsection api_rest (end)	
 	% section beampressk (end)
 
