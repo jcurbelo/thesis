@@ -68,11 +68,21 @@ function decreaseHeight($el, args){
 		El servidor web \textit{Beampressk} brinda la posibilidad de establecer una comunicación bidireccional entre las vistas de control y presentación, además garantiza la interoperabilidad con otros servicios web como se vió en la sección \ref{sec:beampressk_imp}. En esta sección se argumentará cómo puede realizar las acciones en el lado cliente que se especifiquen mediante un pedido POST.
 
 
-		En la sección \ref{ssub:mensajes_de_comunicacion} se detallaron los mensajes de comunicación de Websocket entre las vistas de \textit{Beampress} (lado cliente) y su aplicación de \textit{Flask} (lado servidor). También se vio en la fig. TAL la forma de interactuar con las mismas utilizando un pedido POST. 
+		En la sección \ref{ssub:mensajes_de_comunicacion} se detallaron los mensajes de comunicación de Websocket entre las vistas de \textit{Beampress} (lado cliente) y su aplicación de \textit{Flask} (lado servidor). También se vio en la fig. \ref{fig:curl_post} la forma de interactuar con las mismas utilizando un pedido POST. 
 
 		Una acción que se quiera efectuar en el lado cliente puede ser una función de JavaScript. La definición de dicha función puede ser enviada como cadena de texto al servidor para ser emitida como mensaje de Websocket. El cliente que reciba el mensaje con la información de la función la interpeta y la ejecuta. 
 
-		En la fig. TAL se muestra un pedido POST que tiene como contenido una función de JavaScript en forma de texto. Esta función será ejecutada en el cliente que reciba dicha cadena de texto. 
+		En la fig. \ref{fig:java_post} se muestra un pedido POST usando \texttt{curl} que tiene como contenido una función anónima de JavaScript en forma de texto. Esta función será ejecutada por cliente que reciba dicha cadena de texto en el momento que determine. 
+
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=Python]%
+
+$ curl -i -H "Content-Type: application/json" -X POST -d '{"action":"function", "data":"var miFuncion = function(){/*Código que se quiera ejecutar*/};"}' http://beampressk.com:5000/action
+  
+				\end{lstlisting}
+			\caption{Método POST con una función de JavaScript}
+			\label{fig:java_post}
+			\end{figure}		
 
 	% section beampressk (end)
 	

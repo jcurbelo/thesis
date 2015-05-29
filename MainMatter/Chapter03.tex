@@ -557,7 +557,7 @@ def beampressk_hide_msg():
 		\label{sub:api_rest_imp}
 			En la sección \ref{sub:api_rest} se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia solo funciona adecuadamente cuando el servidor web que ejecuta la aplicación de \textit{Flask} no es \textit{multi hilos}. Esto es factible ya que \textit{Beampressk} no un servidor web en producción, con una gran cantidad de accesos.
 
-			Para efectuar un método POST y emitir un mensaje de Websocket se usa la función de la fig. \ref{fig:post_method}. De esta manera se puede activar el live feed o mostrar mensajes de texto que se envíen en el pedido.
+			Para efectuar un método POST y emitir un mensaje de Websocket se usa la función de la fig. \ref{fig:post_method}. De esta manera se puede activar el live feed o mostrar mensajes de texto que se envíen en el pedido. En la fig. \ref{fig:curl_post} se efectúa un pedido POST usando \texttt{curl}.
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}[language=Python]%
@@ -580,6 +580,15 @@ def beampressk_emit_task():
 			\label{fig:post_method}
 			\end{figure}			
 
+			\begin{figure}[htb]%
+				\begin{lstlisting}[language=Python]%
+
+$ curl -i -H "Content-Type: application/json" -X POST -d '{"action":"msg", "data":"Este es un mensaje de texto"}' http://beampressk.com:5000/action
+  
+				\end{lstlisting}
+			\caption{Método POST usando curl}
+			\label{fig:curl_post}
+			\end{figure}
 			
 			
 		% subsection api_rest (end)	
