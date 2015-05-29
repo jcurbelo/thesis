@@ -1,43 +1,79 @@
 %!TEX root = ../thesis.tex
 \chapter{Extensibilidad} % (fold)
 \label{cha:extensibilidad}
-	Se pueden sobreescribir o añadir nuevas opciones a \textit{beampress.js}; estas son
-	las funciones de animación y los índices de los intervalos. Por ejemplo, si se quisiera
-	añadir una nueva función se debe hacer lo siguiente, Fig. \ref{fig:ex6}
+ 	En este capítulo se argumentarán las formas de agregar funcionalidades nuevas a las propuestas de este trabajo. En la sección \ref{sec:beampress_extended} se explicará cómo se puede extender el conjunto de funciones de animación de \textit{Beampress} y la manera de especificar sus configuraciones. Seguidamente, en la sección \ref{sec:beampressk_extended} se mostrará una forma genérica de agregar funcionalidades para la API REST que provee \textit{Beampressk}.  
 
 	\section{Beampress} % (fold)
-	\label{sec:beampress}
-		El plugin \textit{beampress.js} tiene un diccionario \texttt{}
-	% section beampress (end)
+	\label{sec:beampress_extended}
+		En esta sección se detallarán las características de las funciones de animación que se quieran utilizar para realizar transiciones con los elementos de la presentación. También se explicará la forma de añadirlas al plugin \textit{beampress.js} y los valores del mismo que se pueden modificar.
 
-	\section{Beampressk} % (fold)
-	\label{sec:beampressk}
-	
-	% section beampressk (end)
+		Una función de animación en \textit{Beampress} es una función de JavaScript y sus argumentos tienen que ser los siguientes:
+
+		\begin{itemize}
+			\item \texttt{\$el}: selector del objeto DOM que modifica
+			\item \texttt{args}: diccionario de los parámetros a utilizar en el cuerpo de la función
+		\end{itemize}
+
+		En la fig.\ref{fig:javascript_animation} se muestra una función de animación definida con los argumentos anteriormente vistos usando JQuery.
+
+		\begin{figure}[htb]%
+			\begin{lstlisting}{language=JavaScript}%
+function increaseHeight($el, args){
+    $el.animate({
+    	'height': $el.height() + args['height'] 
+    	}, 
+    	args['speed']);
+}
+
+function decreaseHeight($el, args){
+    $el.animate({
+    	'height': $el.height() - args['height'] 
+    	}, 
+    	args['speed']);
+}      
+			\end{lstlisting}
+		\caption{Ejemplo de una función de animación en JavaScript.} 
+		\label{fig:javascript_animation} 
+		\end{figure}		
+
+
+		El plugin \textit{beampress.js} provee un diccionario \texttt{options} donde contiene todas las funciones de transición y los índices del frame y del slide actual. Los valores de dicho diccionario pueden ser extendidos en el constructor del plugin para dar la posibilidad de incorporar nuevas funciones que se definan, así como establecer el frame y el slide donde va a comenzar una presentación.
+
+		En la fig. \ref{fig:extending_beampress} se muestra la forma de incorporar a \textit{beampress.js} las funciones de la fig. \ref{fig:javascript_animation}, y la manera de comenzar una presentación en el frame 2 y en el slide 4. 
 
 		\begin{figure}[htb]%
 			\begin{lstlisting}%
 
-
 <script>
-   $(document).ready(function(){
-       	/**
-		 * Las funciones deben tener este formato
-		 * @param $el: Selector del elemento HTML  
-		 * @param args: Diccionario de los parámetros
-		 */
-   		function myAnimation($el, args){
-   			// Función de animación 
-   		}     
+   $(document).ready(function(){ 
        $("#main-container").beampress({
-       		"myAnimation": myAnimation
+       		"increaseHeight": increaseHeight,
+       		"decreaseHeight": decreaseHeight,
+       		"currentFrame": 2,
+       		"currentSlide": 4
        	});
     });
 </script>
 
 			\end{lstlisting}
-		\caption{
-			Añadiendo una nueva función de animación. 
-			\label{fig:ex6} }
-		\end{figure}	
+		\caption{Forma de extender \texttt{options}.} 
+		\label{fig:extending_beampress}
+		\end{figure}
+
+		En la siguiente sección se menciona una forma genérica para especificar acciones con la API REST que provee \textit{Beampressk}. 
+	% section beampress (end)
+
+	\section{Beampressk} % (fold)
+	\label{sec:beampressk_extended}
+		El servidor web \textit{Beampressk} brinda la posibilidad de establecer una comunicación bidireccional entre las vistas de control y presentación, además garantiza la interoperabilidad con otros servicios web como se vió en la sección \ref{sec:beampressk_imp}. En esta sección se argumentará cómo puede realizar las acciones en el lado cliente que se especifiquen mediante un pedido POST.
+
+
+		En la sección \ref{ssub:mensajes_de_comunicacion} se detallaron los mensajes de comunicación de Websocket entre las vistas de \textit{Beampress} (lado cliente) y su aplicación de \textit{Flask} (lado servidor). También se vio en la fig. TAL la forma de interactuar con las mismas utilizando un pedido POST. 
+
+		Una acción que se quiera efectuar en el lado cliente puede ser una función de JavaScript. La definición de dicha función puede ser enviada como cadena de texto al servidor para ser emitida como mensaje de Websocket. El cliente que reciba el mensaje con la información de la función la interpeta y la ejecuta. 
+
+		En la fig. TAL se muestra un pedido POST que tiene como contenido una función de JavaScript en forma de texto. Esta función será ejecutada en el cliente que reciba dicha cadena de texto. 
+
+	% section beampressk (end)
+	
 % chapter extensibilidad (end)

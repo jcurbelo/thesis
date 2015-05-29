@@ -174,7 +174,7 @@
 			\begin{itemize}
 				\item \texttt{addStyle(\$el, args)}: Agrega los estilos de CSS que recibe como argumentos
 				\item \texttt{removeStyle(\$el, args)}: Elimina todos los estilos CSS definidos
-				\item \texttt{slowShowItem(\$el, args)}: Realiza un \texttt{animate} de JQuery incrementando la opacidad hasta el 100 PORCIENTO del elemento con el tiempo especificado en los argumentos
+				\item \texttt{slowShowItem(\$el, args)}: Realiza un \texttt{animate} de JQuery incrementando la opacidad hasta el 100 \% del elemento con el tiempo especificado en los argumentos
 				\item \texttt{slowHideItem(\$el, args)}: Realiza un \texttt{animate} de JQuery disminuyendo la opacidad del elemento con el tiempo especificado en los argumentos
 				\item \texttt{playAudio(\$el, args)}: Reproduce el audio en el tiempo y con el volumen especificados en los argumentos
 				\item \texttt{stopAudio(\$el, args)}: Detiene el audio
@@ -221,7 +221,7 @@
 
 			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame empleando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items de un frame, o sea, todos los elementos HTML hijos de un contenedor frame, se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. Las instancias de \texttt{Frame} son almacenadas en una lista y en todo momento se sabe qué frame está mostrado y en qué slide se encuentra con los índices \texttt{currentFrame} y \texttt{currentSlide} respectivamente.
 
-			Un objeto \texttt{Frame} tiene una lista de objetos \texttt{SlideItems}. Sus funciones de transición o transiciones de entrada y salida por defecto se hacen alterando su atributo \texttt{display}, que en caso de estar mostrado es \texttt{block} y en caso contrario es \texttt{none}. Un frame hace su transición de salida cuando se visualizan todos sus slides y el siguiente (en caso de existir) realiza su transición de entrada. En la fig. \ref{fig:frame_html_slides} se muestra un frame con varios slide items.
+			Un objeto \texttt{Frame} tiene una lista de objetos \texttt{SlideItem}. Sus funciones de transición o transiciones de entrada y salida por defecto se hacen alterando su atributo \texttt{display}, que en caso de estar mostrado es \texttt{block} y en caso contrario es \texttt{none}. Un frame hace su transición de salida cuando se visualizan todos sus slides y el siguiente (en caso de existir) realiza su transición de entrada. En la fig. \ref{fig:frame_html_slides} se muestra un frame con varios slide items.
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
@@ -324,7 +324,7 @@
 		\subsection{Estructura de la aplicación} % (fold)
 		\label{sub:estructura_de_la_aplicacion}
 			Todas las vistas que se definieron en la sección \ref{sec:definiciones_de_beampressk} se conforman usando el sistema de templates \textit{Jinja2}, en la fig. \ref{sub:estructura_de_la_aplicacion} se muestra la ubicación de cada template.
-			Para interpretar las presentaciones, o sea, interpretar los frames, slides, slide items, overlays y las funciones de transición se usa el plugin \textit{beampress.js} cuyas características se argumentaron en la sección anterior. El uso de \textit{SocketIO} ~\cite{socketio} se realiza con la biblioteca \textit{socket.io..min.js}, y para eliminar los 300ms de espera en los navegadores móviles desde el momento en que se toca un botón para disparar el evento \texttt{click}, se usa \texttt{fastclick.js} ~\cite{fastclick}. La razón de este retraso es que el navegador está esperando para determinar si se hace un doble click ~\cite{fior}.
+			Para interpretar las presentaciones, o sea, interpretar los frames, slides, slide items, overlays y las funciones de transición se usa el plugin \textit{beampress.js} cuyas características se argumentaron en la sección anterior. El uso de \textit{SocketIO} ~\cite{socketio} se realiza con la biblioteca \textit{socket.io.min.js}, y para eliminar los 300ms de espera en los navegadores móviles desde el momento en que se toca un botón para disparar el evento \texttt{click}, se usa \texttt{fastclick.js} ~\cite{fastclick}. La razón de este retraso es que el navegador está esperando para determinar si se hace un doble click ~\cite{fior}.
 			\begin{figure}[htb]%
 				\dirtree{%
 				.1 beampressk.
@@ -372,7 +372,7 @@
 			Por convenio un template de presentación debe llamarse \texttt{index.html} y estar dentro de una carpeta con el nombre de la presentación contenida en el directorio \texttt{templates} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion}. Para mostrar cada presentación se usa la siguiente URL: \\
 			\texttt{beampressk.com/presentation/nombre\textendash de\textendash presentacion} y esta es intepretada por la aplicación de \textit{Flask} (\texttt{app.py}) con la función \texttt{show} de la fig.\ref{fig:presentation_routes}.
 
-			Si el servidor tiene varios clientes y al mismo tiempo acceden a la misa URL de una presentación, esta se visualizará simultáneamente en varios dispositivos. 
+			La presentación será visualizada en varios clientes si estos acceden a la misma URL que la representa. 
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}[language=Python]%
@@ -402,8 +402,16 @@ def index():
 				\end{lstlisting}
 			\caption{Ruta para la vista de control}
 			\label{fig:control_view_code}
-			\end{figure}			
-		
+			\end{figure}
+
+			En la fig. \ref{fig:control} se muestra la vista de control visualizada en un dispositivo móvil.
+
+			\begin{figure}[tb]
+				\centering
+				\includegraphics[width=6cm]{img/control}
+				\caption{Ejemplo de la vista de control visualizada en un dispositivo móvil}
+				\label{fig:control}
+			\end{figure}						
 		% subsection vista_de_control (end)
 
 		\subsection{Websocket} % (fold)
@@ -413,7 +421,7 @@ def index():
 
 			\subsubsection{Mensajes de comunicación} % (fold)
 			\label{ssub:mensajes_de_comunicacion}
-				Para establecer la comunicación entre la vista de control y la vista de presentaciones se usan los mensajes de \textit{SocketIO}. Estos mensajes son registrados con \textit{Flask-SocketIO} de forma similar a la manera en que registra las \textit{rutas} con funciones en Python. 
+				Para establecer la comunicación entre la vista de control y la vista de presentación se usan los mensajes de \textit{SocketIO}. Estos mensajes son registrados con \textit{Flask-SocketIO} de forma similar a la manera en que registra las \textit{rutas} con funciones de Python. 
 
 				De esta manera la aplicación de \textit{Flask} funciona como intermediaria entre la vista de control y la vista de presentación. Los mensajes definidos en la tabla \ref{tab:messages} se muestran en la fig. \ref{fig:control_view_msgs} y \ref{fig:presentation_view_msgs} para la parte cliente y en la fig. \ref{fig:server_msgs} para la parte servidor.
 
@@ -537,9 +545,9 @@ def beampressk_hide_msg():
 		\subsection{Live Feed} % (fold)
 		\label{sub:live_feed}
 
-			La captura multimedia HTML (audio y video) se realiza con la API \texttt{getUserMedia()} que funciona en combinación con los tags de HTML5 \texttt{<audio>} y \texttt{<video>}. El primer parámetro de \texttt{getUserMedia()} es para especificar el tipo de medio al que se quiere acceder. Por ejemplo, si se quiere solicitar la cámara web, el primer parámetro debe ser \texttt{video}. Para usar tanto el micrófono como la cámara, se utiliza \texttt{video, audio}.
+			La captura multimedia HTML (audio y video) se realiza con la API \texttt{getUserMedia()} que funciona en combinación con los tags de HTML5 \texttt{<audio>} y \texttt{<video>}. El primer parámetro de \texttt{getUserMedia()} especifica el tipo de medio al que se quiere acceder. Por ejemplo, si se quiere solicitar la cámara web, el primer parámetro debe ser \texttt{video}. Para usar tanto el micrófono como la cámara, se utiliza \texttt{video, audio}.
 
-			Como se observó en las fig. \ref{fig:presentation_view_msgs}, \ref{fig:control_view_msgs} y \ref{fig:server_msgs} se puede activar o desactivar un live feed mediante los mensajes de Websocket. A contiunación se explicará el uso de esta funcionalidad a través de otro servicio web, así como la incorporación de otros contenidos en la presentación utilizando las rutas de la aplicación en \textit{Flask}.
+			Como se observó en las fig. \ref{fig:control_view_msgs}, \ref{fig:presentation_view_msgs} y \ref{fig:server_msgs} se puede activar o desactivar un live feed mediante los mensajes de Websocket. A contiunación se explicará el uso de esta funcionalidad a través de otro servicio web, así como la incorporación de otros contenidos en la presentación utilizando las rutas de la aplicación en \textit{Flask}.
 		
 		% subsection live_feed (end)
 		
@@ -577,7 +585,7 @@ def beampressk_emit_task():
 		% subsection api_rest (end)	
 	% section beampressk (end)
 
-	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccinal utilizando Websocket.
+	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte, de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccinal utilizando Websocket.
 
 	Seguidamente se mostrará cómo pude definirse cualquier función de animación en Javascript, vinculándose a \textit{Beampress}, así como una forma genérica de agregar funcionalidades para la API REST que provee \textit{Beampressk}.
 		
