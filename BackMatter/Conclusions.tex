@@ -1,9 +1,11 @@
 % Conclusions
-
+%!TEX root = ../thesis.tex
 \begin{conclusions}
 
-	Beampress es un sistema para hacer diapositivas que se basa en HTML5, CSS3 y JavaScript, que separa contenido de forma, dispone de múltiples animaciones, es web y permite la creación de diapositivas con independencia del mouse. Es extensible, ya que permite añadir nuevas funciones de animación a las opciones del plugin beampress.js.
+	Beampress es un sistema para hacer diapositivas basadas en HTML5, CSS3 y JavaScript. Las ventajas de su implementación se explican a través de sus características, como el hecho de que las diapositivas se encuentren en ámbito web, lo cual determina que se estructuren con HTML proporcionando la capacidad de separar contenido de forma. Además dispone de múltiples animaciones y permite añadir nuevas funciones de animación a las opciones del plugin \textit{beampress.js}, dado su poder de extensibilidad.
 
-	Se implementó un servidor en Flask para controlar las diapostivas, con determinadas vistas. Permite agregar todas las vistas que se requiera, y este servidor, además, funciona como una API REST que posibilita mostrar el livefeed donde aparece la persona detrás de la presentación. Al mismo tiempo, ofrece la opción de mostrar cualquier información que se necesite en un momento determinado, como por ejemplo los mensajes o respuestas del Proyecto Delta y reorganizar el flujo de la presentación.
+	Beampressk, que es un servidor implementado en Flask, ofrece varias posibilidades. Permite el control de la presentación mediante una comunicación instantánea que logra utilizando Websocket entre la vista de control que define y la vista de presentación. También permite la comunicación con otros servicios web así como la manipulación de los contenidos de las diapositivas.
+
+	Estas dos herramientas son particularmente útiles para crear y controlar presentaciones, como se demuestra en el Proyecto Delta, un espacio para la divulgación de la ciencia, la teconlogía y el humor, en cuyas apariciones públicas ambas han sido utilizadas. 
 
 \end{conclusions}

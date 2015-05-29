@@ -1,7 +1,7 @@
 %!TEX root = ../thesis.tex
 \chapter{Detalles de implementación} % (fold)
 \label{cha:detalles_de_implementacion}
-	En este capítulo se explicará cómo fueron implementados \textit{Beampress} y \textit{Beampressk} tomando en cuenta los requerimientos vistos en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} y siguiendo las concepciones definidas en el capítulo anterior. Se describe cómo se confecciona una presentación en HTML y cómo el plugin de JQuery \textit{beampress.js} la interpreta. Se explica cómo se implementan las funciones de transición y las características de dicho plugin.
+	En este capítulo se explica cómo fueron implementados \textit{Beampress} y \textit{Beampressk} tomando en cuenta los requerimientos vistos en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, y siguiendo las concepciones definidas en el capítulo anterior. Se describe cómo se confecciona una presentación en HTML y cómo el plugin de JQuery \textit{beampress.js} la interpreta. Se muestra cómo se implementan las funciones de transición, y las características de dicho plugin.
 
 	Se analiza, de \textit{Beampressk}, la implementación del servidor web en Flask, cómo se definen la vista de control, de presentación, el modo en que se utilizó Websocket como tecnología para un canal de comunicación bidireccional entre estas, así como las funcionalidades de \textit{Beampressk} como API REST.
 
@@ -11,9 +11,9 @@
 	\label{sec:beampress_imp}
 	
 
-		Como se describió en la sección \ref{sec:beampress} se utlizó un  \textit{patrón ligero} como diseño para la implementación de \textit{beampress.js}. 
+		Como se describió en la sección \ref{sec:beampress} se utilizó un  \textit{patrón ligero} como diseño para la implementación de \textit{beampress.js}. 
 
-		En esta sección se explicará cómo crear contenidos, slide items, overlays y frames.
+		En esta sección se explica cómo crear contenidos, slide items, overlays y frames.
 
 		Para crear una presentación siguiendo las definiciones del capítulo anterior, se hace uso de las etiquetas y atributos de HTML.
 
@@ -48,7 +48,7 @@
 
 		\subsection{Overlays y Slide Items} % (fold)
 		\label{sub:slide_items}
-			Según la definición \ref{def:slide_item}, un slide item es un contenido con un conjunto de overlays. Para emplear la sintaxis de overlays vista en el ejemplo \ref{ex:overlay_set} se hace uso de los atributos \texttt{data} de HTML5, para lo cual se definió el atributo \texttt{data-onslide}. Un slide item es un contenido de HTML con el atributo \texttt{data-onslide}, que tiene como valor el conjunto de overlays usando la sintaxis básica del ejemplo \ref{ex:overlay_set} o la sintaxis extendida vista en la sección \ref{subsec:sintaxis_extendida}. Por ejemplo en la fig. \ref{fig:slide_items_html} se definen varios slide items usando la sintaxis básica.
+			Según la definición \ref{def:slide_item}, un slide item es un contenido con un conjunto de overlays. Para emplear la sintaxis de overlays vista en el ejemplo \ref{ex:overlay_set} se hace uso de los atributos \texttt{data} de HTML5, para lo cual se definió el atributo \texttt{data-onslide}. Un slide item es un contenido de HTML con el atributo \texttt{data-onslide}, que tiene como valor el conjunto de overlays usando la sintaxis básica del ejemplo \ref{ex:overlay_set}, o la sintaxis extendida vista en la sección \ref{subsec:sintaxis_extendida}. Como ejemplo, en la fig. \ref{fig:slide_items_html} se definen varios slide items usando la sintaxis básica.
 
 
 				\begin{figure}[htb]%
@@ -101,7 +101,7 @@
 					
 		
 			
-			Debe aclararse que al definir los overlays usando la sintaxis extendida, \textit{beampress.js} parsea explícitamente el overlay, para convertirlo en objeto JSON. Por ejemplo en la fig \ref{fig:extended_syntax_html} se muestran slide items que tienen definidos sus overlays con la sintaxis extendida.
+			Debe aclararse que al definir los overlays usando la sintaxis extendida, \textit{beampress.js} parsea explícitamente el overlay, para convertirlo en objeto JSON. Como ejemplo, en la fig \ref{fig:extended_syntax_html} se muestran slide items que tienen definidos sus overlays con la sintaxis extendida.
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
@@ -169,7 +169,7 @@
 			\end{figure}			
 
 
-			Las funciones de transición \texttt{slowShowItem} y \texttt{slowHideItem} utilizadas en la fig. \ref{fig:extended_syntax_html} no son las elementales, pero están definidas en \textit{beampress.js}. Con el fin de cumplir los requerimientos de la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} se implementaron otras funciones además de las elementales. Como invariante estas funciones reciben en sus argumentos el selector DOM del elemento que modifican. A continuación se describe el efecto que produce cada una en el elemento que modifican:
+			Las funciones de transición \texttt{slowShowItem} y \texttt{slowHideItem} utilizadas en la fig. \ref{fig:extended_syntax_html} no son las elementales, pero están definidas en \textit{beampress.js}. Con el fin de cumplir los requerimientos de la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} se implementaron otras funciones además de las elementales. Como invariante estas funciones reciben en sus argumentos el selector DOM del elemento que modifican. A continuación se describe el efecto que produce cada una en el elemento a modificar:
 
 			\begin{itemize}
 				\item \texttt{addStyle(\$el, args)}: Agrega los estilos de CSS que recibe como argumentos
@@ -183,7 +183,7 @@
 				\item \texttt{slowShowFrame(\$el, args)}: Similar a \texttt{slowShowItem} pero además establece el valor de \texttt{display} en \texttt{Blovk}
 				\item \texttt{slowHideFrame(\$el, args)}: Similar a \texttt{slowHideItem} pero además establece el valor \texttt{display} en \texttt{none}				
 			\end{itemize}
-			En el capítulo \ref{cha:extensibilidad} se explicará la manera en que se pueden agregar otras funciones que se definan, así como el formato que deben tener.
+			En el capítulo \ref{cha:extensibilidad} se explica el modo en que se pueden agregar otras funciones que se definan, así como el formato que deben tener.
 
 			En \textit{beampress.js} un \texttt{slide item} es un objeto de JavaScript ~\cite{book:1047044} de tipo \texttt{SlideItem} con las siguientes propiedades:
 
@@ -191,8 +191,8 @@
 			\label{it:slide_item}
 			 	\item \texttt{\$el}: selector JQuery del elemento HTML que representa
 			 	\item \texttt{overlays}: lista de todos los objetos JSON que definien sus overlays
-			 	\item función \texttt{next}: recibe el número del slide actual como argumento del frame mostrado. Ejectua la función \textit{siguiente}, cuyo nombre está determinado por el overlay que tiene como llave el slide del argumento 
-			 	\item función \texttt{prev}: recibe el número del slide actual como argumento del frame mostrado y ejectua la función \textit{anterior}			 	
+			 	\item función \texttt{next}: recibe el número del slide actual como argumento del frame mostrado. Ejecuta la función \textit{siguiente}, cuyo nombre está determinado por el overlay que tiene como llave el slide del argumento 
+			 	\item función \texttt{prev}: recibe el número del slide actual como argumento del frame mostrado y ejecuta la función \textit{anterior}			 	
 			 \end{itemize} 
 				
 		% subsection slide_items (end)	
@@ -237,10 +237,10 @@
 				\label{fig:frame_html_slides}
 			\end{figure}
 
-			El slide item \texttt{<h1>Frame</h1>} de la fig. \ref{fig:frame_html_slides} siempre estará visible en todos los slides del frame porque no tiene definido un conjunto de overlays, o sea, no presenta el atributo \texttt{data-onslide}. No se crea ningún objeto \texttt{SlideItem} porque no está en los resultados del selector \texttt{\$("[data-onslide]")}.
+			El slide item \texttt{<h1>Frame</h1>} de la fig. \ref{fig:frame_html_slides} siempre estará visible en todos los slides del frame porque no tiene definido un conjunto de overlays. En otras palabras: no presenta el atributo \texttt{data-onslide} y como consecuencia, no se crea ningún objeto \texttt{SlideItem} porque no está en los resultados del selector \texttt{\$("[data-onslide]")}.
 
 
-			En la sección \ref{subsec:sintaxis_extendida} se argumentó que un frame podía tener funciones de transición, en este caso, transición de entrada y salida. Usando la sintaxis extendida y los atributos \texttt{data-onshow} y \texttt{data-onhide} se puede efectuar dicha funcionalidad. En la fig. \ref{fig:frames_transitions} se muestran dos frames con transiciones de entrada y de salida.
+			En la sección \ref{subsec:sintaxis_extendida} se argumentó que un frame podía tener funciones de transición, en este caso, transición de entrada y salida. Usando la sintaxis extendida y los atributos \texttt{data-onshow} y \texttt{data-onhide} se puede efectuar dicha funcionalidad. En la fig. \ref{fig:frames_transitions} se ejemplifican dos frames con transiciones de entrada y de salida.
 
 
 		\begin{figure}[htb]%
@@ -258,12 +258,12 @@
 
 		\subsection{Transiciones} % (fold)
 		\label{sub:transiciones}
-			Para realizar las transiciones o cambio de slides, se implementaron las funciones \texttt{next()} y \texttt{prev()} que efectúan las transiciones siguiente y anterior respectivamente. Estas funciones están registradas a distintos eventos, de forma tal que se ejecutan en dependecia de la interacción del usuario con el navegador o de la interacción de algún otro dispotivo utilizando Websocket. Esto último se explicará con más detalle en la sección \ref{sec:beampressk_imp}.
+			Para realizar las transiciones o cambio de slides, se implementaron las funciones \texttt{next()} y \texttt{prev()} que efectúan las transiciones siguiente y anterior respectivamente. Estas funciones están registradas a distintos eventos, de forma tal que se ejecutan en dependecia de la interacción del usuario con el navegador, o de la interacción de algún otro dispositivo utilizando Websocket. Esto último se explicará con más detalle en la sección \ref{sec:beampressk_imp}.
 		% subsection transiciones (end)
 
 		\subsection{Presentación} % (fold)
 		\label{sub:presentacion}
-			Todos los frames de la presentación tienen que estar contenidos dentro de un contenedor general. En la fig. \ref{fig:main_container} se define un contenedor con clase \texttt{main-container}.
+			Todos los frames de la presentación tienen que encontrarse dentro de un contenedor general. En la fig. \ref{fig:main_container} se define un contenedor con clase \texttt{main-container}.
 		
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
@@ -277,7 +277,7 @@
 			\end{figure}				
 
 
-			Como \textit{beampress.js} está basado en JQuery, para usarlo es necesario incluir alguna biblioteca de JQuery. Un ejemplo completo de su uso se puede ver en la Fig. \ref{fig:ex5}
+			Como \textit{beampress.js} está basado en JQuery, para usarlo es necesario incluir alguna biblioteca de JQuery. Un ejemplo completo de su uso puede verse en la Fig. \ref{fig:ex5}
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
@@ -324,7 +324,7 @@
 		\subsection{Estructura de la aplicación} % (fold)
 		\label{sub:estructura_de_la_aplicacion}
 			Todas las vistas que se definieron en la sección \ref{sec:definiciones_de_beampressk} se conforman usando el sistema de templates \textit{Jinja2}, en la fig. \ref{sub:estructura_de_la_aplicacion} se muestra la ubicación de cada template.
-			Para interpretar las presentaciones, o sea, interpretar los frames, slides, slide items, overlays y las funciones de transición se usa el plugin \textit{beampress.js} cuyas características se argumentaron en la sección anterior. El uso de \textit{SocketIO} ~\cite{socketio} se realiza con la biblioteca \textit{socket.io.min.js}, y para eliminar los 300ms de espera en los navegadores móviles desde el momento en que se toca un botón para disparar el evento \texttt{click}, se usa \texttt{fastclick.js} ~\cite{fastclick}. La razón de este retraso es que el navegador está esperando para determinar si se hace un doble click ~\cite{fior}.
+			Para interpretar las presentaciones, o sea, interpretar los frames, slides, slide items, overlays y las funciones de transición se usa el plugin \textit{beampress.js} cuyas características se argumentaron en la sección anterior. El uso de \textit{SocketIO} ~\cite{socketio} se realiza con la biblioteca \textit{socket.io.min.js}. Para eliminar los 300ms de espera en los navegadores móviles desde el momento en que se toca un botón para disparar el evento \texttt{click}, se usa \texttt{fastclick.js} ~\cite{fastclick}. La razón de este retraso es que el navegador espera ese tiempo para determinar si se hace un doble click ~\cite{fior}.
 			\begin{figure}[htb]%
 				\dirtree{%
 				.1 beampressk.
@@ -369,7 +369,7 @@
 		\subsection{Presentaciones} % (fold)
 		\label{sub:presentaciones}
 
-			Por convenio un template de presentación debe llamarse \texttt{index.html} y estar dentro de una carpeta con el nombre de la presentación contenida en el directorio \texttt{templates} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion}. Para mostrar cada presentación se usa la siguiente URL: \\
+			Por convenio, un template de presentación debe llamarse \texttt{index.html} y encontrarse en una carpeta con el nombre de la presentación, que a su vez tiene que estar contenida en el directorio \texttt{templates} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion}. Para mostrar cada presentación se usa la siguiente URL: \\
 			\texttt{beampressk.com/presentation/nombre\textendash de\textendash presentacion} y esta es intepretada por la aplicación de \textit{Flask} (\texttt{app.py}) con la función \texttt{show} de la fig.\ref{fig:presentation_routes}.
 
 			La presentación será visualizada en varios clientes si estos acceden a la misma URL que la representa. 
@@ -390,7 +390,7 @@ def show(name):
 
 		\subsection{Vista de control} % (fold)
 		\label{sub:vista_de_control}
-			El template de la vista de control se encuentra en \texttt{templates/index.html} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion} y la URL de la misma es la URL raíz: \texttt{beampress.com}. La función \texttt{index} de la fig. \ref{fig:control_view_code} es llamada luego de mapearse la URL raíz.
+			El template de la vista de control se encuentra en \texttt{templates/index.html} como se muestra en la fig. \ref{sub:estructura_de_la_aplicacion} y su URL es \texttt{beampress.com}. La función \texttt{index} de la fig. \ref{fig:control_view_code} es llamada, luego de acceder a la URL raíz.
 
 			\begin{figure}[htb]%
 				\begin{lstlisting}[language=Python]%
@@ -547,7 +547,7 @@ def beampressk_hide_msg():
 
 			La captura multimedia HTML (audio y video) se realiza con la API \texttt{getUserMedia()} que funciona en combinación con los tags de HTML5 \texttt{<audio>} y \texttt{<video>}. El primer parámetro de \texttt{getUserMedia()} especifica el tipo de medio al que se quiere acceder. Por ejemplo, si se quiere solicitar la cámara web, el primer parámetro debe ser \texttt{video}. Para usar tanto el micrófono como la cámara, se utiliza \texttt{video, audio}.
 
-			Como se observó en las fig. \ref{fig:control_view_msgs}, \ref{fig:presentation_view_msgs} y \ref{fig:server_msgs} se puede activar o desactivar un live feed mediante los mensajes de Websocket. A contiunación se explicará el uso de esta funcionalidad a través de otro servicio web, así como la incorporación de otros contenidos en la presentación utilizando las rutas de la aplicación en \textit{Flask}.
+			Como se observó en las fig. \ref{fig:control_view_msgs}, \ref{fig:presentation_view_msgs} y \ref{fig:server_msgs} se puede activar o desactivar un live feed mediante los mensajes de Websocket. A continuación se explica el uso de esta funcionalidad mediante otro servicio web, así como la incorporación de otros contenidos en la presentación utilizando las rutas de la aplicación en \textit{Flask}.
 		
 		% subsection live_feed (end)
 		
@@ -555,7 +555,7 @@ def beampressk_hide_msg():
 
 		\subsection{API REST} % (fold)
 		\label{sub:api_rest_imp}
-			En la sección \ref{sub:api_rest} se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia solo funciona adecuadamente cuando el servidor web que ejecuta la aplicación de \textit{Flask} no es \textit{multi hilos}. Esto es factible ya que \textit{Beampressk} no un servidor web en producción, con una gran cantidad de accesos.
+			En la sección \ref{sub:api_rest} se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen de los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia es factible ya que \textit{Beampressk} no es un servidor web en producción, con una gran cantidad de accesos.
 
 			Para efectuar un método POST y emitir un mensaje de Websocket se usa la función de la fig. \ref{fig:post_method}. De esta manera se puede activar el live feed o mostrar mensajes de texto que se envíen en el pedido. En la fig. \ref{fig:curl_post} se efectúa un pedido POST usando \texttt{curl}.
 
@@ -594,8 +594,8 @@ $ curl -i -H "Content-Type: application/json" -X POST -d '{"action":"msg", "data
 		% subsection api_rest (end)	
 	% section beampressk (end)
 
-	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte, de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccional de comunicación utilizando Websocket.
+	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte, de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda entre ambas al configurar un canal bidireccional de comunicación utilizando Websocket.
 
-	Seguidamente se mostrará cómo puede definirse cualquier función de animación en JavaScript, vinculándose a \textit{Beampress}, así como una forma genérica de agregar funcionalidades para la API REST que provee \textit{Beampressk}.
+	Seguidamente se muestra cómo puede definirse cualquier función de animación en JavaScript, vinculándose a \textit{Beampress}, así como una forma genérica de agregar funcionalidades para la API REST que provee \textit{Beampressk}.
 		
 % chapter detalles_de_implementacion (end)
