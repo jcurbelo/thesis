@@ -323,7 +323,7 @@
 		
 		\subsection{Estructura de la aplicación} % (fold)
 		\label{sub:estructura_de_la_aplicacion}
-			Todas las vistas que se definieron en la sección TAL se conforman usando el sistema de templates \textit{Jinja2}, en la fig. \ref{sub:estructura_de_la_aplicacion} se muestra la ubicación de cada template.
+			Todas las vistas que se definieron en la sección \ref{sec:definiciones_de_beampressk} se conforman usando el sistema de templates \textit{Jinja2}, en la fig. \ref{sub:estructura_de_la_aplicacion} se muestra la ubicación de cada template.
 			Para interpretar las presentaciones, o sea, interpretar los frames, slides, slide items, overlays y las funciones de transición se usa el plugin \textit{beampress.js} cuyas características se argumentaron en la sección anterior. El uso de \textit{SocketIO} ~\cite{socketio} se realiza con la biblioteca \textit{socket.io..min.js}, y para eliminar los 300ms de espera en los navegadores móviles desde el momento en que se toca un botón para disparar el evento \texttt{click}, se usa \texttt{fastclick.js} ~\cite{fastclick}. La razón de este retraso es que el navegador está esperando para determinar si se hace un doble click ~\cite{fior}.
 			\begin{figure}[htb]%
 				\dirtree{%
@@ -409,7 +409,7 @@ def index():
 		\subsection{Websocket} % (fold)
 		\label{sub:websocket}
 
-		En la sección TAL se definió que la comunicación entre la vista de control y la vista de presentación tenía que ser instantánea. Como se vió en la sección \ref{sec:beampressk} se utilizó websocket para establecer un canal de comunicación bidireccional entre estas vistas. Para ello se incluyó la extensión de Flask \textit{Flask-SocketIO} ~\cite{flasksocket} en la aplicación de Beampressk que establece una conexión con los clientes que tengan la biblioteca \textit{Socket.IO}.
+		En la sección \ref{sec:definiciones_de_beampressk} se definió que la comunicación entre la vista de control y la vista de presentación tenía que ser instantánea. Como se vió en la sección \ref{sec:beampressk} se utilizó websocket para establecer un canal de comunicación bidireccional entre estas vistas. Para ello se incluyó la extensión de Flask \textit{Flask-SocketIO} ~\cite{flasksocket} en la aplicación de Beampressk que establece una conexión con los clientes que tengan la biblioteca \textit{Socket.IO}.
 
 			\subsubsection{Mensajes de comunicación} % (fold)
 			\label{ssub:mensajes_de_comunicacion}
@@ -547,7 +547,7 @@ def beampressk_hide_msg():
 
 		\subsection{API REST} % (fold)
 		\label{sub:api_rest}
-			En la sección TAL se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia solo funciona adecuadamente cuando el servidor web que ejecuta la aplicación de \textit{Flask} no es \textit{multi hilos}. Esto es factible ya que \textit{Beampressk} no un servidor web en producción, con una gran cantidad de accesos.
+			En la sección \ref{sub:api_rest} se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia solo funciona adecuadamente cuando el servidor web que ejecuta la aplicación de \textit{Flask} no es \textit{multi hilos}. Esto es factible ya que \textit{Beampressk} no un servidor web en producción, con una gran cantidad de accesos.
 
 			Para efectuar un método POST y emitir un mensaje de Websocket se usa la función de la fig. \ref{fig:post_method}. De esta manera se puede activar el live feed o mostrar mensajes de texto que se envíen en el pedido.
 
