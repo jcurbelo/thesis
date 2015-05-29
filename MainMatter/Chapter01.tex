@@ -31,7 +31,7 @@
 		% section prezi (end)
 
 
-		\subsection{Sistemas basados en HMTL, CSS y Javascript} % (fold)
+		\subsection{Sistemas basados en HMTL, CSS y JavaScript} % (fold)
 		\label{sub:otros_sistemas}
 			A continuación se muestran otros sistemas de presentaciones basados en HTML, CSS y javascript, que son alternativas de \textit{Prezi}, y sirvieron de base para el presente trabajo, por lo cual se menciona sus nombres y se hace referencia brevemente a la característica fundamental de cada uno.
 			\begin{itemize}
@@ -62,7 +62,7 @@
 
 			Por último, en ocasiones es necesario reorganizar la presentación de las diapositivas según los requerimientos de cada puesta en escena, algunos de los cuales son imprevisibles dado el dinamismo inherente al Proyecto Delta. Esto se explica por la adecuación que algunos imprevistos obligan a llevar a cabo (ausencia de un invitado, retraso en el inicio de los equipos de audio y de video, problemas en la sala de exhibición, demandas del público, etc.) Con el objetivo de mantener el ritmo del espectáculo, es necesario la posibilidad de alterar el orden preconcebido de las diapositivas, de forma tal que pueda obviarse la vista de algunas de ellas o regresar a alguna anterior.			
 
-			Realizar todas estas accciones con una presentación hecha con beamer o con cualquiera de los sistemas existentes puede resultar en extremo complicado. A continuación se muestran los requisitos fundamentales que debe reunir la propuesta de este trabajo para dar solución a las necesidades ya analizadas de dicho espacio cultural. 
+			Realizar todas estas accciones con una presentación hecha con \textit{Beamer} o con cualquiera de los sistemas existentes puede resultar en extremo complicado. A continuación se muestran los requisitos fundamentales que debe reunir la propuesta de este trabajo para dar solución a las necesidades ya analizadas de dicho espacio cultural. 
 	% section proyecto_delta (end)
 
 	\section{Requerimientos básicos del sistema propuesto} % (fold)
@@ -95,14 +95,14 @@
 
 	\section{Beampress} % (fold)
 	\label{sec:beampress}
-		Para lograr que el sistema de presentaciones que se propone estructure las mismas de forma similar a \textit{Beamer}, y cumplimente los requisitos mencionados en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, se implementó el plugin de JQuery \textit{beampress.js} para aprovechar las bondades de HTML5, CSS3 y Javascript.
+		Para lograr que el sistema de presentaciones que se propone estructure las mismas de forma similar a \textit{Beamer}, y cumplimente los requisitos mencionados en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, se implementó el plugin de JQuery \textit{beampress.js} para aprovechar las bondades de HTML5, CSS3 y JavaScript.
 
 		\subsection{Plugin beampress.js} % (fold)
 		\label{sub:beampress_js}
 			 Para la implementación de \textit{beampress.js} se utlizó un  \textit{patrón ligero} como diseño de dicho plugin \cite{smashingmagazine} que cumple con las siguientes características que son producto del uso de las prácticas más comunes:
 
 			\begin{itemize}
-				\item Uso de un punto y coma \texttt{;} antes de llamar la función principal, para evitar conflictos con otros códigos de Javascript que tengan ausencia de dicho signo
+				\item Uso de un punto y coma \texttt{;} antes de llamar la función principal, para evitar conflictos con otros códigos de JavaScript que tengan ausencia de dicho signo
 				\item Un objeto \texttt{defaults}, que tiene las configuraciones iniciales del plugin
 				\item Un \textit{constructor sencillo} para la creación y la asignación de la lógica que se desea emplear con el elemento HTML seleccionado
 				\item Posibilidad de extender las configuraciones (extender \texttt{defaults})
@@ -111,7 +111,7 @@
 		% subsection beampress_js (end)
 
 
-		Al estar en presencia de una herramienta que se encuentra en ámbito web, se aprovechan las posibilidades que esto ofrece, dando solución a las necesidades vistas en la sección \ref{sec:proyecto_delta}. Por ejemplo, la inclusión de audios y videos se puede realizar gracias a los tags \texttt{audio} y \texttt{video} de HTML5; las animaciones se pueden implementar puramente con Javascript, o se pueden crear con la función \texttt{animate} de JQuery ~\cite{animate}. También con los \texttt{transform} de CSS3 ~\cite{csstransform} o con alguna otra herramienta, como GreenSock Animation Platform (GSAP) ~\cite{gsap}, que se basa en Javascript y es más rápida que JQuery ~\cite{jquery}. 
+		Al estar en presencia de una herramienta que se encuentra en ámbito web, se aprovechan las posibilidades que esto ofrece, dando solución a las necesidades vistas en la sección \ref{sec:proyecto_delta}. Por ejemplo, la inclusión de audios y videos se puede realizar gracias a los tags \texttt{<audio>} y \texttt{<video>} de HTML5; las animaciones se pueden implementar puramente con JavaScript, o se pueden crear con la función \texttt{animate} de JQuery ~\cite{animate}. También con los \texttt{transform} de CSS3 ~\cite{csstransform} o con alguna otra herramienta, como GreenSock Animation Platform (GSAP) ~\cite{gsap}, que se basa en JavaScript y es más rápida que JQuery ~\cite{jquery}. 
 
 
 		El nombre \textit{Beampress} surge por la unión de los nombres \textit{Beamer} e \textit{Impress}, sistemas de presentaciones que fueron detallados en la sección \ref{sec:sistemas_de_presentaciones}. Es de destacar que con \textit{Beampress} se solucionan algunos de los problemas señalados como: uso de animaciones y empleo de materiales audiovisuales en las diapositivas.	
@@ -132,7 +132,7 @@
 
 		Para controlar la presentación en tiempo real, o sea, que las acciones (modificación de volumen, cambio de diapositivas, etc.) que efectúe el presentador desde el dispositivo móvil tengan efecto instantáneo en la presentación, se utilizó \textit{websocket} ~\cite{websocket} como tecnología para enviar/recibir la información requerida a través de un canal de comunicación bidireccional entre la vista de diapostivas y la vista de control.
 
-		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} ~\cite{flasksocket} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} ~\cite{socketio} de Javascript.
+		Para lograr esto, se utilizó la extensión de \textit{Flask} \textit{Flask-SocketIO} ~\cite{flasksocket} que implementa el protocolo de paso de mensajes brindado por la biblioteca \textit{SocketIO} ~\cite{socketio} de JavaScript.
 
 	 	Teniendo en cuenta que \textit{Beampressk} es un servidor web se decidió concebirlo como API REST para que interactuara con otros servicios web, principalmente con los mensajes de texto que envía el público. A continuación se explican las funcionalidades de \textit{Beampressk} como API REST ~\cite{book:899251}.
 		
@@ -142,7 +142,7 @@
 		\label{sub:api_rest}
 
 
-			La \textbf{Transferencia de Estado Representacional} (Representational State Transfer) o \textbf{REST} es una arquitectura simple y \textit{sin estados} que generalmente funciona a través del protocolo HTTP. En los últimos años REST ha emergido como el diseño de la arquitectura estándar para servicios web (Servicios RESTful) y APIs web.
+			La \textbf{Transferencia de Estado Representacional} (Representational State Transfer) o REST es una arquitectura simple y \textit{sin estados} que generalmente funciona a través del protocolo HTTP. En los últimos años REST ha emergido como el diseño de la arquitectura estándar para servicios web (Servicios RESTful) y APIs web.
 
 			Conjuntamente con el concepto de un servicio RESTful está la noción de \textit{recursos}. Los recursos son representados por URIs, un cliente envía un pedido (request) a estas URIs usando los métodos definidos por el protocolo HTTP, y posiblemente el estado de un recurso cambie como resultado de dicho pedido. 
 			% En el caso de \textit{Beampressk} un recurso es la vista de presentación, la vista de control, los mensajes que envía el público del Proyecto Delta y el live feed entre otros que se definan.
@@ -185,7 +185,7 @@
 		Esta herramienta resuelve las principales problemáticas ocasionadas por la distancia, garantizando que el presentador tenga control de la presentación aún estando lejos de la computadora que contiene la misma.
 
 
-		En este capítulo se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, sus requerimientos, las soluciones que ofrecen y las tecnologías que se emplearon. También se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significativas a la propuesta de este trabajo, siendo esto parte de uno de los objetivos específicos visto en la sección \ref{sec:objetivos}. En el capítulo \ref{cha:fundamentos_conceptuales} se explicará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, y los conceptos principales en los que se basan.
+		En este capítulo se describieron las necesidades que dieron origen a \textit{Beampress} y a \textit{Beampressk}, sus requerimientos, las soluciones que ofrecen y las tecnologías que se emplearon. También se argumentaron las características de los sistemas de presentaciones más conocidos, incorporando las más significativas a la propuesta de este trabajo, siendo esto parte de uno de los objetivos específicos. En el capítulo siguiente se explicará cómo son concebidos \textit{Beampress} y \textit{Beampressk}, y los conceptos principales en los que se basan.
 	% section beampressk (end)
 
 

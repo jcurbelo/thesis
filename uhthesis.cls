@@ -173,7 +173,7 @@
     \vfill
     {\large Trabajo de Diploma \\presentado en opci\'on al t\'itulo de \\ \@degree} \\
     \vskip 0.5cm
-    \includegraphics[width=2.5cm]{gfx/qrcode}
+    % \includegraphics[width=2.5cm]{gfx/qrcode}
     \vskip 0.5cm
     \@date
   \end{center}

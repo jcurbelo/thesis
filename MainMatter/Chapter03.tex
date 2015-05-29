@@ -1,7 +1,7 @@
 %!TEX root = ../thesis.tex
 \chapter{Detalles de implementación} % (fold)
 \label{cha:detalles_de_implementacion}
-	En este capítulo se explicará cómo fueron implementados \textit{Beampress} y \textit{Beampressk} tomando en cuenta los requerimientos vistos en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} y siguiendo las concepciones definidas en el capítulo anterior. Se describe cómo se confecciona una presentación en HTML (especie de tutorial) y cómo el plugin de JQuery \textit{beampress.js} la interpreta. Se explica cómo se implementan las funciones de transición y las características de dicho plugin.
+	En este capítulo se explicará cómo fueron implementados \textit{Beampress} y \textit{Beampressk} tomando en cuenta los requerimientos vistos en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} y siguiendo las concepciones definidas en el capítulo anterior. Se describe cómo se confecciona una presentación en HTML y cómo el plugin de JQuery \textit{beampress.js} la interpreta. Se explica cómo se implementan las funciones de transición y las características de dicho plugin.
 
 	Se analiza, de \textit{Beampressk}, la implementación del servidor web en Flask, cómo se definen la vista de control, de presentación, el modo en que se utilizó Websocket como tecnología para un canal de comunicación bidireccional entre estas, así como las funcionalidades de \textit{Beampressk} como API REST.
 
@@ -185,7 +185,7 @@
 			\end{itemize}
 			En el capítulo \ref{cha:extensibilidad} se explicará la manera en que se pueden agregar otras funciones que se definan, así como el formato que deben tener.
 
-			En \textit{beampress.js} un \texttt{slide item} es un objeto de Javascript ~\cite{book:1047044} de tipo \texttt{SlideItem} con las siguientes propiedades:
+			En \textit{beampress.js} un \texttt{slide item} es un objeto de JavaScript ~\cite{book:1047044} de tipo \texttt{SlideItem} con las siguientes propiedades:
 
 			\begin{itemize}
 			\label{it:slide_item}
@@ -216,7 +216,7 @@
 					\label{fig:frames_html}
 				\end{figure}
 
-			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de Javascript de tipo \texttt{Frame} que hereda de \texttt{SlideItem}.
+			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de JavaScript de tipo \texttt{Frame} que hereda de \texttt{SlideItem}.
 			 % para adquirir las propiedades vistas en el listado \ref{it:slide_item}. 
 
 			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame empleando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items de un frame, o sea, todos los elementos HTML hijos de un contenedor frame, se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. Las instancias de \texttt{Frame} son almacenadas en una lista y en todo momento se sabe qué frame está mostrado y en qué slide se encuentra con los índices \texttt{currentFrame} y \texttt{currentSlide} respectivamente.
@@ -228,9 +228,9 @@
 
 <section class="frame">
 	<h1>Frame</h1>
-	<span data-onslide="1-">Texto</span>
-	<span data-onslide="2-">Texto3</span>
-	<span data-onslide="3-">Texto4</span>
+	<span data-onslide="1-">Texto1</span>
+	<span data-onslide="2-">Texto2</span>
+	<span data-onslide="3-">Texto3</span>
 </section>
 				\end{lstlisting}
 				\caption{Un frame en HTML con varios slide items}
@@ -311,7 +311,7 @@
 				\label{fig:ex5} }
 			\end{figure}	
 
-			El estilo de la presentación queda sujeto al usuario, por lo que se requieren previos conocimientos de HTML, CSS y Javascript. Como extensión a la propuesta de este trabajo se implementó el estilo Warsaw de \textit{Beamer} con el CSS \texttt{warsaw.css} que se mencionará también en la siguiente sección.
+			El estilo de la presentación queda sujeto al usuario, por lo que se requieren previos conocimientos de HTML, CSS y JavaScript. Como extensión a la propuesta de este trabajo se implementó el estilo Warsaw de \textit{Beamer} con el CSS \texttt{warsaw.css} que se mencionará también en la siguiente sección.
 		% subsection presentación (end)
 	% section beampress (end)
 
@@ -554,7 +554,7 @@ def beampressk_hide_msg():
 		% subsection websockets (end)
 
 		\subsection{API REST} % (fold)
-		\label{sub:api_rest}
+		\label{sub:api_rest_imp}
 			En la sección \ref{sub:api_rest} se explicaron las características de un servicio REST, cuya concepción está centrada en la noción de recursos. Para almacenar información referente a la presentación como el frame y el slide actual, así como el volumen los elementos multimedia de la misma, se utiliza una estructura de memoria. Esta estrategia solo funciona adecuadamente cuando el servidor web que ejecuta la aplicación de \textit{Flask} no es \textit{multi hilos}. Esto es factible ya que \textit{Beampressk} no un servidor web en producción, con una gran cantidad de accesos.
 
 			Para efectuar un método POST y emitir un mensaje de Websocket se usa la función de la fig. \ref{fig:post_method}. De esta manera se puede activar el live feed o mostrar mensajes de texto que se envíen en el pedido.
@@ -585,8 +585,8 @@ def beampressk_emit_task():
 		% subsection api_rest (end)	
 	% section beampressk (end)
 
-	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte, de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccinal utilizando Websocket.
+	En este capítulo fueron analizados, de \textit{Beampress} sus características, sus funcionalidades y el modo en que es capaz de interpretar las presentaciones. Por su parte, de \textit{Beampressk} se explicó su implementación como servidor web en Flask, se definieron las vistas de control y de presentación destacando la instantaneidad lograda en la comunicación entre ambas al configurar un canal bidireccional de comunicación utilizando Websocket.
 
-	Seguidamente se mostrará cómo pude definirse cualquier función de animación en Javascript, vinculándose a \textit{Beampress}, así como una forma genérica de agregar funcionalidades para la API REST que provee \textit{Beampressk}.
+	Seguidamente se mostrará cómo puede definirse cualquier función de animación en JavaScript, vinculándose a \textit{Beampress}, así como una forma genérica de agregar funcionalidades para la API REST que provee \textit{Beampressk}.
 		
 % chapter detalles_de_implementacion (end)
