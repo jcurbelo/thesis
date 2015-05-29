@@ -3,7 +3,7 @@
 
 \chapter{Fundamentos conceptuales} % (fold)
 \label{cha:fundamentos_conceptuales}
-	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item}, \textit{Slide} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item}, \ref{def:slide} y \ref{def:overlay} respectivamente. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{API REST} para eliminar las dificultades señaladas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. Estos dos últimos elementos serán ampliados en las secciones \ref{sec:api_rest} y \ref{def:live_feed} respectivamante. 
+	En este capítulo se presentan los elementos que permiten realizar una presentación con \textit{Beampress}. Estos elementos son \textit{Frame}, \textit{Slide Item}, \textit{Slide} y \textit{Overlay}, inspirados en sus equivalentes de la clase \textit{Beamer} de \LaTeX{} y que se describen en las definiciones \ref{def:frame}, \ref{def:slide_item}, \ref{def:slide} y \ref{def:overlay} respectivamente. También se muestran los fundamentos de \textit{Beampressk}, básicamente su concepción como \textit{API REST} para eliminar las dificultades señaladas en la sección \ref{sec:proyecto_delta} referentes a la distancia, así como la opción que brinda para usar un \textit{Live Feed}. 
 
 	\section{Definiciones de Beampress} % (fold)
 	\label{sec:definiciones_de_beampress}
@@ -89,7 +89,9 @@
 		
 		Un frame puede tener varios slides y un slide se identifica con un número natural que simula el momento en que se mostrará su conjunto de slide items. Al estar los slides representados por enteros positivos, son ordenables. Decir que un slide es mayor que otro significa que ocurre después de otro. En \textit{Beamer} la definición de slide es distinta, ya que un slide representa una de las diapositivas de un frame.
 
-		Por ejemplo, en la fig. \ref{fig:contents_b} el slide 2 es el conjunto formado por los dos primeros contenidos del frame, que son los mostrados. 				
+		Por ejemplo, en la fig. \ref{fig:contents_b} el slide 2 es el conjunto formado por los dos primeros contenidos del frame, que son los mostrados. 
+
+		Para determinar en qué slide pertenece un slide item se utilizan los overlays.				
 
  		\begin{definition}
  		\label{def:overlay}
@@ -119,7 +121,7 @@
 		% 	\label{fig:overlay_set}
 					
 		% \end{figure} 		 						 		 				
-
+		Los slide items definen un contenido en la presentación, a continuación se explica qué es un contenido y el comportamiento que puede tener.
 		\begin{definition}
 		\label{def:content}
 			Un \textbf{contenido} es todo aquello que se muestre en las diapositivas, ya sea texto, imagen, audio, video o sus combinaciones posibles. 
@@ -183,7 +185,7 @@
 		\begin{itemize}
 		\label{it:basic_functions}
 			\item \textbf{Función identidad}: No cambia el estado del contenido del slide item
-			\item \textbf{Función mostrar}: Visualiza el contenido del slide item. Esta función no cumple totalmente con la definición \ref{def:show} de mostrar un contenido, ya que no es capaz de reproducir ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la subsección \ref{subsec:sintaxis_extendida} 
+			\item \textbf{Función mostrar}: Visualiza el contenido del slide item. Esta función no cumple totalmente con la definición \ref{def:show} de mostrar un contenido, ya que no es capaz de reproducir ni audios ni videos. La capacidad de hacer uso de elementos multimedias se argumenta en la sección \ref{subsec:sintaxis_extendida} 
 			\item \textbf{Función ocultar}: Provoca que el contenido del slide item deje de ser visualizado
 		\end{itemize}
 
@@ -280,7 +282,7 @@
 		\item \texttt{anterior}: tiene como valores el nombre de la función de transición anterior con sus argumentos
 	\end{itemize}
 
-	Una de las principales motivaciones para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video detallado en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Si se necesita reproducir un audio o un video se puede utilizar el ejemplo que se muestra en la fig. \ref{fig:ex_audio_video_syntax}. En el ejemplo se hará un \textit{fade in} para reproducir el video en el \textit{slide} 1 comenzando en el segundo 30. Lo mismo sucederá con el audio, pero en el \textit{slide} 2 y comenzando en el segundo 10.
+	Una de las principales motivaciones para la creación de \textit{Beampress} fue el requerimiento de animaciones, audio y video detallado en la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto}, para lo cual resulta imprescindible el manejo de dicha sintaxis transformada. Si se necesita reproducir un audio o un video se puede utilizar el ejemplo que se muestra en la fig. \ref{fig:ex_audio_video_syntax}. En dicho ejemplo se hará un \textit{fade in} para reproducir el video en el \textit{slide} 1 comenzando en el segundo 30. Lo mismo sucederá con el audio, pero en el \textit{slide} 2 y comenzando en el segundo 10.
 
 
 	\begin{figure}[htb]%
@@ -322,7 +324,7 @@
 		\end{figure}
 
 		
-		Como se vio en los overlays de la fig. \ref{fig:ex_audio_video_syntax}, las funciones de transición utilizadas (\texttt{fadeInVideo}, \texttt{fadeInAudio}) no son las elementales definidas en el listado \ref{it:basic_functions}. Esta sintaxis ampliada para definir overlays permite agregar nuevas funciones de transición además de las elementales, garantizando la extensibilidad de \textit{Beampress} que se verá con más detalles en el capítulo \ref{cha:extensibilidad}.
+		Como se vio en los overlays de la fig. \ref{fig:ex_audio_video_syntax}, las funciones de transición utilizadas (\texttt{fadeInVideo}, \texttt{fadeInAudio}) no son las funciones elementales. Esta sintaxis ampliada para definir overlays permite agregar nuevas funciones de transición además de las elementales, garantizando la extensibilidad de \textit{Beampress} que se verá con más detalles en el capítulo \ref{cha:extensibilidad}.
 
 
 		Un ejemplo de un overlay con una función de transición distinta de las funciones elementales, se aprecia en la fig. \ref{fig:ball_code} y su ejemplo visual en la fig. \ref{fig:ball_visual}.

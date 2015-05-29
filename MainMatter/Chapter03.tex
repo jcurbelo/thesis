@@ -13,6 +13,8 @@
 
 		Como se describió en la sección \ref{sec:beampress} se utlizó un  \textit{patrón ligero} como diseño para la implementación de \textit{beampress.js}. 
 
+		En esta sección se explicará cómo crear contenidos, slide items, overlays y frames.
+
 		Para crear una presentación siguiendo las definiciones del capítulo anterior, se hace uso de las etiquetas y atributos de HTML.
 
 
@@ -46,7 +48,7 @@
 
 		\subsection{Overlays y Slide Items} % (fold)
 		\label{sub:slide_items}
-			Según la definición \ref{def:slide_item}, un slide item es un contenido con un conjunto de overlays. Para emplear la sintaxis de overlays vista en el ejemplo \ref{fig:overlay_set} se hace uso de los atributos \texttt{data} de HTML5, para lo cual se definió el atributo \texttt{data-onslide}. Un slide item es un contenido de HTML con el atributo \texttt{data-onslide}, que tiene como valor el conjunto de overlays usando la sintaxis básica del ejemplo \ref{fig:overlay_set} o la sintaxis extendida vista en la sección \ref{sec:sintaxis_extendida}. Por ejemplo en la fig. \ref{fig:slide_items_html} se definen varios slide items usando la sintaxis básica.
+			Según la definición \ref{def:slide_item}, un slide item es un contenido con un conjunto de overlays. Para emplear la sintaxis de overlays vista en el ejemplo \ref{ex:overlay_set} se hace uso de los atributos \texttt{data} de HTML5, para lo cual se definió el atributo \texttt{data-onslide}. Un slide item es un contenido de HTML con el atributo \texttt{data-onslide}, que tiene como valor el conjunto de overlays usando la sintaxis básica del ejemplo \ref{ex:overlay_set} o la sintaxis extendida vista en la sección \ref{subsec:sintaxis_extendida}. Por ejemplo en la fig. \ref{fig:slide_items_html} se definen varios slide items usando la sintaxis básica.
 
 
 				\begin{figure}[htb]%
@@ -65,16 +67,16 @@
 					\caption{Forma de definir slide items con overlays en HTML5}
 					\label{fig:slide_items_html}
 				\end{figure}
-			Un slide item está mostrado en todos los slides si no tiene overlays, o sea, si un elemento HTML no tiene el atributo \texttt{data-onslide} se verá en todas las transiciones del frame al que pertenece. En caso de tenerlo, se ocultará en todos los slides a no ser que sus overlays determinen otra conducta.
+			Un slide item está mostrado en todos los slides si no tiene overlays, o sea, si un elemento HTML no tiene el atributo \texttt{data-onslide} se mostrará en todas las transiciones del frame al que pertenece. En caso de tenerlo, se ocultará en todos los slides a no ser que sus overlays determinen otra conducta.
 
 
 			Para determinar los slides de un frame, \textit{beampress.js} primero analiza todos elementos HTML hijos de dicho frame y en dependencia de cada conjuntos de overlays, obtiene el menor y el mayor slide, que son el primero y el último respectivamente.
 
 			Para analizar cada overlay con la sintaxis básica, se utiliza la siguiente expresión regular: \texttt{/([1\textendash 9]\textbackslash d*)?(\textendash )?([1\textendash 9]\textbackslash d*)?/} para agrupar los límites inferior y superior. Nótese que estos pueden no estar al igual que puede ser sólo un número sin \texttt{\textendash}. 
 
-			Un overlay es un objeto JSON con el mismo formato de la fig. \ref{fig:json_format} y teniendo en cuenta la definición \ref{def:new_overlay}, determina una función de transición siguiente y una función de transición anterior para uno o varios slides. El plugin \textit{beampress.js} transforma la sintaxs básica en la sintaxis extendida de la sección \ref{sec:sintaxis_extendida}. 
+			Un overlay es un objeto JSON con el mismo formato de la fig. \ref{fig:json_format} y teniendo en cuenta la definición \ref{def:new_overlay}, determina una función de transición siguiente y una función de transición anterior para uno o varios slides. El plugin \textit{beampress.js} transforma la sintaxs básica en la sintaxis extendida de la sección \ref{subsec:sintaxis_extendida}. 
 
-			Por ejemplo, si se tiene el siguiente conjunto de overlays: $$-2; 4$$ \textit{beampress.js} lo convierte en los overlays de la fig. \ref{fig:overlay_set_beampress}. Las funciones elementales vistas en el listado TAL se implementaron en \textit{beampress.js} de forma tal que modifican el atributo \texttt{opacity} del elemento en cuestión.
+			Por ejemplo, si se tiene el siguiente conjunto de overlays: $$-2; 4$$ \textit{beampress.js} lo convierte en los overlays de la fig. \ref{fig:overlay_set_beampress}. Las funciones elementales se implementaron en \textit{beampress.js} de forma tal que modifican el atributo \texttt{opacity} del elemento en cuestión.
 
 				\begin{figure}[htb]%
 					\begin{lstlisting}%
@@ -167,7 +169,7 @@
 			\end{figure}			
 
 
-			Las funciones de transición \texttt{slowShowItem} y \texttt{slowHideItem} utilizadas en la fig. \ref{fig:extended_syntax_html} no son las elementales, pero están definidas en \textit{beampress.js}. Con el fin de cumplir los requerimientos de la sección \ref{sec:requirements} se implementaron otras funciones además de las elementales. Como invariante estas funciones reciben en sus argumentos el selector DOM del elemento que modifican. A continuación se describe el efecto que produce cada una en el elemento que modifican:
+			Las funciones de transición \texttt{slowShowItem} y \texttt{slowHideItem} utilizadas en la fig. \ref{fig:extended_syntax_html} no son las elementales, pero están definidas en \textit{beampress.js}. Con el fin de cumplir los requerimientos de la sección \ref{sec:requerimientos_basicos_del_sistema_propuesto} se implementaron otras funciones además de las elementales. Como invariante estas funciones reciben en sus argumentos el selector DOM del elemento que modifican. A continuación se describe el efecto que produce cada una en el elemento que modifican:
 
 			\begin{itemize}
 				\item \texttt{addStyle(\$el, args)}: Agrega los estilos de CSS que recibe como argumentos
@@ -181,7 +183,7 @@
 				\item \texttt{slowShowFrame(\$el, args)}: Similar a \texttt{slowShowItem} pero además establece el valor de \texttt{display} en \texttt{Blovk}
 				\item \texttt{slowHideFrame(\$el, args)}: Similar a \texttt{slowHideItem} pero además establece el valor \texttt{display} en \texttt{none}				
 			\end{itemize}
-			En el capítulo \ref{ch:extensibilidad} se explicará la manera en que se pueden agregar otras funciones que se definan, así como el formato que deben tener.
+			En el capítulo \ref{cha:extensibilidad} se explicará la manera en que se pueden agregar otras funciones que se definan, así como el formato que deben tener.
 
 			En \textit{beampress.js} un \texttt{slide item} es un objeto de Javascript ~\cite{book:1047044} de tipo \texttt{SlideItem} con las siguientes propiedades:
 
@@ -214,7 +216,8 @@
 					\label{fig:frames_html}
 				\end{figure}
 
-			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de Javascript de tipo \texttt{Frame} que hereda de \texttt{SlideItem} para adquirir las propiedades vistas en el listado \ref{it:slide_item}. 
+			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de Javascript de tipo \texttt{Frame} que hereda de \texttt{SlideItem}.
+			 % para adquirir las propiedades vistas en el listado \ref{it:slide_item}. 
 
 			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame empleando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items de un frame, o sea, todos los elementos HTML hijos de un contenedor frame, se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. Las instancias de \texttt{Frame} son almacenadas en una lista y en todo momento se sabe qué frame está mostrado y en qué slide se encuentra con los índices \texttt{currentFrame} y \texttt{currentSlide} respectivamente.
 
@@ -237,7 +240,7 @@
 			El slide item \texttt{<h1>Frame</h1>} de la fig. \ref{fig:frame_html_slides} siempre estará visible en todos los slides del frame porque no tiene definido un conjunto de overlays, o sea, no presenta el atributo \texttt{data-onslide}. No se crea ningún objeto \texttt{SlideItem} porque no está en los resultados del selector \texttt{\$("[data-onslide]")}.
 
 
-			En la sección \ref{sec:extensibilidad} se argumentó que un frame podía tener funciones de transición, en este caso, transición de entrada y salida. Usando la sintaxis extendida y los atributos \texttt{data-onshow} y \texttt{data-onhide} se puede efectuar dicha funcionalidad. En la fig. \ref{fig:frames_transitions} se muestran dos frames con transiciones de entrada y de salida.
+			En la sección \ref{subsec:sintaxis_extendida} se argumentó que un frame podía tener funciones de transición, en este caso, transición de entrada y salida. Usando la sintaxis extendida y los atributos \texttt{data-onshow} y \texttt{data-onhide} se puede efectuar dicha funcionalidad. En la fig. \ref{fig:frames_transitions} se muestran dos frames con transiciones de entrada y de salida.
 
 
 		\begin{figure}[htb]%
