@@ -217,9 +217,10 @@
 				\end{figure}
 
 			Los slide items de cada contenedor frame se definen dentro del mismo, o sea, son sus hijos. Cada frame es un objeto de JavaScript de tipo \texttt{Frame} que hereda de \texttt{SlideItem}.
-			 % para adquirir las propiedades vistas en el listado \ref{it:slide_item}. 
 
-			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame empleando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Los slide items de un frame, o sea, todos los elementos HTML hijos de un contenedor frame, se obtienen con el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. Las instancias de \texttt{Frame} son almacenadas en una lista y en todo momento se sabe qué frame está mostrado y en qué slide se encuentra con los índices \texttt{currentFrame} y \texttt{currentSlide} respectivamente.
+
+			 % para adquirir las propiedades vistas en el listado \ref{it:slide_item}. 
+			Con el propósito de organizar la presentación \textit{beampress.js} analiza cada frame empleando el selector \texttt{\$(".frame")} y por cada uno crea un objeto \texttt{Frame}. Para obtener los slide items con conjunto de overlays en un frame, o sea, todos los elementos HTML hijos de un contenedor frame con el atributo \texttt{data-onslide}, se utiliza el selector \texttt{\$("[data-onslide]")} y por cada uno se crea un objeto \texttt{SlideItem}. Las instancias de \texttt{Frame} son almacenadas en una lista y en todo momento se sabe qué frame está mostrado y en qué slide se encuentra con los índices \texttt{currentFrame} y \texttt{currentSlide} respectivamente.
 
 			Un objeto \texttt{Frame} tiene una lista de objetos \texttt{SlideItem}. Sus funciones de transición o transiciones de entrada y salida por defecto se hacen alterando su atributo \texttt{display}, que en caso de estar mostrado es \texttt{block} y en caso contrario es \texttt{none}. Un frame hace su transición de salida cuando se visualizan todos sus slides y el siguiente (en caso de existir) realiza su transición de entrada. En la fig. \ref{fig:frame_html_slides} se muestra un frame con varios slide items.
 
@@ -263,7 +264,8 @@
 
 		\subsection{Presentación} % (fold)
 		\label{sub:presentacion}
-			Todos los frames de la presentación tienen que encontrarse dentro de un contenedor general. En la fig. \ref{fig:main_container} se define un contenedor con clase \texttt{main-container}.
+
+			Todos los frames de la presentación van contenidos en el objeto DOM que instancia al plugin \textit{beampress.js}. En la fig. \ref{fig:main_container} se define un \texttt{<div>} con clase \texttt{main-container} que contiene los frames de una presentación. Usando este ejemplo, se instancia al plugin de la siguiente manera:\\ \texttt{\$(".main-container").beampress();} como se muestra en la fig. \ref{fig:ex5}.
 		
 			\begin{figure}[htb]%
 				\begin{lstlisting}%
@@ -300,7 +302,7 @@
 	   <script src="js/beampress.js"></script>
 	   <script>
 	       $(document).ready(function(){     
-	           $("#main-container").beampress();
+	           $(".main-container").beampress();
 	        });
 	   </script>		
 	</body>
