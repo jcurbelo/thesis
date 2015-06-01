@@ -138,7 +138,8 @@
  			\label{fig:frame_video_image}
  		\end{figure}
 
- 		Un contenido puede estar oculto o mostrado, si se toman como ejemplo los tres contenidos del frame de la fig. \ref{fig:contents} se puede ver que en la fig. \ref{fig:contents_a} está mostrado el primer contenido y los otros dos están ocultos, mientras que en la fig. \ref{fig:contents_b} solo está oculto el tercero y en la fig. \ref{fig:contents_c} están mostrados los tres contenidos.		
+ 		Un contenido puede estar oculto o mostrado, si se toman como ejemplo los tres contenidos del frame de la fig. \ref{fig:contents} se puede ver que en la fig. \ref{fig:contents_a} está mostrado el primer contenido y los otros dos están ocultos, mientras que en la fig. \ref{fig:contents_b} solo está oculto el tercero y en la fig. \ref{fig:contents_c} están mostrados los tres contenidos.
+
 
 		\begin{definition}
 		\label{def:show}
@@ -490,14 +491,14 @@
 				\hline
 					\textbf{Vista Control} & \textbf{Acción} & \textbf{Vista \newline Presentación} & \textbf{Acción} \\
 				\hline
-					\texttt{siguiente} & Realiza una transición siguiente & \texttt{respuesta actualiza} & Actualiza la información en la vista de control. La información está integrada por el frame y el slide actual, así como por el nivel del volumen, y si está o no mostrado el live feed o algún mensaje de texto  \\ \cline{1-2}
+					\texttt{siguiente} & Realiza una transición siguiente &  & Actualiza la información en la vista  \\ \cline{1-2}
 				% \hline
 				% \hline
-					\texttt{anterior} & Realiza una transición anterior &   &  \\ \cline{1-2}
+					\texttt{anterior} & Realiza una transición anterior &   & de control. La información está integrada por el \\ \cline{1-2}
 				% \hline
 
 				% \hline
-					\texttt{volumen} & Ajusta el volumen con el valor especificado en el contenido del mensaje &  &  \\ \cline{1-2}
+					\texttt{volumen} & Ajusta el volumen con el valor especificado en el contenido del mensaje & \texttt{respuesta actualiza} & frame y el slide actual, así como por el nivel del volumen, y si está o no mostrado el live feed o algún mensaje de texto \\ \cline{1-2}
 				% \hline	
 
 				% \hline
